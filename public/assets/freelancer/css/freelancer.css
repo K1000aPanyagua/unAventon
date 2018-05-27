@@ -35,12 +35,12 @@ hr.star-dark:after {
 }
 
 hr.star-light {
-  border-color: #fff;
+  border-color: #f17376;
 }
 
 hr.star-light:after {
   color: #fff;
-  background-color: #18BC9C;
+  background-color: #1a252f;
 }
 
 hr.star-dark {
@@ -175,7 +175,7 @@ section h2 {
 }
 
 header.masthead {
-  padding-top: calc(6rem + 72px);
+  padding-top: calc(8rem + 72px);
   padding-bottom: 6rem;
 }
 
@@ -191,7 +191,7 @@ header.masthead h2 {
 
 @media (min-width: 992px) {
   header.masthead {
-    padding-top: calc(6rem + 106px);
+    padding-top: calc(10rem + 106px);
     padding-bottom: 6rem;
   }
   header.masthead h1 {
@@ -395,10 +395,31 @@ a:focus, a:hover, a:active {
     color: #2c3e50;
     text-transform: uppercase;
     text-align: left;
-    padding-left: 5.5em;
     padding-top: 1.5em;  
 }
 
+
+@media screen and (min-width: 1300px){
+  .input-text{
+    padding-left: 8.5em;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1299px) {
+  .input-text{
+    padding-left: 5.5em;
+  }
+}
+
+@media screen and (min-width: 720px) and (max-width: 992px) {
+  .input-text{
+    padding-left: 7.5em;
+  }
+}
+
+.color-aventon-bk{
+  background: #f17376;
+}
 .color-aventon{
   background: #f17376;
 }
@@ -411,4 +432,9 @@ a:focus, a:hover, a:active {
 .disapear-xs{
   display: none;
 }
+}
+
+.white{
+  background: white;
+  color: #f17376;
 }
