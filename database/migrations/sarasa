@@ -1,0 +1,116 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateComentariosTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('comentarios', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('idUsuario')->unsigned();
+            $table->foreign('idUsuario')->references('id')->on('usuarios');
+            $table->integer('idViaje')->unsigned();
+            $table->foreign('idViaje')->references('id')->on('viajes');
+            $table->string('contenido');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('comentarios');
+    }
+}
+
+
+
+
+
+
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateVehiculosTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('vehiculos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('patente');
+            $table->string('marca');
+            $table->string('modelo');
+            $table->string('color');
+            $table->integer('nroAsientos');
+            $table->integer('idUsuario')->unsigned();
+            $table->foreign('idUsuario')->references('id')->on('usuarios');
+            $table->integer('idTipo')->unsigned();
+            $table->foreign('idTipo')->references('id')->on('tiposVehiculo');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('vehiculos');
+    }
+}
+
+
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateTiposVehiculoTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('tipos_vehiculo', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('tipo');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('tipos_vehiculo');
+    }
+}
