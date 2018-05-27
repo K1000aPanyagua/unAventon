@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <!-- Plugin CSS -->
     <link href="{{asset('assets/freelancer/vendor/magnific-popup/magnific-popup.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('assets/freelancer/vendor/bootstrap/css/bootstrap-grid.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('assets/freelancer/css/style.css')}}" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template -->
     <link href="{{asset('assets/freelancer/css/freelancer.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('assets/freelancer/css/style.css')}}" rel="stylesheet" type="text/css">

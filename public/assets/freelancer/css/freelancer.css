@@ -1,4 +1,4 @@
-body {
+fbody {
   font-family: 'Lato';
 }
 
@@ -94,10 +94,14 @@ section h2 {
   background-color: rgba(33, 37, 41, 0.5);
   line-height: 3.1rem;
 }
+ @media (max-width: 960px) {
+  #navbarResponsive {
+    border-top: solid grey 1px;  
+  }
+}
 
 #mainNav {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem 0 0 0;
   font-weight: 700;
   font-family: 'Montserrat';
 }
@@ -107,8 +111,13 @@ section h2 {
 }
 
 #mainNav .navbar-nav {
-  margin-top: 1rem;
   letter-spacing: 0.0625rem;
+}
+
+@media (max-width: 991px) {
+  #mainNav .navbar-nav li.nav-item {
+        padding-right: 6em;
+  }
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link {
@@ -116,7 +125,7 @@ section h2 {
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
-  color: #18BC9C;
+  color: #f17376;
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
@@ -135,7 +144,6 @@ section h2 {
 @media (min-width: 992px) {
   #mainNav {
     padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
     -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
     -moz-transition: padding-top 0.3s, padding-bottom 0.3s;
     transition: padding-top 0.3s, padding-bottom 0.3s;
@@ -333,11 +341,11 @@ form .row:first-child .floating-label-form-group {
 }
 
 a {
-  color: #18BC9C;
+  color: #f17376;
 }
 
 a:focus, a:hover, a:active {
-  color: #128f76;
+  color: #c55f62;
 }
 
 .btn {
@@ -361,13 +369,13 @@ a:focus, a:hover, a:active {
 }
 
 .btn-primary {
-  background-color: #18BC9C;
-  border-color: #18BC9C;
+  background-color: #f17376;
+  border-color: #f17376;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-  background-color: #128f76;
-  border-color: #128f76;
+  background-color: #c55f62;
+  border-color: #c55f62;
 }
 
 .btn-secondary {
@@ -376,7 +384,31 @@ a:focus, a:hover, a:active {
 }
 
 .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
-  background-color: #1a252f;
-  border-color: #1a252f;
+  background-color: #c55f62;
+  border-color: #c55f62;
+}
+.right{
+  float: right;  
 }
 
+.input-text{
+    color: #2c3e50;
+    text-transform: uppercase;
+    text-align: left;
+    padding-left: 5.5em;
+    padding-top: 1.5em;  
+}
+
+.color-aventon{
+  background: #f17376;
+}
+
+.color-aventon:hover{
+  background: #c55f62;
+}
+
+@media (max-width: 576px){
+.disapear-xs{
+  display: none;
+}
+}

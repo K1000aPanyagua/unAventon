@@ -1,5 +1,5 @@
 <!-- Footer -->
-    <footer class="footer text-center">
+    <footer class="footer text-center row">
       <div class="container">
         <div class="row">
           <div class="col-md-4 mb-5 mb-lg-0">
@@ -63,16 +63,10 @@
             <div class="col-lg-8 mx-auto">
               <h2 class="text-secondary text-uppercase mb-0">Inicio de Sesión</h2>
               <hr class="star-dark mb-5">
-             <!--errores-->
-
-              
-                <h5>Email: </h5>
+                <h5 class="input-text">Email: </h5>
                 <input type="text" name="email" value="" size="50" />
-                <br>
-                <br>
-                <h5>Contraseña: </h5>
+                <h5 class="input-text">Contraseña: </h5>
                 <input type="password" name="password" value="" size="50" />
-
                 <br>
                 <br>
                 <button type="submit" class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss">Iniciar sesión</button>
