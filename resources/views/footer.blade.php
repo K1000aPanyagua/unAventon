@@ -63,10 +63,9 @@
             <div class="col-lg-8 mx-auto">
               <h2 class="text-secondary text-uppercase mb-0">Inicio de Sesión</h2>
               <hr class="star-dark mb-5">
-              <?php echo validation_errors(); //Retorno cualquier error ?> 
+             <!--errores-->
 
-              <?php echo form_open('form'); ?>
-            
+              
                 <h5>Email: </h5>
                 <input type="text" name="email" value="" size="50" />
                 <br>
@@ -96,9 +95,7 @@
             <div class="col-lg-8 mx-auto">
               <h2 class="text-secondary text-uppercase mb-0">Registrarse</h2>
               <hr class="star-dark mb-5">
-              <?php echo validation_errors(); //Retorno cualquier error ?> 
 
-              <?php echo form_open('form'); ?>
 
                 <h5>Nombre de usuario: </h5>
                 <input type="text" name="username" value="" size="50" />
@@ -162,20 +159,24 @@
             </div>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="<?php echo base_url('application/views/assets/freelancer/vendor/jquery/jquery.min.js')?>"></script>
-    <script src="<?php echo base_url('application/views/assets/freelancer/vendor/bootstrap/js/bootstrap.bundle.min.js')?>"></script>
+
+
+    <script src="{{asset('assets/freelancer/vendor/jquery/jquery.min.js')}}"></script>
+
+    <script src="{{asset('assets/freelancer/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="<?php echo base_url('application/views/assets/freelancer/vendor/jquery-easing/jquery.easing.min.js')?>"></script>
-    <script src="<?php echo base_url('application/views/assets/freelancer/vendor/magnific-popup/jquery.magnific-popup.min.js')?>"></script>
+    <script src="{{asset('assets/freelancer/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <script src="{{asset('assets/freelancer/vendor/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
 
     <!-- Contact Form JavaScript -->
-    <script src="<?php echo base_url('application/views/assets/freelancer/js/jqBootstrapValidation.js')?>"></script>
-    <script src="<?php echo base_url('application/views/assets/freelancer/js/contact_me.js')?>"></script>
+    <script src="{{asset('assets/freelancer/js/jqBootstrapValidation.js')}}"></script>
+    <script src="{{asset('assets/freelancer/js/contact_me.js')}}"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="<?php echo base_url('application/views/assets/freelancer/js/freelancer.min.js')?>"></script>
+    <script src="{{asset('assets/freelancer/js/freelancer.min.js')}}"></script>
 
-  </body>
+
 
 </html>
