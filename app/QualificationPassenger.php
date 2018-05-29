@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class QualificationPassenger extends Model{
 
-    protected $table = 'qualificationsPassengers';
+    protected $table = 'QualificationsPassengers';
 
     protected $fillable = ['value', 'review'];
 

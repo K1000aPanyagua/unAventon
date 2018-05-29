@@ -13,7 +13,7 @@ class CreateQualificationsPassengersTable extends Migration
      */
     public function up()
     {
-        Schema::create('QualificationsPassengers', function (Blueprint $table) {
+        Schema::create('qualificationsPassengers', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->string('value');

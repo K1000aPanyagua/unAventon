@@ -2,13 +2,13 @@
 
 namespace App;
 
-//use Illuminate\Notifications\Notifiable;
-//use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class User extends Authenticatable
 {
-    //use Notifiable;
+    use Notifiable;
 
     protected $fillable = [
         'name', 'email', 'pass', 'lastname', 'birthdate', 'gender', 'photo', 'telephone'];
@@ -18,8 +18,8 @@ class User extends Model
     
     protected $table = 'users';
 
-    public function car(){
-        return $this->hasOne(Car::class);
+    public function cars(){
+        return $this->hasMany(Car::class);
     }
 
     public function ridesAsPilot(){

@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->date('birthdate');
             $table->string('pass');
             $table->string('gender');
-            $table->string('photo');
+            $table->string('photo')->default('/resources/assets/userPhoto.jpg');
             $table->string('telephone');
             $table->boolean('active');  
             $table->timestamps();
