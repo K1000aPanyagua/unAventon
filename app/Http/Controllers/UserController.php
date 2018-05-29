@@ -36,7 +36,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
     
         //Validation
         /*$request->validate([
@@ -58,22 +57,11 @@ class UserController extends Controller
         $user->email            = $request->email;
         $user->gender           = $request->gender;
         $user->telephone        = $request->telephone;
-        
         $user->save();
 
         //Redireccion
         
-=======
-        return view('search');
->>>>>>> d2f6026d94502eec8bd7373aaec50d7fd54dce90
     }
-
-
-
-
-
-
-
 
     /**
      * Display the specified resource.
