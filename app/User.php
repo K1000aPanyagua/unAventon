@@ -17,15 +17,16 @@ class User extends Authenticatable
     
     protected $table = 'users';
 
-    
-
-
     public function car(){
         return $this->hasOne(Car::class)
     }
 
-    public function rides(){
+    public function ridesAsPilot(){
     	return $this->hasMany(Ride::class);
+    }
+
+    public function ridesAsPassenger(){
+        return $this->hasMany(PassengerRide::class);
     }
 
      public function qualificationsAsPilot(){

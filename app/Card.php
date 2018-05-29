@@ -12,7 +12,10 @@ class Card extends Model{
 	protected $fillable = ['numCard', 'expiration'];
 
 	public function user(){
-
 		return $this->belongsTo(User::class);
 	}
+
+	public function rides(){
+        return $this->hasMany(Ride::class);
+    }
 }

@@ -1,22 +1,18 @@
 <?php
 
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model{
+class UserRide extends Model{
 
-	protected $table = 'accounts';
-
-	protected $fillable = ['numAccount'];
+	protected $table = 'user_ride';
 
 	public function user(){
-
 		return $this->belongsTo(User::class);
 	}
 
 	public function rides(){
-        return $this->hasMany(Ride::class);
+        return $this->belongsTo(Ride::class);
     }
 }
