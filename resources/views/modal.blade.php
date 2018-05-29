@@ -75,7 +75,7 @@
                 <input type="string" name="telephone" value="" size="50" />
                 <br>
                 <br>
-                <button type="submit" class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss">Registrarse</button>
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill">Registrarse</button>
               </form>
                     </div>
                   </div>
