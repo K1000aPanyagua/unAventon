@@ -5,7 +5,7 @@
 
 @include('menu')
 
-<header class="masthead bg-primary text-white row">
+<header class="masthead background-w-imagebgprimary text-white row" style="background-image: url('{{ asset('assets/autos.jpg') }}')">
       <div class="col-12">
       	<h3 class="m-left"> Buscar por: </h3>
       	<div class="row color-aventon-bk">
@@ -16,33 +16,24 @@
       			<h5>Origen: </h5><input type="text" name="origen" value="" size="50" />
       		</div>
       		<div class="col-4 search-form-item">
-      			<h5>Fecha salida: </h5><input type="text" name="passconf" value="" size="50" />
-
-<input type="text" name="datetimes" />
-
-<script>
-$(function() {
-  $('input[name="datetimes"]').daterangepicker({
-    timePicker: true,
-    startDate: moment().startOf('hour'),
-    endDate: moment().startOf('hour').add(32, 'hour'),
-    locale: {
-      format: 'M/DD hh:mm A'
-    }
-  });
-});
-</script>
-      		</div>
-      		<div class="col-4 search-form-item">
-      			<h5>Email: </h5><input type="text" name="email" value="" size="50" />
-      		</div>
-      	</div>
+      			<h5>Fecha salida: </h5><input type="date" name="fecha" min="1950-01-01" max="2020-01-01">
+      	    </div>
+      	    <div class="col-4 search-form-item">
+      			<h5>Fecha llegada: </h5><input type="date" name="fecha" min="1950-01-01" max="2020-01-01">
+      	    </div>
+      	    <div class="col-4 search-form-item">
+      			<h5>Tipo de vehiculo: </h5>
+      			  <select>
+      			  	<option value="camioneta">Camioneta</option>
+                    <option value="auto">Auto</option>
+                    <option value="camion">Camión</option>
+                    <option value="sin preferencia">Sin preferencia</option>
+      			  </select>
+      	    </div>
+      	 </div>
       </div>
-</header>
-
-
-
-
+  </header>
+@include('modal')
 @include('copyrigtharrow')
 @include('javascript')
 </body>
