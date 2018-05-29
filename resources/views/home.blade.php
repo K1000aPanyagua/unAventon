@@ -11,6 +11,7 @@
 
 <!--fin header-->
 @include('footer')
+@include('modal')
 
 
 </html>

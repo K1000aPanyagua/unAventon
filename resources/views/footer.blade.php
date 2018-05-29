@@ -1,54 +1,53 @@
 <!-- Footer -->
-<footer class="footer text-center row">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 mb-5 mb-lg-0">
-        <h4 class="text-uppercase mb-4">Seguinos en las redes sociales</h4>
-        <ul class="list-inline mb-0">
-          <li class="list-inline-item">
-            <a class="btn btn-outline-light btn-social  rounded-circle" href="https://www.facebook.com/" target="_blank">
-              <i class="fa fa-fw fa-facebook"></i>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn btn-outline-light btn-social  rounded-circle" href="https://www.instagram.com/" target="_blank">
-              <i class="fa fa-fw fa-instagram"></i>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn btn-outline-light btn-social rounded-circle" href="https://twitter.com/" target="_blank">
-              <i class="fa fa-fw fa-twitter"></i>
-            </a>
-          </li>
-        </ul>
-        <br>
-        <p class="lead mb-0">La Plata, Buenos Aires, Argentina.</p>
+    <footer class="footer text-center row">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-5 mb-lg-0">
+            <h4 class="text-uppercase mb-4">Seguinos en las redes sociales</h4>
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/" target="_blank">
+                  <i class="fa fa-fw fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.instagram.com/" target="_blank">
+                  <i class="fa fa-fw fa-instagram"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/" target="_blank">
+                  <i class="fa fa-fw fa-twitter"></i>
+                </a>
+              </li>
+            </ul>
+            <br>
+            <p class="lead mb-0">La Plata, Buenos Aires, Argentina.</p>
+          </div>
+          <div class="col-md-4">
+            <h4 class="text-uppercase mb-4">Acerca de nosotros</h4>
+            <p class="lead mb-0">Un Aventón está destinado a la búsqueda de viajes para reducir tráfico y abaratar costos. ¿Todavía no te uniste? <a class="rounded js-scroll-trigger portfolio-item" href="#register">Registrate</a> y empezá a ahorrar!</p>
+          </div>
+          <div class="col-md-4 mb-5 mb-lg-0">
+            <h4 class="text-uppercase mb-4">¿Necesitás ayuda?</h4>
+            <p class="lead mb-0">Ingresá a nuestra sección de <a href="">preguntas frecuentes</a> para más información. También podés consultar nuestros <a href="">términos y condiciones</a>.</p>
+          </div>
+          
+        </div>
       </div>
-      <div class="col-md-4">
-        <h4 class="text-uppercase mb-4">Acerca de nosotros</h4>
-        <p class="lead mb-0">Un Aventón está destinado a la búsqueda de viajes para reducir tráfico y abaratar costos. ¿Todavía no te uniste? <a class="rounded js-scroll-trigger portfolio-item" href="#register">Registrate</a> y empezá a ahorrar!</p>
-      </div>
-      <div class="col-md-4 mb-5 mb-lg-0">
-        <h4 class="text-uppercase mb-4">¿Necesitás ayuda?</h4>
-        <p class="lead mb-0">Ingresá a nuestra sección de 
-          <a href="">preguntas frecuentes</a> 
-          para más información. También podés consultar nuestros 
-          <a href="">términos y condiciones.</a>
-        </p>
+    </footer>
+
+    <div class="copyright py-4 text-center text-white">
+      <div class="container">
+        <small>Copyright &copy; Un Aventón 2018</small>
       </div>
     </div>
-  </div>
-</footer>
-
-<div class="copyright py-4  row text-white">
-  <div class="col-12">
-    <small>Copyright &copy; Un Aventón 2018</small>
-  </div>
-</div>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-<div class="scroll-to-top d-lg-none position-fixed ">
-  <a class="js-scroll-trigger d-block  text-white rounded" href="#page-top">
-    <i class="fa fa-chevron-up"></i>
-  </a>
-</div>
+    <div class="scroll-to-top d-lg-none position-fixed ">
+      <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+        <i class="fa fa-chevron-up"></i>
+      </a>
+    </div>
+
+    
