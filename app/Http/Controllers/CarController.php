@@ -56,7 +56,7 @@ class CarController extends Controller
     public function show($id)
     {
         $car = Car::find($id);
-        return view('user.show', compact('user'));
+        return view('car.show', compact('car'));
     }
 
     /**
@@ -80,7 +80,14 @@ class CarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $car->license = $request->license;
+        $car->brand = $request->brand;
+        $car->model = $request->model;
+        $car->color = $request->color;
+        $car->numSeats = $request->numSeats;
+        $car->kind = $request->kind;
+        
+        $car->save();
     }
 
     /**
@@ -91,6 +98,12 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $car = Car::findOrFail($id);
+        $car->delete();
+
+        return view('home')->with([
+            'flash_message' => 'Vehiculo eliminado',
+            'flash_message_important' => false
+            ]);
     }
 }
