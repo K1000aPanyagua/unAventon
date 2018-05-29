@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    use Notifiable;
+    //use Notifiable;
 
     protected $fillable = [
         'name', 'email', 'pass', 'lastname', 'birthdate', 'gender', 'photo', 'telephone'];

@@ -12,6 +12,10 @@ class PagesController extends Controller {
 		return view('search');
 	}
 
+	public function getUpdate(){
+	    return view('userupdate');
+	}
+
 	public function getOwnProfile(){
 		return view('myprofile');
 	}

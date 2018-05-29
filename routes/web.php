@@ -15,4 +15,6 @@ Route::get('/','PagesController@getIndex');
 
 Route::get('/search','PagesController@getSearch');
 
+Route::get('/userAccount','PagesController@getUpdate');
+
 Route::resource('user', 'UserController');

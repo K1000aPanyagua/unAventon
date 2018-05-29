@@ -1,4 +1,4 @@
-<section class="color-aventon-bk text-white mb-0 row" id="#ahorra">
+<section class="background-w-imageaventon text-white mb-0 row" style="background-image: url('{{ asset('assets/autos.jpg') }}')" id="#ahorra">
   <div class="container">
     <h2 class="text-center text-uppercase text-white">Ahorrá y ayudá </h2>
     <div class="row">

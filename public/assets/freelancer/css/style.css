@@ -38,3 +38,18 @@
 	position: absolute;
     width: 100%;
 }
+
+
+.background-w-imageaventon{
+	background-color: rgba(241, 115, 118, 0.37);
+    background-blend-mode: lighten;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background-w-imagebgprimary{
+    background-color: rgba(26, 37, 47, 0.76);
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
