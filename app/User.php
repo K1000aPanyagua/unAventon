@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+//use Illuminate\Notifications\Notifiable;
+//use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
     use Notifiable;
 
@@ -18,7 +19,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     public function car(){
-        return $this->hasOne(Car::class)
+        return $this->hasOne(Car::class);
     }
 
     public function ridesAsPilot(){

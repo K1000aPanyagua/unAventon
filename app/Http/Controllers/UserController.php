@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -47,7 +47,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user=User::find($id);
-        return view('profile', compact('user'));
+        return view('user.show', compact('user'));
     }
 
     /**
