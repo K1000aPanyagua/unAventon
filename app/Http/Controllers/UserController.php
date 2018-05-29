@@ -113,6 +113,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return view('home')->with([
+            'flash_message' => 'Usuario eliminado',
+            'flash_message_important' => false
+        ]);
     }
 }
