@@ -37,8 +37,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 2d62591df638f6166f53c8a102a1d1ea75f2a791
     
         //Validation
         /*$request->validate([
@@ -68,6 +71,10 @@ class UserController extends Controller
 
         return view('search');
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2d62591df638f6166f53c8a102a1d1ea75f2a791
     }
 
     /**
