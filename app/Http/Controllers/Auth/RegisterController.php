@@ -20,7 +20,6 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
     use RegistersUsers;
 
     /**
@@ -46,12 +45,21 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
+        protected function validator(array $data){
+        
+        Validator::extend('olderThan', function($attribute, $value, $parameters)
+        {
+            $minAge = ( ! empty($parameters)) ? (int) $parameters[0] : 13;
+            return (new DateTime)->diff(new DateTime($value))->y >= $minAge;
+            });
+        }
+        
+        return 
             'name' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'pass' => 'required|string|min:6|confirmed',
+            'birthdate' => 'required|date|olderThan:18',
         ]);
     }
 
