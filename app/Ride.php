@@ -11,8 +11,12 @@ class Ride extends Model{
 
 	protected $fillable = ['origin', 'destination', 'duration', 'amount', 'remarks', 'departDate', 'departHour'];
 
-	public function user(){
+	public function pilot(){
 		return $this->belongsTo(User::class);
+	}
+
+	public function Passenger(){
+		return $this->hasMany(PassengerRide::class);
 	}
 
 	public function car(){
