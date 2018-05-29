@@ -39,6 +39,7 @@
               <hr class="star-dark mb-5">
 
               <form method="POST" action="{{ route('user.store') }}">
+              {{ csrf_field() }}
                 <h5>Nombre: </h5>
                 <input type="text" name="name" value="" size="50" />
                 <br>
@@ -75,7 +76,7 @@
                 <input type="string" name="telephone" value="" size="50" />
                 <br>
                 <br>
-                <button type="submit" class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss">Registrarse</button>
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill">Registrarse</button>
               </form>
                     </div>
                   </div>
