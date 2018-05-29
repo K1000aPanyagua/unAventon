@@ -39,6 +39,7 @@
               <hr class="star-dark mb-5">
 
               <form method="POST" action="{{ route('user.store') }}">
+              {{ csrf_field() }}
                 <h5>Nombre: </h5>
                 <input type="text" name="name" value="" size="50" />
                 <br>
@@ -48,11 +49,11 @@
                 <br>
                 <br>
                 <h5>Fecha de nacimiento: </h5>
-                <input type="date" name="fecha" min="1950-01-01" max="2000-01-01">
+                <input type="date" name="birthdate" min="1950-01-01" max="2000-01-01">
                 <br>
                 <br>
                 <h5>Contraseña: </h5>
-                <input type="password" name="password" value="" size="50" />
+                <input type="password" name="pass" value="" size="50" />
                 <br>
                 <br>
                 <h5>Confirmar contraseña: </h5>
