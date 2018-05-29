@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
+
     
         //Validation
         /*$request->validate([
@@ -63,9 +63,9 @@ class UserController extends Controller
 
         //Redireccion
         
-=======
+
         return view('search');
->>>>>>> d2f6026d94502eec8bd7373aaec50d7fd54dce90
+
     }
 
 

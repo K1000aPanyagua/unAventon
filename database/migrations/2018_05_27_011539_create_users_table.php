@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('gender');
             $table->string('photo')->default('/resources/assets/userPhoto.jpg');
             $table->string('telephone');
-            $table->boolean('active');  
+            $table->boolean('active')->default(True);  
             $table->timestamps();
             $table->rememberToken();
         });
