@@ -4,52 +4,50 @@
 <body id="page-top" class="container-fluid">
 
 @include('menu')
-
-
-      
+   
         <div class="container text-center">
           <div class="row">
             <div class="col-lg-8 mx-auto">
               <h2 class="text-secondary text-uppercase mb-0">Agregar vehiculo</h2>
               
               <form method="POST" action="{{ route('car.store') }}">
-                <h5>Nombre: </h5>
-                <input type="text" name="name" value="" size="50" />
+                <h5>Licencia de conducir: </h5>
+                <input type="text" name="license" value="" size="50" />
                 <br>
                 <br>
-                <h5>Apellido: </h5>
-                <input type="text" name="lastname" value="" size="50" />
+                <h5>Marca: </h5>
+                <input type="text" name="brand" value="" size="50" />
                 <br>
                 <br>
-                <h5>Fecha de nacimiento: </h5>
-                <input type="date" name="fecha" min="1950-01-01" max="2000-01-01">
+                <h5>Modelo: </h5>
+                <input type="text" name="model" value="" size="50" />
                 <br>
                 <br>
-                <h5>Contraseña: </h5>
-                <input type="password" name="password" value="" size="50" />
+                <h5>Año: </h5>
+                <input type="text" name="year" value="" size="50" />
                 <br>
                 <br>
-                <h5>Confirmar contraseña: </h5>
-                <input type="password" name="passconf" value="" size="50" />
+                <h5>Tipo: </h5>
+                  <select>
+                  	<option value="camioneta">Camioneta</option>
+                    <option value="auto">Auto</option>
+                    <option value="camion">Camión</option>
+                  </select>
                 <br>
                 <br>
-                <h5>Email: </h5>
-                <input type="email" name="email" value="" size="50" />
+                <h5>Lugares: </h5>
+                <input type="text" name="places" value="" size="50" />
                 <br>
                 <br>
-                <h5>Género: </h5>
-                <select name="gender">
-                    <option value="femenino">Femenino</option>
-                    <option value="masculino">Masculino</option>
-                    <option value="no binario">No binario</option>
-                </select>
+                <h5>Color: </h5>
+                <input type="text" name="color" value="" size="50" />
                 <br>
                 <br>
-                <h5>Teléfono: </h5>
-                <input type="string" name="telephone" value="" size="50" />
+                <h5>Cantidad de asientos: </h5>
+                <input type="string" name="numSeats" value="" size="50" />
                 <br>
                 <br>
-                <button type="submit" class="btn btn-primary btn-lg rounded-pill">Registrarse</button>
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Confirmar </button>
               </form>
            </div>
          </div>
