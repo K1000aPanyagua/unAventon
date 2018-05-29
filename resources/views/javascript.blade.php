@@ -12,7 +12,6 @@
 
     <!-- Contact Form JavaScript -->
     <script src="{{asset('assets/freelancer/js/jqBootstrapValidation.js')}}"></script>
-    <script src="{{asset('assets/freelancer/js/contact_me.js')}}"></script>
 
     <!-- Custom scripts for this template -->
     <script src="{{asset('assets/freelancer/js/freelancer.min.js')}}"></script>

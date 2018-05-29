@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\User;
 
 class UserController extends Controller
@@ -35,8 +36,40 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+    
+        //Validation
+        /*$request->validate([
+            'name' => 'required|string',
+            'lastname' => 'required|string',
+            'birthdate' => 'required|date',
+            'password' => 'required|string',
+            'email' => 'required|email',
+            'gender' => 'string',
+            'telephone' => 'string',
+        ]);*/
+
+        //Almacenamiento
+        $user = new User;
+        $user->name             = $request->name;
+        $user->lastname         = $request->lastname;
+        $user->birthdate        = $request->birthdate;
+        $user->pass             = $request->pass;
+        $user->email            = $request->email;
+        $user->gender           = $request->gender;
+        $user->telephone        = $request->telephone;
+        
+        $user->save();
+
+        //Redireccion
+        
     }
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.
