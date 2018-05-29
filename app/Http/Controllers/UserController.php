@@ -36,7 +36,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1f4509c599424ea8c0738985255baff400dc9b19
     
         //Validation
         /*$request->validate([
@@ -58,22 +61,17 @@ class UserController extends Controller
         $user->email            = $request->email;
         $user->gender           = $request->gender;
         $user->telephone        = $request->telephone;
-        
         $user->save();
 
         //Redireccion
         
+<<<<<<< HEAD
 
         return view('search');
 
+=======
+>>>>>>> 1f4509c599424ea8c0738985255baff400dc9b19
     }
-
-
-
-
-
-
-
 
     /**
      * Display the specified resource.
