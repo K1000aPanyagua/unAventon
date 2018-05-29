@@ -12,11 +12,10 @@ class QualificationPassenger extends Model{
     protected $fillable = ['value', 'review'];
 
     public function pilot(){
-
         return $this->belongsTo(User::class);
     }
 
-    pilots function passenger(){
+    public function passenger(){
         return $this->belongsTo(User::class);
     }
 

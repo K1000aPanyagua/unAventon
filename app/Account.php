@@ -15,4 +15,8 @@ class Account extends Model{
 
 		return $this->belongsTo(User::class);
 	}
+
+	public function rides(){
+        return $this->hasMany(Ride::class);
+    }
 }

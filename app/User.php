@@ -17,9 +17,6 @@ class User extends Authenticatable
     
     protected $table = 'users';
 
-    
-
-
     public function car(){
         return $this->hasOne(Car::class)
     }
