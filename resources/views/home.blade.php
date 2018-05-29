@@ -7,13 +7,13 @@
 <!--Body -->
 @include('menu')
 @include('header') 
-@include('buttons')
+@include('buttonsearch')
 
 <!--fin header-->
 @include('footer')
 @include('modal')
-
-
+@include('javascript')
+</body>
 </html>
 
 

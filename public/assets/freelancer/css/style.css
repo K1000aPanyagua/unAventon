@@ -1,10 +1,33 @@
-@media (min-width: 992px){}
+@media (min-width: 992px){
 .img-logo {
-      width: 10em;
-      float: right;
-}}
+	width: 10em;
+    float: right;
+   }
+}
 
 .o-header {
 	display: inline-block;
 	width: 0%;
+}
+
+.m-left{
+  margin-left: 1em;
+}
+
+.search-form-list{
+  display: grid;
+}
+
+.search-form-item{
+ /* display: inline-flex;*/
+  padding: 1.5em;
+}
+
+.search-form-item h5{
+  margin-right: 1em;
+}
+
+.copyright{
+	position: absolute;
+    width: 100%;
 }

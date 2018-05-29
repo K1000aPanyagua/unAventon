@@ -7,3 +7,8 @@
 	display: inline-block;
 	width: 0%;
 }
+
+
+.dropdown-toggle::after{
+	margin-left: 0;
+}

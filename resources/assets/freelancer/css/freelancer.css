@@ -380,3 +380,9 @@ a:focus, a:hover, a:active {
   border-color: #1a252f;
 }
 
+.btn-primary:not(:disabled):not(.disabled).active, 
+.btn-primary:not(:disabled):not(.disabled):active, 
+.show>.btn-primary.dropdown-toggle{
+  background-color: #128f76;
+  border-color: #128f76;
+}

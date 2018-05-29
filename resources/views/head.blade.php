@@ -21,4 +21,14 @@
     <link href="{{asset('assets/freelancer/css/freelancer.css')}}" rel="stylesheet">
     <link href="{{asset('assets/freelancer/css/style.css')}}" rel="stylesheet" type="text/css">
 
+
+
+
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
 </head>
