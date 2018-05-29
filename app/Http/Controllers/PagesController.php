@@ -8,5 +8,12 @@ class PagesController extends Controller {
 		return view('home');
 	}
 
+	public function getSearch(){
+		return view('search');
+	}
+
+	public function getOwnProfile(){
+		return view('myprofile');
+	}
  		
 }
