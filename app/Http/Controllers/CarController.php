@@ -24,7 +24,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('car.create');
+        return view('car/create');
     }
 
     /**
@@ -42,7 +42,7 @@ class CarController extends Controller
         $car->color = $request->color;
         $car->numSeats = $request->numSeats;
         $car->kind = $request->kind;
-        $car->user_id = Auth::user->id;
+        $car->user_id = Auth::user()->id;
 
         $car->save();
     }

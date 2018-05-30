@@ -41,7 +41,14 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+<<<<<<< HEAD
+=======
+
+<<<<<<< HEAD
+=======
+>>>>>>> 6f51cdc1843b9d735563aab0fc6a1b832ad67794
     
+>>>>>>> 5f4d9c3aef79b3efac66f84d6cbe5759fe1d7564
         //Validation
         $request->validate([
             'name' => 'required|string',
@@ -70,8 +77,20 @@ class UserController extends Controller
 
         //Redireccion
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+        return view('search');
+}
+=======
+        
+
+
+>>>>>>> 6f51cdc1843b9d735563aab0fc6a1b832ad67794
         return view('search');
     }
+>>>>>>> 5f4d9c3aef79b3efac66f84d6cbe5759fe1d7564
 
     /**
      * Display the specified resource.
@@ -93,7 +112,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+<<<<<<< HEAD
+        //
+=======
         //Carga vista de editar perfil
+>>>>>>> 5f4d9c3aef79b3efac66f84d6cbe5759fe1d7564
     }
 
     /**
@@ -105,6 +128,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+<<<<<<< HEAD
+        //
+=======
         $user->name = $request->name;
         $user->lastname = $request->lastname;
         $user->birthdate = $request->birthdate;
@@ -116,6 +142,7 @@ class UserController extends Controller
 
         //Redireccion
         return view('home');
+>>>>>>> 5f4d9c3aef79b3efac66f84d6cbe5759fe1d7564
     }
 
     /**
@@ -126,6 +153,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+<<<<<<< HEAD
+        //
+    }
+}
+=======
         Item::find(1)->delete();
         return view('home')->with([
             'flash_message' => 'Usuario eliminado',
@@ -133,3 +165,4 @@ class UserController extends Controller
             ]);
     }
 }
+>>>>>>> 5f4d9c3aef79b3efac66f84d6cbe5759fe1d7564
