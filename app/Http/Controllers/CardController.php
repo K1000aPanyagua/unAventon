@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use App\User;
+use App\Card;
 
-class UserController extends Controller
+class CardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
-        //
+        $card = Card::where('user_id', '$user_id');
+        return view('card.index', compact('card'));
     }
 
     /**
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('card.create');
     }
 
     /**
@@ -35,42 +35,19 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        //Validacion
 
-    
-        //Validation
-        /*$request->validate([
-            'name' => 'required|string',
-            'lastname' => 'required|string',
-            'birthdate' => 'required|date',
-            'password' => 'required|string',
-            'email' => 'required|email',
-            'gender' => 'string',
-            'telephone' => 'string',
-        ]);*/
 
         //Almacenamiento
-        $user = new User;
-        $user->name             = $request->name;
-        $user->lastname         = $request->lastname;
-        $user->birthdate        = $request->birthdate;
-        $user->pass             = $request->pass;
-        $user->email            = $request->email;
-        $user->gender           = $request->gender;
-        $user->telephone        = $request->telephone;
-        $user->save();
+        $card = new Card;
+        $card->numCard          = $request->numCard;
+        $card->expiration       = $request->expiration;
+        $card->user_id          = Auth::(User)->id;
+        $card->save();
 
         //Redireccion
-
-        
-
-
-        return view('search');
-
-
-
         return view('home');
-
     }
 
     /**
@@ -81,8 +58,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user=User::find($id);
-        return view('user.show', compact('user'));
+        //
     }
 
     /**
@@ -93,7 +69,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //Carga vista de editar perfil
+        //
     }
 
     /**
@@ -105,14 +81,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user->name             = $request->name;
-        $user->lastname         = $request->lastname;
-        $user->birthdate        = $request->birthdate;
-        $user->pass             = $request->pass;
-        $user->email            = $request->email;
-        $user->gender           = $request->gender;
-        $user->telephone        = $request->telephone;
-        $user->save();
+        //Validacion
+
+
+        //Almacenamiento
+        $card->numCard          = $request->numCard;
+        $card->expiration       = $request->expiration;
+        $card->user_id          = Auth::(User)->id;
+        $card->save();
 
         //Redireccion
         return view('home');
@@ -126,6 +102,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
+        $card = Card::find($id);
+        $card->delete();
+        return view('home');
     }
 }
