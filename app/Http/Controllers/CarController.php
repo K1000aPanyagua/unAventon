@@ -42,7 +42,7 @@ class CarController extends Controller
         $car->color = $request->color;
         $car->numSeats = $request->numSeats;
         $car->kind = $request->kind;
-        $car->user_id = Auth::user->id;
+        //$car->user_id = Auth::user->id;
 
         $car->save();
     }

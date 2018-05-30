@@ -1,6 +1,5 @@
-
-
     <!--LOGIN MODAL -->
+    
     <div class="portfolio-modal mfp-hide" id="login">
       <div class="portfolio-modal-dialog bg-white">
         <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
@@ -9,22 +8,27 @@
         <div class="container text-center">
           <div class="row">
             <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Inicio de Sesión</h2>
+              <h2 class="text-secondary text-uppercase mb-0">Iniciar Sesión</h2>
               <hr class="star-dark mb-5">
-                <h5 class="input-text">Email: </h5>
-                <input type="text" name="email" value="" size="50" />
-                <h5 class="input-text">Contraseña: </h5>
-                <input type="password" name="password" value="" size="50" />
+              <form method="POST" action="{{ route('auth.store') }}">
+                { csrf_field() }}
+                <h5>Email: </h5>
+                <input type="email" name="email" value="" size="50" />
                 <br>
                 <br>
-                <button type="submit" class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss">Iniciar sesión</button>
-              
+                <h5>Contraseña: </h5>
+                <input type="password" name="pass" value="" size="50"/>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill">Iniciar Sesión</button>
+              </form>
             </div>
-          </div>
-          
+          </div>       
         </div>
       </div>
     </div>
+
+    
    
     <!--REGISTER MODAL-->
     <div class="portfolio-modal mfp-hide" id="register">
