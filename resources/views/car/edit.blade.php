@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 @include('head')
@@ -5,10 +6,10 @@
 
 @include('menu')
 
-@include('formcreate')     
+@include('car/formedit')     
     
 
-@include('copyrigtharrow')
+@include('footer')
 @include('javascript')
 </body>
 </html>

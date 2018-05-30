@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Car;
+//use Auth;
+use App\User;
+use Illuminate\Support\Facades\Auth; 
 
 class CarController extends Controller
 {
@@ -14,7 +17,8 @@ class CarController extends Controller
      */
     public function index()
     {
-        return Car::All();
+        $cars = Car::All();
+        return view('allcars')->with('cars', $cars);
     }
 
     /**
@@ -24,7 +28,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('car.create');
+        return view('car/create');
     }
 
     /**
@@ -42,9 +46,14 @@ class CarController extends Controller
         $car->color = $request->color;
         $car->numSeats = $request->numSeats;
         $car->kind = $request->kind;
+<<<<<<< HEAD
         //$car->user_id = Auth::user->id;
+=======
+        $car->user_id = Auth::User()->id;
+>>>>>>> e73739c32784ca2d6189c1fa8836d205c7166033
 
         $car->save();
+        return view('car.edit');
     }
 
     /**

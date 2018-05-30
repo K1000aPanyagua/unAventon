@@ -19,5 +19,13 @@ class PagesController extends Controller {
 	public function getOwnProfile(){
 		return view('myprofile');
 	}
+
+	public function getAccount(){
+		return view('configurationaccount');
+	}
+
+	public function getResultRegister(){
+		return view('resultregister');
+	}
  		
 }
