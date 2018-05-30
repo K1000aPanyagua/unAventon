@@ -6,7 +6,8 @@
         <br>
         <br>
         <form method="POST" action="{{ route('car.store') }}">
-          <h5>Licencia de conducir: </h5>
+         {{ csrf_field() }}
+         <h5>Licencia de conducir: </h5>
           <input type="text" name="license" value="{{old('license')}}" size="50" />
           <br>
           <br>

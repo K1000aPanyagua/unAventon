@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Car;
+//use Auth;
+use App\User;
+use Illuminate\Support\Facades\Auth; 
 
 class CarController extends Controller
 {
@@ -43,7 +46,7 @@ class CarController extends Controller
         $car->color = $request->color;
         $car->numSeats = $request->numSeats;
         $car->kind = $request->kind;
-        $car->user_id = Auth::user()->id;
+        $car->user_id = Auth::User()->id;
 
         $car->save();
         return view('car.edit');
