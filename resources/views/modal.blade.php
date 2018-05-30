@@ -1,5 +1,6 @@
 
 
+
     <!--LOGIN MODAL -->
     <div class="portfolio-modal mfp-hide" id="login">
       <div class="portfolio-modal-dialog bg-white">
@@ -17,7 +18,7 @@
                 <input type="password" name="password" value="" size="50" />
                 <br>
                 <br>
-                <button type="submit" class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss">Iniciar sesión</button>
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill ">Iniciar sesión</button>
               
             </div>
           </div>
@@ -85,6 +86,9 @@
               </div>
             </div>
 
+<<<<<<< HEAD
 
            
     
+=======
+>>>>>>> 026e629b4c03cdc749159f28f57c9daef94f9517
