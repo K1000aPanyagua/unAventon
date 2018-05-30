@@ -6,7 +6,16 @@
 
 
 
+<<<<<<< HEAD
 SI ERRORES IGUAL A 0 ESTO
+=======
+
+
+
+@if (count($errors)=0)
+   
+        
+>>>>>>> 37c6c5ff8254db274f94e9219d4b318090cdb913
         <div class="container text-center">
           <div class="row">
             <div class="col-lg-8 mx-auto">
@@ -25,10 +34,16 @@ SI ERRORES IGUAL A 0 ESTO
           
         </div>
 
+   
+@else
 
-SI ERRORES MAYOR A 0 EST0 MAS LA PORQUERIA DE LOS CARTELES DE ERROR
-
-
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li class="alert alert-danger">
+            {{$error}}
+        </li>
+      
+    </ul>
 
 <div class="container text-center">
           <div class="row">
@@ -92,7 +107,7 @@ SI ERRORES MAYOR A 0 EST0 MAS LA PORQUERIA DE LOS CARTELES DE ERROR
 
 
 
-
+@endif
 
 
           </body>

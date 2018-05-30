@@ -25,5 +25,9 @@ Route::resource('card', 'CardController');
 
 Route::resource('car', 'CarController');
 
+<<<<<<< HEAD
+Route::resource('auth', 'AuthController');
+=======
 
 
+>>>>>>> e73739c32784ca2d6189c1fa8836d205c7166033
