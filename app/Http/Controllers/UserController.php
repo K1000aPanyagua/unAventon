@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use Validator;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
@@ -34,20 +36,26 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+    
+
     public function store(Request $request)
     {
-
     
         //Validation
-        /*$request->validate([
+        $request->validate([
             'name' => 'required|string',
             'lastname' => 'required|string',
             'birthdate' => 'required|date',
-            'password' => 'required|string',
+            'password' => 'required|string|confirmed',
             'email' => 'required|email',
-            'gender' => 'string',
             'telephone' => 'string',
-        ]);*/
+        
+        ]);
+
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+        } 
 
         //Almacenamiento
         $user = new User;
@@ -62,15 +70,7 @@ class UserController extends Controller
 
         //Redireccion
 
-        
-
-
         return view('search');
-
-
-
-        return view('home');
-
     }
 
     /**
