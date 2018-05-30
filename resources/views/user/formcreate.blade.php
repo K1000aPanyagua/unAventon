@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-8 mx-auto">
         <h2 class="text-secondary text-uppercase mb-0">Agregar vehiculo</h2>
-        <form method="POST" action="{{ route('car.store') }}">
+        <form method="POST" action="{{ route('user.store') }}">
           <h5>Licencia de conducir: </h5>
           <input type="text" name="license" value="" size="50" />
           <br>

@@ -46,6 +46,7 @@ class CarController extends Controller
         $car->user_id = Auth::user()->id;
 
         $car->save();
+        return view('car.edit');
     }
 
     /**
