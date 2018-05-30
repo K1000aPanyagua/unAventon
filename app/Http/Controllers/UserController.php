@@ -105,13 +105,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user->name             = $request->name;
-        $user->lastname         = $request->lastname;
-        $user->birthdate        = $request->birthdate;
-        $user->pass             = $request->pass;
-        $user->email            = $request->email;
-        $user->gender           = $request->gender;
-        $user->telephone        = $request->telephone;
+        $user->name = $request->name;
+        $user->lastname = $request->lastname;
+        $user->birthdate = $request->birthdate;
+        $user->pass = $request->pass;
+        $user->email = $request->email;
+        $user->gender = $request->gender;
+        $user->telephone = $request->telephone;
         $user->save();
 
         //Redireccion
