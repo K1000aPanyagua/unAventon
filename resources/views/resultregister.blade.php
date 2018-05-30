@@ -6,17 +6,6 @@
 
 
 
-
-
-
-@if ($errors->has('password'))
-    <span class="invalid-feedback">
-        <strong>{{ $errors->first('password') }}</strong>
-    </span>
-@endif
-
-
-
 SI ERRORES IGUAL A 0 ESTO
         <div class="container text-center">
           <div class="row">
@@ -90,6 +79,13 @@ SI ERRORES MAYOR A 0 EST0 MAS LA PORQUERIA DE LOS CARTELES DE ERROR
                     </div>
                   </div>
 </div>
+
+@if ($errors->has('password'))
+    <span class="invalid-feedback">
+        <strong>{{ $errors->first('password') }}</strong>
+    </span>
+@endif
+
 
              
          

@@ -12,10 +12,11 @@ class CarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
-        $cars = Car::All();
-        return view('allcars')->with('cars', $cars);
+        $cars = Car::where('user_id', '$user_id');
+        return view('car/allcars')->with('cars', $cars);
+
     }
 
     /**
@@ -46,7 +47,7 @@ class CarController extends Controller
         $car->user_id = Auth::user()->id;
 
         $car->save();
-        return view('car.edit');
+        return view('car/edit');
     }
 
     /**
