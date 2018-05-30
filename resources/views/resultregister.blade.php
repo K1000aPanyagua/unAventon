@@ -1,11 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<body id="page-top" class="container-fluid">
 
 
-    <!--LOGIN MODAL -->
-    <div class="portfolio-modal mfp-hide" id="login">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
+
+
+
+
+
+
+@if ($errors->has('password'))
+    <span class="invalid-feedback">
+        <strong>{{ $errors->first('password') }}</strong>
+    </span>
+@endif
+
+
+
+SI ERRORES IGUAL A 0 ESTO
         <div class="container text-center">
           <div class="row">
             <div class="col-lg-8 mx-auto">
@@ -23,16 +35,13 @@
           </div>
           
         </div>
-      </div>
-    </div>
-   
-    <!--REGISTER MODAL-->
-    <div class="portfolio-modal mfp-hide" id="register">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
+
+
+SI ERRORES MAYOR A 0 EST0 MAS LA PORQUERIA DE LOS CARTELES DE ERROR
+
+
+
+<div class="container text-center">
           <div class="row">
             <div class="col-lg-8 mx-auto">
               <h2 class="text-secondary text-uppercase mb-0">Registrarse</h2>
@@ -80,11 +89,17 @@
               </form>
                     </div>
                   </div>
-                  
-                </div>
-              </div>
-            </div>
+</div>
+
+             
+         
 
 
-           
-    
+
+
+
+
+          </body>
+          </html>
+
+

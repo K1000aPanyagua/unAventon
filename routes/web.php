@@ -15,9 +15,15 @@ Route::get('/','PagesController@getIndex');
 
 Route::get('/search','PagesController@getSearch');
 
+Route::get('/configurationAccount','PagesController@getAccount');
+
+Route::get('/resultregister','PagesController@getResultRegister');
+
 Route::resource('user', 'UserController');
 
 Route::resource('card', 'CardController');
 
 Route::resource('car', 'CarController');
+
+
 
