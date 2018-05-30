@@ -26,7 +26,18 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6f51cdc1843b9d735563aab0fc6a1b832ad67794
+    
+>>>>>>> 5f4d9c3aef79b3efac66f84d6cbe5759fe1d7564
+>>>>>>> 9b89a1b728adb0a7669aeaee9c92e1642b5c81c9
+>>>>>>> 1052de727f2b09086311c4a07bb343fc195c51a3
         //Validation
         $request->validate([
             'name' => 'required|string',
@@ -52,12 +63,40 @@ class UserController extends Controller
 
         //Redireccion
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+        return view('search');
+}
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+        return view('search');
+}
+=======
+        
+>>>>>>> 1052de727f2b09086311c4a07bb343fc195c51a3
 
 
         return view('search');
     }
+<<<<<<< HEAD
 
    
+=======
+>>>>>>> 5f4d9c3aef79b3efac66f84d6cbe5759fe1d7564
+>>>>>>> 9b89a1b728adb0a7669aeaee9c92e1642b5c81c9
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+>>>>>>> 1052de727f2b09086311c4a07bb343fc195c51a3
     public function show($id)
     {
         $user=User::find($id);
@@ -67,14 +106,19 @@ class UserController extends Controller
   
     public function edit($id)
     {
+<<<<<<< HEAD
 
         //Carga vista de editar perfil
 
+=======
+        //
+>>>>>>> 1052de727f2b09086311c4a07bb343fc195c51a3
     }
 
     
     public function update(Request $request, $id)
     {
+<<<<<<< HEAD
 
         $user->name = $request->name;
         $user->lastname = $request->lastname;
@@ -88,11 +132,15 @@ class UserController extends Controller
         //Redireccion
         return view('home');
 
+=======
+        //
+>>>>>>> 1052de727f2b09086311c4a07bb343fc195c51a3
     }
 
    
     public function destroy($id)
     {
+<<<<<<< HEAD
         Item::find(1)->delete();
         return view('home')->with([
             'flash_message' => 'Usuario eliminado',
@@ -104,3 +152,8 @@ class UserController extends Controller
         
 
 
+=======
+        //
+    }
+}
+>>>>>>> 1052de727f2b09086311c4a07bb343fc195c51a3

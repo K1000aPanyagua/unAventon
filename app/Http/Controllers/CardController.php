@@ -43,7 +43,7 @@ class CardController extends Controller
         $card = new Card;
         $card->numCard          = $request->numCard;
         $card->expiration       = $request->expiration;
-        $card->user_id          = Auth::(User)->id;
+        $card->user_id          = Auth::User()->id;
         $card->save();
 
         //Redireccion
@@ -87,7 +87,7 @@ class CardController extends Controller
         //Almacenamiento
         $card->numCard          = $request->numCard;
         $card->expiration       = $request->expiration;
-        $card->user_id          = Auth::(User)->id;
+        $card->user_id          = Auth::User()->id;
         $card->save();
 
         //Redireccion
