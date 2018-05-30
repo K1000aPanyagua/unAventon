@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Car;
+use Auth;
+use App\User;
 
-class CarController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        return Car::All();
+        //
     }
 
     /**
@@ -24,7 +25,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('car/create');
+        //
     }
 
     /**
@@ -35,17 +36,34 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $car = new Car;
-        $car->license = $request->license;
-        $car->brand = $request->brand;
-        $car->model = $request->model;
-        $car->color = $request->color;
-        $car->numSeats = $request->numSeats;
-        $car->kind = $request->kind;
-        $car->user_id = Auth::user()->id;
 
-        $car->save();
-    }
+        //Validation
+        /*$request->validate([
+            'name' => 'required|string',
+            'lastname' => 'required|string',
+            'birthdate' => 'required|date',
+            'password' => 'required|string',
+            'email' => 'required|email',
+            'gender' => 'string',
+            'telephone' => 'string',
+        ]);*/
+
+        //Almacenamiento
+        $user = new User;
+        $user->name             = $request->name;
+        $user->lastname         = $request->lastname;
+        $user->birthdate        = $request->birthdate;
+        $user->pass             = $request->pass;
+        $user->email            = $request->email;
+        $user->gender           = $request->gender;
+        $user->telephone        = $request->telephone;
+        $user->save();
+
+        //Redireccion
+
+
+        return view('search');
+}
 
     /**
      * Display the specified resource.
@@ -55,8 +73,8 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        $car = Car::find($id);
-        return view('car.show', compact('car'));
+        $user=User::find($id);
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -67,8 +85,7 @@ class CarController extends Controller
      */
     public function edit($id)
     {
-        $car = Car::find($id);
-        return view('car.edit',compact('car'));
+        //
     }
 
     /**
@@ -80,14 +97,7 @@ class CarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $car->license = $request->license;
-        $car->brand = $request->brand;
-        $car->model = $request->model;
-        $car->color = $request->color;
-        $car->numSeats = $request->numSeats;
-        $car->kind = $request->kind;
-        
-        $car->save();
+        //
     }
 
     /**
@@ -98,12 +108,6 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        $car = Car::findOrFail($id);
-        $car->delete();
-
-        return view('home')->with([
-            'flash_message' => 'Vehiculo eliminado',
-            'flash_message_important' => false
-            ]);
+        //
     }
 }
