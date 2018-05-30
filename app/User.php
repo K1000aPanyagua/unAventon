@@ -15,6 +15,8 @@ class User extends Authenticatable
     
     protected $hidden = [
         'pass', 'remember_token',];
+
+    protected $dates = ['deleted_at'];
     
     protected $table = 'users';
 
@@ -39,7 +41,7 @@ class User extends Authenticatable
     }
 
      public function card(){
-    	return $this->hasOne(Card::class);
+    	return $this->hasMany(Card::class);
     }
 
     public function Account(){

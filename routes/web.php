@@ -15,9 +15,8 @@ Route::get('/','PagesController@getIndex');
 
 Route::get('/search','PagesController@getSearch');
 
-Route::get('/userAccount','PagesController@getUpdate');
-
 Route::resource('user', 'UserController');
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('card', 'CardController');
+
+Route::resource('car', 'CarController');

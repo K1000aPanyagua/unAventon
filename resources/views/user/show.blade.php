@@ -2,3 +2,4 @@
 {{ $user->name }}
 {{ $user->lastname }}
 {{ $user->birthdate }}
+{{ $user->photo }}
