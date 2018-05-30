@@ -23,7 +23,7 @@
           <br>
           <br>
           <h5>Tipo: </h5>
-            <select>
+            <select name="kind">
               <option value="camioneta">Camioneta</option>
               <option value="auto">Auto</option>
               <option value="camion">Camión</option>
