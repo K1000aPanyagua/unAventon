@@ -16,11 +16,18 @@ class CarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+<<<<<<< HEAD
     {
         $cars = Car::All();
+=======
+    {   
+       
+        $cars = Car::where('user_id', Auth::user()->id)->get();
+>>>>>>> 586aaa6dea18162f9f3b3e38183e404cf8b70aa5
         return view('car/allcars')->with('cars', $cars);
 
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,21 +55,21 @@ class CarController extends Controller
         $car->numSeats = $request->numSeats;
         $car->kind = $request->kind;
 <<<<<<< HEAD
+<<<<<<< HEAD
         $car->user_id = '1';
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 586aaa6dea18162f9f3b3e38183e404cf8b70aa5
         $car->user_id = Auth::user()->id;
-=======
-<<<<<<< HEAD
-        //$car->user_id = Auth::user->id;
-=======
-        $car->user_id = Auth::User()->id;
->>>>>>> e73739c32784ca2d6189c1fa8836d205c7166033
->>>>>>> cc18c37abbc7378a6ed6142f48ef393fd0739ccf
 
+<<<<<<< HEAD
 >>>>>>> 3500a9d6b9fd85a0b4815a619fd4dd60dcb2dbf0
+=======
+        //$car->user_id = Auth::user->id;
+>>>>>>> 586aaa6dea18162f9f3b3e38183e404cf8b70aa5
         $car->save();
-        return view('car/edit');
+        return view('car/shownewcar') -> with ('car' , $car);
     }
 
     /**
@@ -86,7 +93,7 @@ class CarController extends Controller
     public function edit($id)
     {
         $car = Car::find($id);
-        return view('car.edit',compact('car'));
+        return view('car/edit', compact('car'));
     }
 
     /**
