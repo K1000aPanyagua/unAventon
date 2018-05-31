@@ -6,9 +6,9 @@
 <body id="page-top" class="container-fluid">
 <!--Body -->
 @include('menu')
-
+@include('choicesforchanges')
 <!--fin header-->
-@include('modal')
+@include('copyrigtharrow')
 @include('javascript')
 </body>
 </html>
