@@ -51,7 +51,7 @@ class RegisterController extends Controller
             'name' => 'required|string',
             'lastname' => 'required|string',
             'birthdate' => 'required|date',
-            'pass' => 'min:6|required_with:password-confirm',
+            'pass' => 'min:6|required_with:password-confirm122222222222222222222222222220hnnnnnnnnnbv 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc,
             'password-confirm' => 'min:6',
             'email' => 'required|email|unique:users',
             'telephone' => 'string',
