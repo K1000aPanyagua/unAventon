@@ -8,7 +8,7 @@
         </a>
       </div>
       <div class="col-sm-4 separator-l">  
-        <a class="btn btn-outline-light text-center color-aventon" href="{{ action('CarController@index') }}"> 
+        <a class="btn btn-outline-light text-center color-aventon" href="{{ action('CarController@index')}}"> 
           Editar vehículos
         </a>
       </div>

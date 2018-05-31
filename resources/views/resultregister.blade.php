@@ -6,9 +6,8 @@
 
 
 
-<<<<<<< HEAD
 SI ERRORES IGUAL A 0 ESTO
-=======
+
 
 
 

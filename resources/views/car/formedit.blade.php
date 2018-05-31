@@ -6,7 +6,7 @@
         <h1 class=" text-white text-uppercase mb-0">Agregar <div style="height: 0.17em;"></div> vehículo</h1>
         <br>
         <br>
-        <form method="POST" action="{{ route('car.update') }}">
+        <form method="POST" action="{{ route('car.store') }}">
           <h5>Licencia de conducir: </h5>
           <input type="text" name="license" value="{{old('license')}} size="50" />
           <br>

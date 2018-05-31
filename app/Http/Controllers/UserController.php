@@ -79,12 +79,8 @@ class UserController extends Controller
 
 
         //Carga vista de editar perfil
-<<<<<<< HEAD
         $user=User::find($id);
         return view('user.edit', compact('user'));
-=======
-
->>>>>>> e73739c32784ca2d6189c1fa8836d205c7166033
     }
 
     
