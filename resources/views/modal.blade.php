@@ -39,7 +39,7 @@
               <h2 class="text-secondary text-uppercase mb-0">Registrarse</h2>
               <hr class="star-dark mb-5">
 
-              <form method="POST" action="{{ route('user.store') }}">
+              <form method="POST" action="{{ action('Auth\RegisterController@register') }}">
               {{ csrf_field() }}
                 <h5>Nombre: </h5>
                 <input type="text" name="name" value="" size="50" />
@@ -77,7 +77,7 @@
                 <input type="string" name="telephone" value="" size="50" />
                 <br>
                 <br>
-                <button type="submit" class="btn btn-primary btn-lg rounded-pill" href="/resultregiter">Registrarse</button>
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill" href="/resultregister">Registrarse</button>
               </form>
                     </div>
                   </div>

@@ -25,5 +25,12 @@ Route::resource('card', 'CardController');
 
 Route::resource('car', 'CarController');
 
+Route::get('/register', 'Auth\RegisterController@getRegister');
+Route::post('/register', 'Auth\RegisterController@register');
+
+Route::get('/login', 'Auth\LoginController@getLogin');
+Route::post('/login', 'Auth\LoginController@postLogin');
+
+Route::get('/logout', 'Auth\LoginController@logOut');
 
 
