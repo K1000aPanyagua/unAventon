@@ -23,7 +23,7 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+   /* public function store(Request $request)
     {
 
 
@@ -52,11 +52,9 @@ class UserController extends Controller
 
         //Redireccion
 
-
-
         return view('search');
     }
-
+    */
 
 
 
@@ -69,8 +67,11 @@ class UserController extends Controller
 
     public function show($id)
     {
+        if (!Auth::check()) {
+            return view('home');
+        }
         $user=User::find($id);
-        return view('user.show', compact('user'));
+            return view('user.show', compact('user'));
     }
 
   
@@ -79,8 +80,15 @@ class UserController extends Controller
 
 
         //Carga vista de editar perfil
+<<<<<<< HEAD
         $user=User::find($id);
         return view('user.edit', compact('user'));
+=======
+
+        $user=User::find($id);
+        return view('user.edit', compact('user'));
+
+>>>>>>> 3500a9d6b9fd85a0b4815a619fd4dd60dcb2dbf0
     }
 
     
@@ -106,7 +114,6 @@ class UserController extends Controller
    
     public function destroy($id)
     {
-
         Item::find(1)->delete();
         return view('home')->with([
             'flash_message' => 'Usuario eliminado',

@@ -47,7 +47,20 @@ class CarController extends Controller
         $car->color = $request->color;
         $car->numSeats = $request->numSeats;
         $car->kind = $request->kind;
+<<<<<<< HEAD
         $car->user_id = '1';
+=======
+<<<<<<< HEAD
+        $car->user_id = Auth::user()->id;
+=======
+<<<<<<< HEAD
+        //$car->user_id = Auth::user->id;
+=======
+        $car->user_id = Auth::User()->id;
+>>>>>>> e73739c32784ca2d6189c1fa8836d205c7166033
+>>>>>>> cc18c37abbc7378a6ed6142f48ef393fd0739ccf
+
+>>>>>>> 3500a9d6b9fd85a0b4815a619fd4dd60dcb2dbf0
         $car->save();
         return view('car/edit');
     }

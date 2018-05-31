@@ -20,6 +20,10 @@ class User extends Authenticatable
     
     protected $table = 'users';
 
+    public function getAuthPassword() {
+        return $this->pass;
+    }
+
     public function cars(){
         return $this->hasMany(Car::class);
     }

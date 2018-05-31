@@ -103,7 +103,7 @@ class EloquentUserProvider implements UserProvider
     {
         if (empty($credentials) ||
            (count($credentials) === 1 &&
-            array_key_exists('password', $credentials))) {
+            array_key_exists('pass', $credentials))) {
             return;
         }
 
@@ -113,7 +113,7 @@ class EloquentUserProvider implements UserProvider
         $query = $this->createModel()->newQuery();
 
         foreach ($credentials as $key => $value) {
-            if (! Str::contains($key, 'password')) {
+            if (! Str::contains($key, 'pass')) {
                 $query->where($key, $value);
             }
         }
@@ -130,7 +130,7 @@ class EloquentUserProvider implements UserProvider
      */
     public function validateCredentials(UserContract $user, array $credentials)
     {
-        $plain = $credentials['password'];
+        $plain = $credentials['pass'];
 
         return $this->hasher->check($plain, $user->getAuthPassword());
     }

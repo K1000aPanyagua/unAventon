@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Http\Request;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use Auth;
 class RegisterController extends Controller
 {
     /*
@@ -27,39 +27,34 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+   /* public function __construct()
     {
         $this->middleware('guest');
     }
-
+    */
     /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-        protected function validator(array $data){
+    protected function validator(array $data){
         
-        Validator::extend('olderThan', function($attribute, $value, $parameters)
-        {
-            $minAge = ( ! empty($parameters)) ? (int) $parameters[0] : 13;
-            return (new DateTime)->diff(new DateTime($value))->y >= $minAge;
-            });
-        }
-        
-        return 
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'pass' => 'required|string|min:6|confirmed',
-            'birthdate' => 'required|date|olderThan:18',
+        return Validator::make($data, [
+            'name' => 'required|string',
+            'lastname' => 'required|string',
+            'birthdate' => 'required|date',
+            'pass' => 'min:6|required_with:password-confirm',
+            'password-confirm' => 'min:6',
+            'email' => 'required|email|unique:users',
+            'telephone' => 'string',
         ]);
     }
 
@@ -74,7 +69,37 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'pass' => bcrypt($data['pass']),
+            'lastname' => $data['lastname'],
+            'birthdate' => $data['birthdate'],
+            'gender' => $data['gender'],
+            'telephone' => $data['telephone']
         ]);
     }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+   
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $this->guard()->login($this->create($request->all()));
+
+        return redirect('/')->with('success', 'Usuario creado!');
+    }
+
+    public function getRegister(){
+        return view('auth/register');
+    }
+
+    /*protected function guard()
+    {
+        return Auth::guard('guard-name');
+    }*/
+
 }

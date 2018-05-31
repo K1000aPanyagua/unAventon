@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
+use Session;
 
 class LoginController extends Controller
 {
@@ -25,15 +28,55 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+   /* public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
+    */
+    protected function validator(array $data){
+        
+        return Validator::make($data, [
+            'pass' => 'required|string',
+            'email' => 'required|email', 
+        ]);
+    }
+
+
+    public function postLogin(Request $request)
+    {   
+        $credentials = $this->validator($request->all())->validate();
+
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return redirect()->intended('/')->with('success', 'Bienvenido');
+        }else{
+            return redirect()->back()->with('error', 'Email o contraseña erronea');
+
+        }
+    }
+
+    
+    public function getLogin(){
+        return view('auth/login');
+    }
+
+    /*protected function guard()
+    {
+       return Auth::guard('guard-name');
+    }
+    */
+
+    public function logOut(){
+        Auth::logout();
+        Session::flush();
+        return redirect()->intended('/');
+    }
+
 }
