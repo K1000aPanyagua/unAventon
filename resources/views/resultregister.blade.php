@@ -12,12 +12,7 @@ SI ERRORES IGUAL A 0 ESTO
 
 
 @if (count($errors)=0)
-   
-<<<<<<< HEAD
-=======
-        
->>>>>>> 37c6c5ff8254db274f94e9219d4b318090cdb913
->>>>>>> cc18c37abbc7378a6ed6142f48ef393fd0739ccf
+
         <div class="container text-center">
           <div class="row">
             <div class="col-lg-8 mx-auto">
@@ -43,9 +38,7 @@ SI ERRORES IGUAL A 0 ESTO
             {{$error}}
         </li>   
     </ul>
-<<<<<<< HEAD
     <button type="button" value="Go back!" onclick="history.back()">Atras</button>
-=======
 
 <div class="container text-center">
           <div class="row">
