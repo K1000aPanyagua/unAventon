@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -23,41 +23,6 @@ class UserController extends Controller
     }
 
 
-   /* public function store(Request $request)
-    {
-
-
-        //Validation
-        $request->validate([
-            'name' => 'required|string',
-            'lastname' => 'required|string',
-            'birthdate' => 'required|date',
-            'password' => 'required|string|confirmed',
-            'email' => 'required|email|unique:users',
-            'telephone' => 'string',
-        
-        ]);
-
-
-        //Almacenamiento
-        $user = new User;
-        $user->name             = $request->name;
-        $user->lastname         = $request->lastname;
-        $user->birthdate        = $request->birthdate;
-        $user->pass             = $request->pass;
-        $user->email            = $request->email;
-        $user->gender           = $request->gender;
-        $user->telephone        = $request->telephone;
-        $user->save();
-
-        //Redireccion
-
-        return view('search');
-    }
-    */
-
-
-
     /**
      * Display the specified resource.
      *
@@ -65,13 +30,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($id)
-    {
-        if (!Auth::check()) {
-            return view('home');
-        }
-        $user=User::find($id);
-            return view('user.show', compact('user'));
+    public function show($id){
+        
+        $user = User::find($id);
+        return view('user.show', compact('user'));
     }
 
   
@@ -90,6 +52,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
+        $this->validator($request->all())->validate();
+
+        $user = User::find($id);
 
         $user->name = $request->name;
         $user->lastname = $request->lastname;
@@ -101,7 +66,7 @@ class UserController extends Controller
         $user->save();
 
         //Redireccion
-        return view('home');
+        return view('user.edit', compact('user'))->with('success', 'Usuario eliminado');
 
 
     }
@@ -109,11 +74,8 @@ class UserController extends Controller
    
     public function destroy($id)
     {
-        Item::find(1)->delete();
-        return view('home')->with([
-            'flash_message' => 'Usuario eliminado',
-            'flash_message_important' => false
-            ]);
+        Item::find($id)->delete();
+        return view('home')->with('success', 'Usuario eliminado');
     }
 }
 

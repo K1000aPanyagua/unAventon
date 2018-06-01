@@ -1,3 +1,4 @@
+@include('flash_message')
 {{ $user->email }}
 {{ $user->name }}
 {{ $user->lastname }}

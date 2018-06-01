@@ -7,6 +7,7 @@
 <!--Body -->
 @include('menu')
 @include('header') 
+@include('flash_message')
 @include('buttonsearch')
 
 <!--fin header-->

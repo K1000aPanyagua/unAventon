@@ -5,9 +5,10 @@
         <h1 class=" text-white text-uppercase mb-0">Editar <div style="height: 0.17em;"></div> vehículo</h1>
         <br>
         <br>
-        <form method="POST" action="{{ route('car.update', '$car->id') }}">
-         {{ csrf_field() }}
-         <h5>Licencia de conducir: </h5>
+        <form method="POST" action="{{route('car.update', ['id'=> $car->id])}}">
+         {{ csrf_field() }} 
+         {{ method_field('PUT') }}
+         <h5>Patente: </h5>
           <input type="text" name="license" value="{{ $car->license  }}" size="50" />
           <br>
           <br>
@@ -31,7 +32,7 @@
             </select>
           <br>
           <br>
-          <h5>Lugares: </h5>
+          <h5>Lugares disponibles: </h5>
           <input type="text" name="places" value="{{$car->places}}" size="50" />
           <br>
           <br>
@@ -44,7 +45,11 @@
           <br>
           <br>
           <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Confirmar </button>
+          <a class="btn btn-primary btn-lg rounded-pill" href="{{route('car.destroy', ['id'=> $car->id])}}">
+          Eliminar vehiculo
+          </a>          
         </form>
+
       </div>
     </div>
   </div>

@@ -23,6 +23,7 @@ Route::resource('user', 'UserController');
 
 Route::resource('card', 'CardController');
 
+Route::get('/list', 'CarController@list');
 Route::resource('car', 'CarController');
 
 

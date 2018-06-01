@@ -1,6 +1,6 @@
 <div class="copyright py-4 text-center text-white row">
   <div class="container">
-    <small>Copyright &copy; Un Aventón 2018</small>
+    <small>Copyleft &copy; Un Aventón 2018</small>
   </div>
 </div>
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
