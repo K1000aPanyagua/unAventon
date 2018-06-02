@@ -7,6 +7,7 @@ use App\Card;
 use App\User;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Validator;
+
 class CardController extends Controller
 {
     /**

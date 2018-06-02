@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> e73739c32784ca2d6189c1fa8836d205c7166033
     <!--LOGIN MODAL -->
     
     <div class="portfolio-modal mfp-hide" id="login">
@@ -17,22 +12,21 @@
               <h2 class="text-secondary text-uppercase mb-0">Iniciar Sesión</h2>
               <hr class="star-dark mb-5">
               <form method="POST" action="{{ route('auth.store') }}">
-                { csrf_field() }}
+                {{ csrf_field() }}
                 <h5>Email: </h5>
                 <input type="email" name="email" value="" size="50" />
                 <br>
                 <br>
-<<<<<<< HEAD
                 <h5>Contraseña: </h5>
                 <input type="password" name="pass" value="" size="50"/>
                 <br>
                 <br>
                 <button type="submit" class="btn btn-primary btn-lg rounded-pill">Iniciar Sesión</button>
               </form>
-=======
-                <button type="submit" class="btn btn-primary btn-lg rounded-pill ">Iniciar sesión</button>
-              
->>>>>>> e73739c32784ca2d6189c1fa8836d205c7166033
+
+                
+        
+
             </div>
           </div>       
         </div>

@@ -1,11 +1,8 @@
-
-
-@include('flash_message')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Registrate') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ action('Auth\RegisterController@register') }}">
@@ -30,7 +27,7 @@
                             <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}</label>
 
                             <div class="col-md-6">
-                                <input id="lastname" type="string" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" required>
+                                <input id="lastname" type="string" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ old('lastname') }}" required autofocus>
 
                                 @if ($errors->has('lastname'))
                                     <span class="invalid-feedback">

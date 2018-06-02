@@ -19,7 +19,9 @@ class CarController extends Controller
     public function index()
     {   
         $cars = Car::where('user_id', Auth::user()->id)->get();
+
         return view('car.allcars')->with('cars', $cars);
+
     }
 
 
@@ -33,12 +35,7 @@ class CarController extends Controller
         return view('car.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $this->validator($request->all())->validate();
@@ -50,7 +47,9 @@ class CarController extends Controller
         $car->color = $request->color;
         $car->numSeats = $request->numSeats;
         $car->kind = $request->kind;
+
         $car->user_id = Auth::user()->id;
+
 
         //$car->user_id = Auth::user->id;
         $car->save();
@@ -69,25 +68,13 @@ class CarController extends Controller
         return view('car.show')->with('car', $car);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $car = Car::find($id);
         return view('car/edit')->with('car', $car);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $this->validator($request->all())->validate();
@@ -107,16 +94,9 @@ class CarController extends Controller
     }
     
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id){
         $car = Car::find($id);
         $car->delete();         //hay que verificar que no haya viajes pendientes
-
         return view('car.show')->with('cars', $cars)->with('success', 'Vehiculo eliminado'); //redirecciona a cualquier lugar
     }
 

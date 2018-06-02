@@ -5,11 +5,14 @@
         <h1 class=" text-white text-uppercase mb-0">Editar <div style="height: 0.17em;"></div> vehículo</h1>
         <br>
         <br>
+
         <form method="POST" action="{{route('car.update', ['id'=> $car->id])}}">
          {{ csrf_field() }} 
          {{ method_field('PUT') }}
-         <h5>Patente: </h5>
+         <h5>Patente: </h5> 
+
           <input type="text" name="license" value="{{ $car->license  }}" size="50" />
+
           <br>
           <br>
           <h5>Marca: </h5>
