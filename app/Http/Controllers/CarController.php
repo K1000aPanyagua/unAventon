@@ -4,40 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Car;
-//use Auth;
 use App\User;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Validator;
 
 class CarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */ 
-    public function index()
-    {   
+
+    public function index(){   
         $cars = Car::where('user_id', Auth::user()->id)->get();
-
         return view('car.allcars')->with('cars', $cars);
-
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    public function create(){
         return view('car.create');
     }
 
-
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $this->validator($request->all())->validate();
 
         $car = new Car;
@@ -49,34 +32,22 @@ class CarController extends Controller
         $car->kind = $request->kind;
 
         $car->user_id = Auth::user()->id;
-
-
-        //$car->user_id = Auth::user->id;
         $car->save();
         return view('car.show') -> with ('car', $car);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+    public function show($id){
         $car = Car::find($id);
         return view('car.show')->with('car', $car);
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $car = Car::find($id);
         return view('car/edit')->with('car', $car);
     }
 
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $this->validator($request->all())->validate();
 
         $car = Car::find($id);

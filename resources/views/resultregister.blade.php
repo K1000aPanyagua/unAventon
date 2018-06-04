@@ -4,13 +4,6 @@
 
 
 
-
-
-SI ERRORES IGUAL A 0 ESTO
-
-
-
-
 @if (count($errors)=0)
 
         <div class="container text-center">

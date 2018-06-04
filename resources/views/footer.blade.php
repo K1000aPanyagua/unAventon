@@ -26,7 +26,7 @@
           </div>
           <div class="col-md-4">
             <h4 class="text-uppercase mb-4">Acerca de nosotros</h4>
-            <p class="lead mb-0">Un Aventón está destinado a la búsqueda de viajes para reducir tráfico y abaratar costos. ¿Todavía no te uniste? <a class="rounded js-scroll-trigger portfolio-item" href="#register">Registrate</a> y empezá a ahorrar!</p>
+            <p class="lead mb-0">Un Aventón está destinado a la búsqueda de viajes para reducir tráfico y abaratar costos. ¿Todavía no te uniste? <a class="rounded js-scroll-trigger portfolio-item" href="">/register</a> y empezá a ahorrar!</p>
           </div>
           <div class="col-md-4 mb-5 mb-lg-0">
             <h4 class="text-uppercase mb-4">¿Necesitás ayuda?</h4>
