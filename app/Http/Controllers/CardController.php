@@ -63,7 +63,7 @@ class CardController extends Controller
     public function show($id)
     {
         $card = Card::find($id);
-        return view('card.show')->compact('$cards')
+        return view('card.show')->compact('$cards');
     }
 
     /**
@@ -107,8 +107,10 @@ class CardController extends Controller
      */
     public function destroy($id)
     {
-        $card = Card::find($id);
-        $card->delete();
+        //Se elimina la tarjeta con id $id
+        Card::destroy($id);
+        
+        //Se redirecciona a la vista de tarjetas
         return view('card.allcards');
     }
 

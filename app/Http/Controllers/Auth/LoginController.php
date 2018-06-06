@@ -55,6 +55,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
+            
             return redirect()->intended('/')->with('success', 'Bienvenido');
         }else{
             return redirect()->back()->with('error', 'Email o contraseña erronea');
