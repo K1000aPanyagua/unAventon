@@ -48,7 +48,7 @@
           <br>
           <br>
           <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Confirmar </button>
-          <a class="btn btn-primary btn-lg rounded-pill" href="{{route('car.destroy', ['id'=> $car->id])}}">
+          <a class="btn btn-primary btn-lg rounded-pill" href="{{action('CarController@destroy', ['id'=> $car->id])}}">
           Eliminar vehiculo
           </a>          
         </form>

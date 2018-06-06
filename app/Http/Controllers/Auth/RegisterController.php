@@ -54,7 +54,6 @@ class RegisterController extends Controller
             'pass' => 'min:6|required_with:password-confirm',
             'password-confirm' => 'min:6',
             'email' => 'required|email|unique:users',
-            'telephone' => 'string',
         ]);
     }
 
