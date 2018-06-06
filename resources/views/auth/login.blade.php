@@ -48,7 +48,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-12 separator-top-s">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Inicia sesión') }}
+                                    {{ __('Iniciar sesión') }}
                                 </button>                   
                               </a>
                             </div>

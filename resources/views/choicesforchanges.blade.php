@@ -36,8 +36,15 @@
             <a class="text-center text-white" href=""> 
               Cambiar contraseña
             </a>
-    
-  ?>
+  
+
+
+        <form action="{{ route('user.destroy', Auth::User()->id) }}" method="POST">
+           {{method_field('DELETE')}}
+           {{ csrf_field() }}
+           <input type="submit" class="btn btn-danger" value="Delete"/>
+        </form>
+  
 
   </div>
 </header>

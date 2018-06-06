@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
 use App\User;
 
@@ -70,8 +71,11 @@ class UserController extends Controller
 
    
     public function destroy($id)
-    {
-        Item::find($id)->delete();
+    {   
+        
+        
+        User::destroy($id);
+
         return view('home')->with('success', 'Usuario eliminado');
     }
 }
