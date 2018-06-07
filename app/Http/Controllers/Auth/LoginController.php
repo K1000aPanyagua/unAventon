@@ -35,11 +35,11 @@ class LoginController extends Controller
      *
      * @return void
      */
-   /* public function __construct()
+    public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logOut');
     }
-    */
+    
     protected function validator(array $data){
         
         return Validator::make($data, [
@@ -49,8 +49,7 @@ class LoginController extends Controller
     }
 
 
-    public function postLogin(Request $request)
-    {   
+    public function postLogin(Request $request){   
         $credentials = $this->validator($request->all())->validate();
 
         if (Auth::attempt($credentials)) {
