@@ -6,14 +6,14 @@
 <body id="page-top" class="container-fluid">
 <!--Body -->
 @include('menu')
-@include('flash_message')
 
 <header class="masthead bg-primary text-white text-center row">
       <h1 class="text-uppercase separator-m col-sm-12">Iniciar sesion</h1>
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-md-8">
-          
+                    @include('flash_message')
+                    <br>
                     <form method="POST" action="{{ action('Auth\LoginController@postLogin') }}">
                         @csrf
 
@@ -55,9 +55,8 @@
                               </a>
                             </div>
                         </div>
-
-
                     </form>
+
               </div>
     </div>
 </div>

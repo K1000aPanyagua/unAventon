@@ -27,8 +27,6 @@ Route::get('/list', 'CarController@list');
 
 Route::resource('car', 'CarController');
 
-Route::resource('auth', 'AuthController');
-
 Route::get('/register', 'Auth\RegisterController@getRegister');
 
 Route::post('/register', 'Auth\RegisterController@register');
@@ -40,3 +38,5 @@ Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logOut');
 
 Route::resource('auth', 'AuthController');
+
+Route::resource('ride', 'RideController');
