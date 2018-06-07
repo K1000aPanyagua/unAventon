@@ -40,7 +40,4 @@ Route::get('/logout', 'Auth\LoginController@logOut');
 Route::resource('auth', 'AuthController');
 
 Route::resource('ride', 'RideController');
-<<<<<<< HEAD
-=======
 
->>>>>>> 01ff29ea8b49a40c2e8bb490983d172df22d5352
