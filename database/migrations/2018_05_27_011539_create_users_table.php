@@ -37,6 +37,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::dropIfExists('users');
+        
     }
 }

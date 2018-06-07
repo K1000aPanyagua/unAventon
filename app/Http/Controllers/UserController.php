@@ -75,12 +75,8 @@ class UserController extends Controller
     }
 
    
-    public function destroy($id)
-    {   
-        
-        
+    public function destroy($id){   
         User::destroy($id);
-
         return view('home')->with('success', 'Usuario eliminado');
     }
 }
