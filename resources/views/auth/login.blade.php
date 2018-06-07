@@ -5,6 +5,10 @@
 
 <body id="page-top" class="container-fluid">
 <!--Body -->
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01ff29ea8b49a40c2e8bb490983d172df22d5352
 @include('menuiniciar')
 
 <header class="masthead bg-primary text-white text-center row">
