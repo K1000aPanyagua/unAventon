@@ -41,10 +41,19 @@
             </div>
     </div>
 
-        <form action="{{ route('user.destroy', Auth::User()->id) }}" method="POST">
-           {{method_field('DELETE')}}
-           {{ csrf_field() }}
-           <input type="submit" class="btn btn-danger" value="Delete"/>
+        <form action="{{ route('user.destroy', Auth::User()->id) }}" method="POST" onsubmit="return ConfirmDelete()">
+          {{method_field('DELETE')}}
+          {{ csrf_field() }}
+          <input type="submit" class="btn btn-danger" value="Delete"/>
+          <script>
+            function ConfirmDelete(){
+              var x = confirm("¿Está seguro que quiere desactivar la cuenta?");
+              if (x)
+                return true;
+              else
+                return false;
+              }
+          </script>
         </form>
   
 
