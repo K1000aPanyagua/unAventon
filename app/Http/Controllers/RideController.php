@@ -35,9 +35,35 @@ class RideController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(){
-            
-        }
+        
+        $request->validate([
+            'origin' => 'required|varchar',
+            'destination' => 'required|varchar',
+            'duration' => 'required|time',
+            'amount' => 'required|decimal',
+            'remarks' => 'varchar',
+            'departDate' => 'date',
+            'departHour' => 'time',
+            ]);
+
+
+        $ride = new Ride;
+        $ride->user_id =        Auth::User()->id;
+        //$ride->car_id =         $request->car_id;
+        $ride->origin =         $request->origin;
+        $ride->destination =    $request->destination;
+        $ride->duration =       $request->duration;
+        //$ride->account_id =     $request->account_id;
+        //$ride->card_id =        $request->card_id;
+        $ride->amount =         $request->amount;
+        $ride->remarks =        $request->remarks;
+        $ride->departDate =     $request->departDate;
+        $ride->departHour =     $request->departHour;
+        $ride->save();
+        
+
+        return view('ride.show');
+        
     }
 
     /**

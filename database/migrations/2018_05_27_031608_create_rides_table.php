@@ -21,7 +21,7 @@ class CreateRidesTable extends Migration
             $table->foreign('car_id')->references('id')->on('cars');
             $table->string('origin');
             $table->string('destination');
-            $table->string('duration');
+            $table->time('duration');
             $table->integer('account_id')->unsigned()->nullable();
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->integer('card_id')->unsigned()->nullable();
