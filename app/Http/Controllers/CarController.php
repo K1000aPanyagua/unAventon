@@ -66,9 +66,12 @@ class CarController extends Controller
     
 
     public function destroy($id){
-        $car = Car::find($id);
-        $car->delete();         //hay que verificar que no haya viajes pendientes
-        return view('car.show')->with('cars', $cars)->with('success', 'Vehiculo eliminado'); //redirecciona a cualquier lugar
+        //Se elimina el auto con id $id
+        //Hay que verificar que no haya viajes pendientes
+        Car::destroy($id);
+
+        //redirecciona a cualquier lugar
+        return view('car.show')->with('cars', $cars)->with('success', 'Vehiculo eliminado'); 
     }
 
 

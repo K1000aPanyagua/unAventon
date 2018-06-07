@@ -20,13 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->date('birthdate');
             $table->string('pass');
-            $table->string('gender');
-            $table->string('photo')->default('/resources/assets/userPhoto.jpg');
-            $table->string('telephone');
+            $table->string('gender')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('telephone')->nullable();
             $table->boolean('active')->default(True);  
             $table->timestamps();
             $table->rememberToken();
-            $table->softDeletes();
+            $table->time('deleted_at')->nullable();
         });
     }
 
@@ -37,6 +37,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::dropIfExists('users');
+        
     }
 }

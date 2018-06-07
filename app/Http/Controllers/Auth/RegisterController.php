@@ -34,11 +34,11 @@ class RegisterController extends Controller
      *
      * @return void
      */
-   /* public function __construct()
+    public function __construct()
     {
         $this->middleware('guest');
     }
-    */
+    
     /**
      * Get a validator for an incoming registration request.
      *
@@ -54,7 +54,6 @@ class RegisterController extends Controller
             'pass' => 'min:6|required_with:password-confirm',
             'password-confirm' => 'min:6',
             'email' => 'required|email|unique:users',
-            'telephone' => 'string',
         ]);
     }
 
