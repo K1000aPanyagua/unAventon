@@ -12,11 +12,11 @@ use App\User;
 class UserController extends Controller
 {
   
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware('guest');
     }
-
+    */
     public function index()
     {
         //
@@ -37,7 +37,6 @@ class UserController extends Controller
      */
 
     public function show($id){
-        
         $user = User::find($id);
         return view('user.show', compact('user'));
     }
@@ -70,14 +69,11 @@ class UserController extends Controller
 
         //Redireccion
         return view('user.edit', compact('user'))->with('success', 'Usuario eliminado');
-
-
     }
 
-   
     public function destroy($id){   
         User::destroy($id);
-        return view('home')->with('success', 'Usuario eliminado');
+        return redirect('/')->with('success', 'Usuario eliminado');
     }
 }
 

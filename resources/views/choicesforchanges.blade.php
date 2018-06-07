@@ -38,12 +38,8 @@
             <a class="listitem text-white" href=""> 
               <h2> ► Cambiar contraseña</h2>
             </a>
-<<<<<<< HEAD
             </div>
     </div>
-=======
-  
-
 
         <form action="{{ route('user.destroy', Auth::User()->id) }}" method="POST">
            {{method_field('DELETE')}}
@@ -51,7 +47,6 @@
            <input type="submit" class="btn btn-danger" value="Delete"/>
         </form>
   
->>>>>>> f0faf59a02cf64968b4681d682da0e2854136d85
 
     </div>
   </div>

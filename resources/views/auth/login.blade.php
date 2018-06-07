@@ -5,12 +5,8 @@
 
 <body id="page-top" class="container-fluid">
 <!--Body -->
-<<<<<<< HEAD
+
 @include('menuiniciar')
-@include('flash_message')
-=======
-@include('menu')
->>>>>>> f0faf59a02cf64968b4681d682da0e2854136d85
 
 <header class="masthead bg-primary text-white text-center row">
       <h1 class="text-uppercase separator-m col-sm-12">Iniciar sesion</h1>
