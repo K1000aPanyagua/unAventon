@@ -11,7 +11,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav left">
       <li class="nav-item mx-0 mx-lg-1">
-        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/register">Registrarse</a>
+        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">Iniciar sesión</a>
       </li>
 </ul>
     </div>

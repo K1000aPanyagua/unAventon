@@ -5,7 +5,10 @@
 
 <body id="page-top" class="container-fluid">
 <!--Body -->
+<<<<<<< HEAD
+=======
 
+>>>>>>> 01ff29ea8b49a40c2e8bb490983d172df22d5352
 @include('menuiniciar')
 
 <header class="masthead bg-primary text-white text-center row">
@@ -13,8 +16,7 @@
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-md-8">
-                    @include('flash_message')
-                    <br>
+          @include('flash_message')
                     <form method="POST" action="{{ action('Auth\LoginController@postLogin') }}">
                         @csrf
 
@@ -22,8 +24,7 @@
                             <label for="email" class="col-sm-4 col-form-label text-md-left">{{ __('Email:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} form-control-lg" name="email" value="{{ old('email') }} " required autofocus placeholder="e-mail" oninvalid="this.setCustomValidity('Campo obligatorio')"
-                                    oninput="setCustomValidity('')">
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} form-control-lg" name="email" value="{{ old('email') }} " required autofocus placeholder="e-mail">
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
@@ -37,27 +38,28 @@
                             <label for="pass" class="col-md-4 col-form-label text-md-left">{{ __('Contraseña:') }}</label>
 
                             <div class="col-md-6">
-                                <input class="form-control{{ $errors->has('pass') ? ' is-invalid' : '' }} form-control-lg" type="password" placeholder="contraseña" name="pass" required oninvalid="this.setCustomValidity('Campo obligatorio')"
-                                    oninput="setCustomValidity('')">
+                                <input class="form-control{{ $errors->has('pass') ? ' is-invalid' : '' }} form-control-lg" type="password" placeholder="contraseña" name="pass" required>
                              
                                 @if ($errors->has('pass'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('pass') }}</strong>
                                     </span>
                                 @endif
+                                 
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-12 separator-top-s">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Iniciar sesión') }}
+                                    {{ __('Inicia sesión') }}
                                 </button>                   
                               </a>
                             </div>
                         </div>
-                    </form>
 
+
+                    </form>
               </div>
     </div>
 </div>
