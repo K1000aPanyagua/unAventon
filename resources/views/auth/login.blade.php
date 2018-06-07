@@ -5,7 +5,7 @@
 
 <body id="page-top" class="container-fluid">
 <!--Body -->
-@include('menu')
+@include('menuiniciar')
 @include('flash_message')
 
 <header class="masthead bg-primary text-white text-center row">

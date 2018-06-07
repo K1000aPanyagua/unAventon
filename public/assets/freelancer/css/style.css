@@ -123,3 +123,18 @@
 .separator-l{
   margin-bottom: 2em;
 }
+
+.listitem{
+  display:block;
+  margin-left: 2em;
+}
+.listitem:hover{
+  text-decoration: none;
+  background: darkgrey;
+}
+
+.col-account{
+padding-top: 4em;
+height: 27em;
+border-radius: 7%
+}

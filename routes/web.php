@@ -39,3 +39,4 @@ Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logOut');
 
 Route::resource('auth', 'AuthController');
+ 
