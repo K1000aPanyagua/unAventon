@@ -58,7 +58,7 @@ class LoginController extends Controller
             
             return redirect()->intended('/')->with('success', 'Bienvenido');
         }else{
-            return redirect()->back()->with('error', 'Email o contraseña erronea');
+            return redirect()->back()->with('error', 'Lo sentimos.. el E-mail o la contraseña no son correctos.');
 
         }
     }
