@@ -10,6 +10,18 @@
 
 @endif
 
+@if ($message = Session::get('deleted'))
+
+<div class="alert alert-info alert-block">
+
+	<button type="button" class="close" data-dismiss="alert">×</button>	
+	<strong><a href="/getRecover">{{$message}}</a></strong>
+	
+
+</div>
+
+@endif
+
 
 @if ($message = Session::get('error'))
 
