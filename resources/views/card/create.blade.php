@@ -1,4 +1,4 @@
-
+ 
 
 <!DOCTYPE html>
 <html lang="es">
@@ -16,8 +16,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
           @include('flash_message')
-                    <form method="POST" action="{{ action('CardController@store') }}">
-                        @csrf
+                    <form method="POST" action="{{ route('card.store') }}">
+                        {{ csrf_field() }} 
                         <div class="form-group row">
                             <label for="nroCard" class="col-md-4 col-form-label text-md-right">{{ __('Número de tarjeta') }}*</label>
 
