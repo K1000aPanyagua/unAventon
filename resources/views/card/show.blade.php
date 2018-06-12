@@ -11,14 +11,10 @@
 
 <header class="masthead bg-primary text-white text-center row">
   <div class="container">
-    <h1 class="text-uppercase separator-l col-sm-12">datos del vehiculo</h1>  
+    <h1 class="text-uppercase separator-l col-sm-12">datos de la tarjeta</h1>  
       <div class="row" >
-           {{ $car->model }} 
-           {{ $car->license }} 
-           {{ $car->brand}} 
-           {{ $car->color }} 
-           {{ $car->numSeats }} 
-           {{ $car->kind }} 
+           {{ $card->nroCard }} 
+           {{ $card->expiration }} 
       </div>
   </div>
 </header>

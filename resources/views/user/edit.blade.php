@@ -1,6 +1,98 @@
-@include('flash_message')
-{{ $user->email }}
-{{ $user->name }}
-{{ $user->lastname }}
-{{ $user->birthdate }}
-{{ $user->photo }}
+ 
+
+<!DOCTYPE html>
+<html lang="es">
+
+@include('head')
+
+<body id="page-top" class="container-fluid">
+<!--Body -->
+@include('menu')
+
+<header class="masthead bg-primary text-white text-center row">
+      <h1 class="text-uppercase  col-sm-12">Editar mis datos</h1>
+      <p class="separator-l col-sm-12"> * Campo obligatorio</p>
+<div class="container text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+          @include('flash_message')
+                    <form method="POST" action="{{ action('Auth\RegisterController@register') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}*</label>
+                            
+                            <div class="col-md-6">
+                                
+                                <input value="" id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ $user->name }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                    oninput="setCustomValidity('')">
+
+                                @if ($errors->has('name'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}*</label>
+
+                            <div class="col-md-6">
+                                <input id="lastname" type="string" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ $user->lastname }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                    oninput="setCustomValidity('')">
+
+                                @if ($errors->has('lastname'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('lastname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                            <label class="col-md-4 col-form-label text-md-right">Género</label>
+                            <select name="gender">
+                                <option value="noDefinido">Seleccionar</option>
+                                <option value="femenino">Femenino</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="no binario">No binario</option>
+                            </select>
+
+                            <div class="form-group row">
+                                <label for="telephone" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }} (opcional)</label>
+
+                                <div class="col-md-6">
+                                    <input id="telephone" type="string" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" value="{{$user->telephone}}">
+
+                                    @if ($errors->has('telephone'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('telephone') }}</strong>
+                                        </span>
+                                    @endif
+                            </div>
+                        </div>
+
+                        <label class="col-md-4 col-form-label text-md-right">Fecha de nacimiento*</label>
+                        <input type="date" name="birthdate" min="1950-01-01" max="2000-01-01"> *
+
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Guardar') }}
+                                </button>
+                            </div>
+                        </div>  
+                    </form>
+                </div>
+            </div>
+</div>
+</header>
+
+
+
+</body>
+<!--fin header-->
+@include('footer')
+@include('modal')
+@include('javascript')
+</html>

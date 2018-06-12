@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,21 +11,20 @@
 
 <header class="masthead bg-primary text-white text-center row">
   <div class="container">
-    <h1 class="text-uppercase separator-l col-sm-12">datos del vehiculo</h1>  
+    @include('flash_message')
+    <h1 class="text-uppercase separator-l col-sm-12">Seleccionar tarjeta:</h1>  
+
+    @foreach($cards as $card)
       <div class="row" >
-           {{ $car->model }} 
-           {{ $car->license }} 
-           {{ $car->brand}} 
-           {{ $car->color }} 
-           {{ $car->numSeats }} 
-           {{ $car->kind }} 
+
+      	<a class="col-sm-12" href="{{action('cardController@edit', ['id'=> $card->id])}}">
+
+           {{ $card->model }} {{ $card->license }} {{ $card->id }}
+        </a>
       </div>
+    @endforeach    
   </div>
 </header>
-
-<a class="btn btn-primary" href="/"> 
-  Volver al inicio 
-</a>
 
 
 

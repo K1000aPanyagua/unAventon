@@ -72,11 +72,24 @@
           <br>
                    <div class="form-group row" >
 
-          <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Confirmar </button>
-          <a class="btn btn-primary btn-lg rounded-pill" href="{{action('CarController@destroy', ['id'=> $car->id])}}">
-          Eliminar vehiculo
-          </a> 
+          <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Guardar cambios </button>
+          
           </div>         
+        </form>
+      
+       <form action="{{ route('car.destroy', ['id' => $car->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
+          {{method_field('DELETE')}}
+          {{ csrf_field() }}
+          <input type="submit" class="btn btn-danger" value="Delete"/>
+          <script>
+            function ConfirmDelete(){
+              var x = confirm("¿Está seguro que quiere eliminar el vehiculo?");
+              if (x)
+                return true;
+              else
+                return false;
+              }
+          </script>
         </form>
 
       </div>

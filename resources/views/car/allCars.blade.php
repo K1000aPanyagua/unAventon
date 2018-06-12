@@ -11,9 +11,9 @@
 
 <header class="masthead bg-primary text-white text-center row">
   <div class="container">
-    @include('flash_message')
+   
     <h1 class="text-uppercase separator-l col-sm-12">Seleccionar vehículo:</h1>  
-
+     @include('flash_message')
     @foreach($cars as $car)
       <div class="row" >
 

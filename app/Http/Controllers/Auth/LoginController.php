@@ -28,7 +28,7 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      *
-     * @var string
+     * @var string  
      */
     protected $redirectTo = '/';
 
@@ -53,13 +53,10 @@ class LoginController extends Controller
 
     public function postLogin(Request $request){   
         $credentials = $this->validator($request->all())->validate();
-        
         $email = $request->input('email');
         $pass = $request->input('pass');
-        $data = [ 'email' => $email,
-            'pass' => $pass];
-        
         $user = User::onlyTrashed()->where('email', $email)->first();
+        
         if ( $user != null ){
                 return redirect()->back()->with('deleted', 'Su cuenta ha sido desactivada, ¿Desea recuperarla?');
             }
@@ -88,7 +85,13 @@ class LoginController extends Controller
     public function recoverAccount(Request $request){
         $email = $request->input('email');
         $user = User::onlyTrashed()->where('email', $email)->first();
-        $user->restore();
+        
+        if ($user != null){
+            $user->restore();
+        }else{
+            return view('auth/loginDeleted')->with('error', 'Datos de cuenta erroneos');
+        }
+        
         $credentials = $this->validator($request->all())->validate();
         if (Auth::attempt($credentials)) {
             // Authentication passed...

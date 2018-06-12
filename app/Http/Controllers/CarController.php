@@ -13,7 +13,7 @@ class CarController extends Controller
 
     public function index(){   
         $cars = Car::where('user_id', Auth::user()->id)->get();
-        return view('car.allcars')->with('cars', $cars);
+        return view('car.allCars')->with('cars', $cars);
     }
 
     public function create(){
@@ -33,7 +33,7 @@ class CarController extends Controller
 
         $car->user_id = Auth::user()->id;
         $car->save();
-        return view('car.show') -> with ('car', $car);
+        return view('car.show')->with('car', $car);
     }
 
     public function show($id){
@@ -43,7 +43,7 @@ class CarController extends Controller
 
     public function edit($id){
         $car = Car::find($id);
-        return view('car/edit')->with('car', $car);
+        return view('car.edit')->with('car', $car);
     }
 
 
@@ -61,7 +61,7 @@ class CarController extends Controller
         
         $car->save();
         $car = Car::find($id);
-        return view('car.shownewcar')->with('car', $car)->with('success', 'Vehiculo editado');
+        return view('car.show')->with('car', $car)->with('success', 'Vehiculo editado');
     }
     
 
@@ -69,9 +69,9 @@ class CarController extends Controller
         //Se elimina el auto con id $id
         //Hay que verificar que no haya viajes pendientes
         Car::destroy($id);
-
+        $cars = Car::where('user_id', Auth::user()->id)->get();
         //redirecciona a cualquier lugar
-        return view('car.show')->with('cars', $cars)->with('success', 'Vehiculo eliminado'); 
+        return view('car.allCars')->with('cars', $cars)->with('success', 'Vehiculo eliminado');
     }
 
 

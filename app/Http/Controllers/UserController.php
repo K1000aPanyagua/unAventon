@@ -41,40 +41,61 @@ class UserController extends Controller
         return view('user.show', compact('user'));
     }
 
-  
+    public function editPassword(){
+        return view('user.passForm');
+    }
+    
     public function edit($id){
 
         //Carga vista de editar perfil
 
         $user=User::find($id);
-        return view('user.edit', compact('user'));
+        return view('user.edit')->with('user', $user);
     }
 
-    
-    public function update(Request $request, $id)
+    protected function validator(array $data){
+        
+        return Validator::make($data, [
+            'name' => 'required|string',
+            'lastname' => 'required|string',
+            'birthdate' => 'required|date',
+            'email' => 'required|email|unique:users',
+        ]);
+    }
+
+    public function update(Request $request)
     {
-
         $this->validator($request->all())->validate();
-
-        $user = User::find($id);
+        $email = $request->input('email');
+        $user = User::find($email);
 
         $user->name = $request->name;
         $user->lastname = $request->lastname;
         $user->birthdate = $request->birthdate;
-        $user->pass = $request->pass;
-        $user->email = $request->email;
         $user->gender = $request->gender;
         $user->telephone = $request->telephone;
         $user->save();
 
         //Redireccion
-        return view('user.edit', compact('user'))->with('success', 'Usuario eliminado');
+        return view('user.show', compact('user'))->with('success', 'Cambios guardados');
     }
 
     public function destroy($id){   
         User::destroy($id);
         return redirect('/')->with('success', 'Usuario eliminado');
     }
+
+    public function updatePassword(Request $request){
+        $passw = $request->input('pass');
+        $newPass = $request->input('newPass');
+        return  Validator::make($request, ['pass' => 'string|required|min:6']);
+        if ($passw == Auth::user()->pass) {
+            $user = User::find($email);
+            $user->pass = bcrypt($request->input('pass'));
+            $user->save();
+        }
+    }
+
 }
 
 
