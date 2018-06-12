@@ -7,6 +7,7 @@
 <!--Body -->
 @include('menu')
 @include('choicesforchanges')
+@include('fill')
 <!--fin header-->
 @include('copyrigtharrow')
 @include('javascript')

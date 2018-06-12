@@ -1,10 +1,21 @@
-<div class="container">
+
+
+<!DOCTYPE html>
+<html lang="es">
+
+@include('head')
+
+<body id="page-top" class="container-fluid">
+<!--Body -->
+@include('menuregistrarse')
+
+<header class="masthead bg-primary text-white text-center row">
+      <h1 class="text-uppercase  col-sm-12">Registrate</h1>
+      <p class="separator-l col-sm-12"> * Campo obligatorio</p>
+<div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Registrate') }}</div>
-                <div> * Campo obligatorio </div>
-                <div class="card-body">
+          @include('flash_message')
                     <form method="POST" action="{{ action('Auth\RegisterController@register') }}">
                         @csrf
                         <div class="form-group row">
@@ -108,7 +119,7 @@
                             </div>
                         </div>
 
-
+                        <label class="col-md-4 col-form-label text-md-right">Fecha de nacimiento*</label>
                         <input type="date" name="birthdate" min="1950-01-01" max="2000-01-01"> *
 
 
@@ -122,7 +133,13 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
+</header>
 
+
+<!--fin header-->
+@include('footer')
+@include('modal')
+@include('javascript')
+</body>
+</html>

@@ -12,7 +12,7 @@
     <?php } 
     else{ 
     ?>
-      <li class="nav-item mx-0 mx-lg-1">
+      <li class="nav-item mx-0 mx-lg-1 py-3">
         {{Auth::User()->name}}
       </li>
       <li class="nav-item mx-0 mx-lg-1">

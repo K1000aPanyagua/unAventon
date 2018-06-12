@@ -7,42 +7,58 @@
         <br>
         <form method="POST" action="{{ route('car.store') }}">
          {{ csrf_field() }}
+         <div class="form-group row" >
          <h5>Licencia de conducir: </h5>
           <input type="text" name="license" value="{{old('license')}}" size="50" />
+          </div>
           <br>
           <br>
+          <div class="form-group row" >
           <h5>Marca: </h5>
           <input type="text" name="brand" value="{{old('brand')}}" size="50" />
+          </div>
           <br>
           <br>
+          <div class="form-group row" >
           <h5>Modelo: </h5>
           <input type="text" name="model" value="{{old('model')}}" size="50" />
+          </div>
           <br>
           <br>
+          <div class="form-group row" >
           <h5>Año: </h5>
           <input type="text" name="year" value="{{old('year')}}" size="50" />
+          </div>
           <br>
           <br>
+          <div class="form-group row" >
           <h5>Tipo: </h5>
             <select name="kind">
               <option value="camioneta">Camioneta</option>
               <option value="auto">Auto</option>
               <option value="camion">Camión</option>
             </select>
+          </div>
           <br>
           <br>
+          <div class="form-group row" >
           <h5>Lugares: </h5>
           <input type="text" name="places" value="{{old('places')}}" size="50" />
+          </div>
           <br>
           <br>
+          <div class="form-group row" >
           <h5>Color: </h5>
           <input type="text" name="color" value="{{old('color')}}" size="50" />
+          </div>
           <br>
           <br>
+          <div class="form-group row" >
           <h5>Cantidad de asientos: </h5>
           <input type="string" name="numSeats" value="{{old('numSeats')}}" size="50" />
           <br>
           <br>
+        </div>
           <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Confirmar </button>
         </form>
       </div>

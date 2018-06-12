@@ -10,13 +10,16 @@
 @include('menuiniciar')
 
 <header class="masthead bg-primary text-white text-center row">
-      <h1 class="text-uppercase separator-m col-sm-12">Iniciar sesion</h1>
+      <h1 class="text-uppercase separator-m col-sm-12">Recuperar cuenta</h1>
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-md-8">
             @include('flash_message')
-          
-                    <form method="POST" action="{{ action('Auth\LoginController@postLogin') }}">
+                    <script type="text/javascript">
+                        alert("Ingrese los datos nuevamente.");
+                    </script>
+
+                    <form method="POST" action="{{ action('Auth\LoginController@recoverAccount')}}">
                         @csrf
 
                         <div class="form-group row">
