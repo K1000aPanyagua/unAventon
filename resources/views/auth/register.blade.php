@@ -11,6 +11,7 @@
 
 <header class="masthead bg-primary text-white text-center row">
       <h1 class="text-uppercase  col-sm-12">Registrate</h1>
+
       <p class="separator-l col-sm-12"> * Campo obligatorio</p>
 <div class="container text-center">
     <div class="row justify-content-center">
@@ -23,7 +24,7 @@
 
                             <div class="col-md-6">
                                 
-                                <input value="" id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
                                     oninput="setCustomValidity('')">
 
                                 @if ($errors->has('name'))
@@ -97,19 +98,18 @@
                                 </script>
 
                         </div>
-                            <label class="col-md-4 col-form-label text-md-right">Género</label>
-                            <select name="gender">
-                                <option value="noDefinido">Seleccionar</option>
-                                <option value="femenino">Femenino</option>
-                                <option value="masculino">Masculino</option>
-                                <option value="no binario">No binario</option>
+                            <label class="col-md-4 col-form-label text-md-right">Género*</label>
+                            <select name="gender" required="required">
+                                <option value="">Seleccionar</option>
+                                <option value="M" @if (old('gender')== "M") {{ 'selected' }} @endif>Masculino</option>
+                                <option value="F" @if (old('gender')== "F") {{ 'selected' }} @endif>Femenino</option>
                             </select>
 
                             <div class="form-group row">
-                                <label for="telephone" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }} (opcional)</label>
+                                <label for="telephone" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="telephone" type="string" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" >
+                                    <input id="telephone" value="{{ old('telephone') }}" type="string" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" >
 
                                     @if ($errors->has('telephone'))
                                         <span class="invalid-feedback">
@@ -119,14 +119,14 @@
                             </div>
                         </div>
 
-                        <label class="col-md-4 col-form-label text-md-right">Fecha de nacimiento*</label>
-                        <input type="date" name="birthdate" min="1950-01-01" max="2000-01-01"> *
-
-
+                        <label for="birthdate" class="col-md-4 col-form-label text-md-right">Fecha de nacimiento*</label>
+                        <input id="birthdate" type="date" value="{{ old('birthdate') }}" name="birthdate" min="1950-01-01" max="2000-01-01" required="required">
+                        <br>
+                        <br>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('Registrarse') }}
                                 </button>
                             </div>
                         </div>  

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model{
 
-	protected $table = 'Cards';
+	protected $table = 'cards';
 
 	protected $fillable = ['numCard', 'expiration'];
 

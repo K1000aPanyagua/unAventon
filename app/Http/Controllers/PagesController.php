@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Car;
+use App\Card;
 class PagesController extends Controller {
 
 	public function getIndex(){
@@ -24,7 +25,8 @@ class PagesController extends Controller {
 	}
 
 	public function getAccount(){
-		$cars = Car::where('user_id', Auth::User()->id);  //Acá se van a cargar los models para el choicesForChanges*/
+		$cars = Car::where('user_id', Auth::user()->id);
+		$cards = Card::where('user_id', Auth::user()->id);  //Acá se van a cargar los models para el choicesForChanges*/
 		return view('configurationaccount')->with('cars', $cars);
 	}
 

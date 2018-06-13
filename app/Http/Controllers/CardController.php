@@ -63,7 +63,7 @@ class CardController extends Controller
     public function show($id)
     {
         $card = Card::find($id);
-        return view('card.show')->compact('$cards');
+        return view('card.show')->with('card', $card);
     }
 
     /**
@@ -72,9 +72,9 @@ class CardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        return view('card.edit');
+    public function edit($id){
+        $card = Card::find($id);
+        return view('card.edit')->with('card', $card);
     }
 
     /**
@@ -86,17 +86,17 @@ class CardController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         //Validacion
         $this->validator($request->all())->validate();
         //Almacenamiento
+        $card = Card::find($id);
         $card->numCard = $request->numCard;
         $card->expiration = $request->expiration;
-        $card->user_id = Auth::User()->id;
-
         $card->save();
 
         //Redireccion
-        return view('card.show');
+        return view('card.show')->with('success', 'Cambios guardados');
     }
 
     /**
@@ -111,17 +111,14 @@ class CardController extends Controller
         Card::destroy($id);
         
         //Se redirecciona a la vista de tarjetas
-        return view('card.allcards');
+        return view('card.allCards');
     }
 
     protected function validator(array $data){
         
         return Validator::make($data, [
-            'license' => 'required|string',
-            'brand' => 'required|string',
-            'model' => 'required|string',
-            'color' => 'string',
-            'numSeats' => 'integer|required',
+            'numCard' => 'numeric|required|int|size:16',
+            'expiration' => 'required|date',
         ]);
     }
 

@@ -17,6 +17,7 @@ Route::get('/configurationAccount','PagesController@getAccount');
 Route::get('/resultregister','PagesController@getResultRegister');
 
 Route::resource('user', 'UserController');
+Route::get('/editPass', 'UserController@editPassword');
 
 Route::resource('card', 'CardController');
 

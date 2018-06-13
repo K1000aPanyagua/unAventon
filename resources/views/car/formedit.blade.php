@@ -9,74 +9,113 @@
         <form method="POST" action="{{route('car.update', ['id'=> $car->id])}}">
          {{ csrf_field() }} 
          {{ method_field('PUT') }}
-         <div class="form-group row" >
-          <h5>Patente: </h5> 
-          <input  type="text" name="license" value="{{ $car->license  }}" size="50" />
-        </div>
-          <br>
-          <br>
-         <div class="form-group row" >
-<h5>Marca: </h5>
-          <input type="text" name="brand" value="{{$car->brand}}" size="50" />
-        </div>
+        <div class="form-group row" >
+          <label for="license" class="col-md-4 col-form-label text-md-right">{{ __('Patente') }}*</label>
 
+            <div class="col-md-6">
+                                
+            <input value="{{ $car->license }}" id="license" type="text" class="form-control{{ $errors->has('license') ? ' is-invalid' : '' }}" name="license" value="" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
-           <br>
+            @if ($errors->has('license'))
+              <span class="invalid-feedback">
+                <strong>{{ $errors->first('license') }}</strong>
+              </span>
+            @endif
+            </div>
+          </div>
           <br>
-         <div class="form-group row" >
-<h5>Modelo: </h5>
-          <input type="text" name="model" value="{{$car->model}}" size="50" />
-        </div>
+          <br>
+          <div class="form-group row" >
+          <label for="brand" class="col-md-4 col-form-label text-md-right">{{ __('Marca') }}*</label>
 
-          <br>
-          <br>
-                <div class="form-group row" >
+            <div class="col-md-6">
+                                
+            <input value="" id="brand" type="text" class="form-control{{ $errors->has('brand') ? ' is-invalid' : '' }}" name="brand" value="{{ $car->brand }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
-          <h5>Año: </h5>
-          <input type="text" name="year" value="{{ $car -> year }}" size="50" />
-        </div>
+            @if ($errors->has('brand'))
+              <span class="invalid-feedback">
+                <strong>{{ $errors->first('brand') }}</strong>
+              </span>
+            @endif
+            </div>
           <br>
           <br>
-                   <div class="form-group row" >
+          <div class="form-group row" >
+          <label for="model" class="col-md-4 col-form-label text-md-right">{{ __('Modelo') }}*</label>
 
+            <div class="col-md-6">
+                                
+            <input value="" id="model" type="text" class="form-control{{ $errors->has('model') ? ' is-invalid' : '' }}" name="model" value="{{ $car->model }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+
+            @if ($errors->has('model'))
+              <span class="invalid-feedback">
+                <strong>{{ $errors->first('model') }}</strong>
+              </span>
+            @endif
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="form-group row" >
           <h5>Tipo: </h5>
-            <select name="kind">
+            <select name="kind" value="{{ $car->kind }}">
+              <option value="noDefinido">Seleccionar</option>
               <option value="camioneta">Camioneta</option>
               <option value="auto">Auto</option>
               <option value="camion">Camión</option>
             </select>
           </div>
           <br>
+          <br>
+          <div class="form-group row" >
+          <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Color') }}*</label>
 
-          <br>
-                   <div class="form-group row" >
+            <div class="col-md-6">
+                                
+            <input value="" id="color" type="text" class="form-control{{ $errors->has('color') ? ' is-invalid' : '' }}" name="color" value="{{ $car->color }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
-          <h5>Lugares disponibles: </h5>
-          <input type="text" name="places" value="{{$car->places}}" size="50" />
-        </div>
-          <br>
-          <br>
-                   <div class="form-group row" >
-
-          <h5>Color: </h5>
-          <input type="text" name="color" value="{{$car->color}}" size="50" />
-        </div>
-          <br>
-          <br>
-                   <div class="form-group row" >
-
-          <h5>Cantidad de asientos: </h5>
-          <input type="string" name="numSeats" value="{{$car->numSeats}}" size="50" />
+            @if ($errors->has('color'))
+              <span class="invalid-feedback">
+                <strong>{{ $errors->first('color') }}</strong>
+              </span>
+            @endif
+            </div>
           </div>
           <br>
           <br>
-                   <div class="form-group row" >
+          <div class="form-group row" >
+          <label for="numSeats" class="col-md-4 col-form-label text-md-right">{{ __('Numero de asientos') }}*</label>
 
-          <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Confirmar </button>
-          <a class="btn btn-primary btn-lg rounded-pill" href="{{action('CarController@destroy', ['id'=> $car->id])}}">
-          Eliminar vehiculo
-          </a> 
+            <div class="col-md-6">
+                                
+            <input value="" id="numSeats" type="integer" class="form-control{{ $errors->has('numSeats') ? ' is-invalid' : '' }}" name="numSeats" value="{{ $car->numSeats }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+
+            @if ($errors->has('numSeats'))
+              <span class="invalid-feedback">
+                <strong>{{ $errors->first('numSeats') }}</strong>
+              </span>
+            @endif
+            </div>
+        </div>
+
+          <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Guardar cambios </button>
+          
           </div>         
+        </form>
+      
+       <form action="{{ route('car.destroy', ['id' => $car->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
+          {{method_field('DELETE')}}
+          {{ csrf_field() }}
+          <input type="submit" class="btn btn-danger" value="Delete"/>
+          <script>
+            function ConfirmDelete(){
+              var x = confirm("¿Está seguro que quiere eliminar el vehiculo?");
+              if (x)
+                return true;
+              else
+                return false;
+              }
+          </script>
         </form>
 
       </div>
