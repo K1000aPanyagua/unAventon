@@ -4,7 +4,7 @@
       <div class="col-lg-8 mx-auto">
         <h1 class=" text-white text-uppercase mb-0">Agregar <div style="height: 0.17em;"></div> vehículo</h1>
         <br>
-        <br>
+        <br> 
         <form method="POST" action="{{ route('car.store') }}">
          {{ csrf_field() }} 
         <div class="form-group row" >
