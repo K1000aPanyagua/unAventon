@@ -117,7 +117,7 @@ class CardController extends Controller
     protected function validator(array $data){
         
         return Validator::make($data, [
-            'numCard' => 'required|string',
+            'numCard' => 'numeric|required|int|size:16',
             'expiration' => 'required|date',
         ]);
     }

@@ -17,7 +17,7 @@
     @foreach($cards as $card)
       <div class="row" >
 
-      	<a class="col-sm-12" href="{{action('cardController@edit', ['id'=> $card->id])}}">
+      	<a class="col-sm-12" href="{{action('CardController@destroy', ['id'=> $card->id])}}">
 
            {{ $card->model }} {{ $card->license }} {{ $card->id }}
         </a>
