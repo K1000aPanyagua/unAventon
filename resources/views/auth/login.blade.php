@@ -23,7 +23,8 @@
                             <label for="email" class="col-sm-4 col-form-label text-md-left">{{ __('Email:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} form-control-lg" name="email" value="{{ old('email') }} " required autofocus placeholder="e-mail">
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} form-control-lg" name="email" value="{{ old('email') }} " required autofocus placeholder="e-mail" oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                    oninput="setCustomValidity('')">
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
@@ -37,7 +38,8 @@
                             <label for="pass" class="col-md-4 col-form-label text-md-left">{{ __('Contraseña:') }}</label>
 
                             <div class="col-md-6">
-                                <input class="form-control{{ $errors->has('pass') ? ' is-invalid' : '' }} form-control-lg" type="password" placeholder="contraseña" name="pass" required>
+                                <input class="form-control{{ $errors->has('pass') ? ' is-invalid' : '' }} form-control-lg" type="password" placeholder="contraseña" name="pass" required oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                    oninput="setCustomValidity('')">
                              
                                 @if ($errors->has('pass'))
                                     <span class="invalid-feedback">
