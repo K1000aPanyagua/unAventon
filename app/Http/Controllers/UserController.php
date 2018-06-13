@@ -17,7 +17,7 @@ class UserController extends Controller
         $this->middleware('guest');
     }
     */
-    public function index()
+    public function index() 
     {
         //
     }
@@ -63,11 +63,20 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+
+    protected function updateValidator(array $data){
+        
+        return Validator::make($data, [
+            'name' => 'required|string',
+            'lastname' => 'required|string',
+            'birthdate' => 'required|date',
+        ]);
+    }
+
+    public function update(Request $request, $id)
     {
-        $this->validator($request->all())->validate();
-        $email = $request->input('email');
-        $user = User::find($email);
+        $this->updateValidator($request->all())->validate();
+        $user = User::find($id);
 
         $user->name = $request->name;
         $user->lastname = $request->lastname;
@@ -77,7 +86,7 @@ class UserController extends Controller
         $user->save();
 
         //Redireccion
-        return view('user.show', compact('user'))->with('success', 'Cambios guardados');
+        return view('user.show')->with('user', $user)->with('success', 'Cambios guardados');
     }
 
     public function destroy($id){   
