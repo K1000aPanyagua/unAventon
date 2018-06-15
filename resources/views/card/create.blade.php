@@ -23,12 +23,12 @@
 
                             <div class="col-md-6">
                                 
-                                <input id="nroCard" type="text" class="form-control{{ $errors->has('nroCard') ? ' is-invalid' : '' }}" name="nroCard" value="{{ old('nroCard') }}" required="required" autofocus oninvalid="this.setCustomValidity('El campo debe contener los 16 dígitos de la tarjeta')"
+                                <input id="numCard" type="text" class="form-control{{ $errors->has('numCard') ? ' is-invalid' : '' }}" name="numCard" value="{{ old('numCard') }}" required="required" autofocus oninvalid="this.setCustomValidity('El campo debe contener los 16 dígitos de la tarjeta')"
                                     oninput="setCustomValidity('')">
 
-                                @if ($errors->has('nroCard'))
+                                @if ($errors->has('numCard'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('nroCard') }}</strong>
+                                        <strong>{{ $errors->first('numCard') }}</strong>
                                     </span>
                                 @endif
                             </div>

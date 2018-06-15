@@ -15,9 +15,10 @@ class CreateUserRideTable extends Migration
     {
         Schema::create('user_ride', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('rides');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('ride_id')->unsigned();
             $table->foreign('ride_id')->references('id')->on('rides');
+            $table->string('state');
             $table->timestamps();
         });
     }

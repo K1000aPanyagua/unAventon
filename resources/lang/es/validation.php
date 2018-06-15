@@ -101,7 +101,7 @@ return [
     'required_without_all' => 'El campo :attribute es obligatorio cuando ninguno de :values estén presentes.',
     'same' => ':attribute y :other deben coincidir.',
     'size' => [
-        'numeric' => 'El tamaño de :attribute debe ser :size.',
+        'numeric' => 'El tamaño del :attribute debe ser de :size dígitos.',
         'file' => 'El tamaño de :attribute debe ser :size kilobytes.',
         'string' => 'El campo :attribute debe contener :size caracteres.',
         'array' => 'El campo :attribute debe contener :size elementos.',
@@ -174,5 +174,6 @@ return [
         'time' => 'hora',
         'subject' => 'asunto',
         'message' => 'mensaje',
+        'numCard' => 'número de tarjeta',
     ],
 ];

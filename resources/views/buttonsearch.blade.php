@@ -7,6 +7,12 @@
           Buscar viajes
         </a>
       </div>
+      
+      <div class="col-lg-4 offset-4">
+        <a class="btn btn-xl btn-outline-light text-center color-aventon" href="{{ route('ride.create') }}">
+          Publicar viaje
+        </a>
+      </div>
     <div>
   </div>
 </section>

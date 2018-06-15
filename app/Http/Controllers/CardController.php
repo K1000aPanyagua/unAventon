@@ -7,6 +7,8 @@ use App\Card;
 use App\User;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
+
 
 class CardController extends Controller
 {
@@ -42,11 +44,12 @@ class CardController extends Controller
         //Validacion
         $this->validator($request->all())->validate();
 
+
         //Almacenamiento
         $card = new Card;
         $card->numCard = $request->numCard;
         $card->expiration = $request->expiration;
-        $card->user_id = Auth::user()->id;
+        $card->user_id = Auth::User()->id;
 
         $card->save();
 
@@ -116,9 +119,10 @@ class CardController extends Controller
 
     protected function validator(array $data){
         
+        $today = today();
         return Validator::make($data, [
-            'numCard' => 'numeric|required|int|size:16',
-            'expiration' => 'required|date',
+            'numCard' => 'required|digits:16|numeric',
+            'expiration' => 'required|date|after:today',
         ]);
     }
 

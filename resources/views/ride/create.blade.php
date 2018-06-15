@@ -18,7 +18,17 @@
 	<label for="departHour">Hora de salida:</label>
 	<input type="time" name="departHour" id="departHour">
 	<br>
+	<label class="col-md-4 col-form-label text-md-right">Tarjeta*</label>
+    <select name="idCard" id="idCard" required="required">
+    		<option value="">Seleccionar</option>
+    	@foreach ($cards as $card)
+        	<option  value="{{$card->id}}"> Tarjeta {{ $card->numCard }}</option>
+        @endforeach
+        
+    </select>
+    <br>
 	<textarea name="remarks" id="remarks" placeholder="Observaciones..."></textarea>
 	<br>
 	<button type="submit">Publicar viajecito</button>
+
 </form>
