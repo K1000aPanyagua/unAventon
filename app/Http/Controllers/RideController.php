@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Ride;
 use Auth;
 use App\Card;
+use App\Comment;
 
 class RideController extends Controller
 {
@@ -90,7 +91,8 @@ class RideController extends Controller
     public function show($id)
     {
         $ride = Ride::find($id);
-        return view('ride.show')->with('ride', $ride);
+        $comments = Comment::where('ride_id', $id)->get();
+        return view('ride.show')->with('ride', $ride)->with('comments', $comments);
     }
 
     /**
@@ -102,6 +104,10 @@ class RideController extends Controller
     public function edit($id)
     {
         //CONTROLAR QUE NO HAYA COPILOTOS PENDIENTES O ACEPTADOS
+        $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
+        if (count($passengers) > 0 ){
+            return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje')
+        }
         $ride = Ride::find($id);
         return view('ride.show')->with('ride', $ride);
     }
@@ -141,14 +147,24 @@ class RideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //Se elimina el auto con id $id
-        //CONTROLAR QUE NO HAYA COPILOTOS PENDIENTES O ACEPTADOS, EN CASO DE HABER PEDIR CONFIRMACION DE DELETE ,ADVERTIR DE PENALIZACIÓN Y APLICARLA
+    public function destroy($id){
         Ride::destroy($id);
         $rides = Ride::where('user_id', Auth::user()->id)->get();
         //redirecciona a cualquier lugar
-        return view('ride.allrides')->with('rides', $rides)->with('warning', 'viaje eliminado');
+        return view('ride.allrides')->with('rides', $rides)->with('success', 'viaje eliminado');
+    }
+
+    public function askDeletion($id){
+        //SE CONTROLA QUE NO HAYA PASAJEROS ACEPTADOS O PENDIENTES
+        //SI HAY, SE LE PREGUNTA SI REALMENTE QUIERE ELIMINAR 
+        //ADVIRTIENDO DE LA PENALIZACION
+        //SI NO HAY SE LLAMA A DESTROY
+        $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
+        if (count($passengers) > 0 ){
+            return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)')//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
+        }else{
+            $this->destroy($id);
+        }
     }
 
     //public function getBy(){
