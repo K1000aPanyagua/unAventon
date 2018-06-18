@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Comment;
-use App\User;
-use Auth;
-use App\Ride;
+use App\Answer;
 
-class CommentController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +22,7 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        //EL SHOW DEL VIAJE VA A TENER EL TEXT AREA DE COMENTARIOS
+        //EL SHOW DEL VIAJE VA A TENER LA OPCIÓN DE RESPONDER
     }
 
     /**
@@ -34,17 +31,17 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $ride_id)
+    public function store(Request $request, $ride_id, $comment_id)
     {   
         //Validacion
         $this->validator($request->all())->validate()
         //Almacenamiento
-        $comment = new Comment;
-        $comment->content = $request->content;
-        $comment->ride_id = $ride_id;
-        $comment->user_id = Auth::User()->id;
+        $answer = new Answer;
+        $answer->content = $request->content;
+        $answer->ride_id = $ride_id;
+        $answer->comment_id = $comment_id;
 
-        $comment->save();
+        $answer->save();
         $ride = Ride::find($ride_id);
         
         //Redireccion
@@ -72,8 +69,8 @@ class CommentController extends Controller
         //LA EDICION DE UN COMENTARIO ES SUPER CHOTA POR QUE NOS VA A
         //REDIRECCIONAR A UN MINIFORM EDIT, Y UNA VEZ HECHO EL UPDATE
         //SE REDIRECCIONA A RIDE SHOW
-        $comment = comment::find($id);
-        return view('comment.edit')->with('comment', $comment);
+        $answer = Answer::find($id);
+        return view('answer.edit')->with('answer', $answer);
     }
 
     /**
@@ -83,17 +80,17 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id){
+    public function update(Request $request, $id_comment, $id_ride){
         //Validacion
         $this->validator($request->all())->validate();
         //Almacenamiento
-        $comment = Comment::find($id);
-        $comment->content = $request->content;
-        $comment->save();
+        $answer = Answer::find($id);
+        $answer->content = $request->content;
+        $answer->save();
 
         $ride = Ride::find($ride_id);
         //Redireccion
-        return view('ride.show')->with('success', 'Cambios guardados');
+        return view('ride.show')->with('success', 'Cambios guardados')->with('ride', $ride);
     }
 
     /**
@@ -102,8 +99,8 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id_comment){
-        Comment::destroy($id_comment);
+    public function destroy($id_answer){
+        Answer::destroy($id_answer);
         return view('ride.show');
     }
 

@@ -88,10 +88,12 @@ class RideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         $ride = Ride::find($id);
         $comments = Comment::where('ride_id', $id)->get();
+        if (count($comments) = 0) {
+            $comments = 'Aún no hay comentarios';
+        }
         return view('ride.show')->with('ride', $ride)->with('comments', $comments);
     }
 
@@ -101,8 +103,7 @@ class RideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         //CONTROLAR QUE NO HAYA COPILOTOS PENDIENTES O ACEPTADOS
         $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
         if (count($passengers) > 0 ){
