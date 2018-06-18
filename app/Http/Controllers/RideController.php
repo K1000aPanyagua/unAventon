@@ -168,9 +168,62 @@ class RideController extends Controller
         }
     }
 
-    //public function getBy(){
+    public function getBy(Request $request){
+        $rides = $rides->newQuery();
 
-   // }
+        // Search for a ride based on their destination.
+        if ($request->has('destination')) {
+            $ride->where('destination', $request->input('destination'));
+        }
+
+        // Search for a ride based on their origin.
+        if ($request->has('origin')) {
+            $ride->where('origin', $request->input('origin'));
+        }
+
+        // Search for a ride based on their duration.
+        if ($request->has('duration')) {
+            $ride->where('duration', $request->input('duration'));
+        }
+
+        // Only return rides who are assigned
+        // to the given sales manager(s).
+        if ($request->has('managers')) {
+           $ride->whereHas('managers', function ($query) use ($request) {
+           $query->whereIn('managers.name', $request->input('managers'));
+            });
+        }
+
+        // Has an 'event' parameter been provided?
+        if ($request->has('event')) {
+            // Only return rides who have
+            // been invited to the event.
+            $ride->whereHas('rsvp.event', function ($query) use ($request) {
+            $query->where('event.slug', $request->input('event'));
+        });
+    
+        // Only return rides who have responded
+        // to the invitation (with any type of
+        // response).
+        if ($request->has('responded')) {
+            $ride->whereHas('rsvp', function ($query) use ($request) {
+            $query->whereNotNull('responded_at');
+            });
+        }
+
+        // Only return rides who have responded
+        // to the invitation with a specific
+        // response.
+        if ($request->has('response')) {
+            $ride->whereHas('rsvp', function ($query) use ($request) {
+            $query->where('response', 'I will be attending');
+        });
+        }
+    
+        // Get the results and return them.
+        $rides = $rides->get();
+        return view('ride.index')->with('rides', $rides);
+    }
 
 
 }
