@@ -72,7 +72,7 @@ class RideController extends Controller
         $ride->remarks =        $request->remarks;
         $ride->departDate =     $request->departDate;
         $ride->departHour =     $request->departHour;
-        //$ride->account_id =     Account::where('user_id', Auth::User()->id);
+        $ride->account_id =     Account::where('user_id', Auth::User()->id);
         $ride->card_id =        $request->idCard;
         $ride->save();
         
@@ -150,4 +150,10 @@ class RideController extends Controller
         //redirecciona a cualquier lugar
         return view('ride.allrides')->with('rides', $rides)->with('warning', 'viaje eliminado');
     }
+
+    //public function getBy(){
+
+   // }
+
+
 }
