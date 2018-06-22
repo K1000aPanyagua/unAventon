@@ -30,7 +30,7 @@
 
             <div class="col-md-6">
                                 
-            <input value="" id="brand" type="text" class="form-control{{ $errors->has('brand') ? ' is-invalid' : '' }}" name="brand" value="{{ $car->brand }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+            <input id="brand" type="text" class="form-control{{ $errors->has('brand') ? ' is-invalid' : '' }}" name="brand" value="{{ $car->brand }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
             @if ($errors->has('brand'))
               <span class="invalid-feedback">
@@ -45,7 +45,7 @@
 
             <div class="col-md-6">
                                 
-            <input value="" id="model" type="text" class="form-control{{ $errors->has('model') ? ' is-invalid' : '' }}" name="model" value="{{ $car->model }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+            <input id="model" type="text" class="form-control{{ $errors->has('model') ? ' is-invalid' : '' }}" name="model" value="{{ $car->model }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
             @if ($errors->has('model'))
               <span class="invalid-feedback">
@@ -59,10 +59,10 @@
           <div class="form-group row" >
           <h5>Tipo: </h5>
             <select name="kind" value="{{ $car->kind }}">
-              <option value="noDefinido">Seleccionar</option>
-              <option value="camioneta">Camioneta</option>
-              <option value="auto">Auto</option>
-              <option value="camion">Camión</option>
+              <option value="">Seleccionar</option>
+              <option value="camioneta" @if ($car->kind == "camioneta") {{ 'selected' }} @endif>Camioneta</option>
+              <option value="auto" @if ($car->kind == "auto") {{ 'selected' }} @endif>Auto</option>
+              <option value="camion" @if ($car->kind == "camion") {{ 'selected' }} @endif>Camión</option>
             </select>
           </div>
           <br>
@@ -72,7 +72,7 @@
 
             <div class="col-md-6">
                                 
-            <input value="" id="color" type="text" class="form-control{{ $errors->has('color') ? ' is-invalid' : '' }}" name="color" value="{{ $car->color }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+            <input id="color" type="text" class="form-control{{ $errors->has('color') ? ' is-invalid' : '' }}" name="color" value="{{ $car->color }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
             @if ($errors->has('color'))
               <span class="invalid-feedback">
@@ -88,7 +88,7 @@
 
             <div class="col-md-6">
                                 
-            <input value="" id="numSeats" type="integer" class="form-control{{ $errors->has('numSeats') ? ' is-invalid' : '' }}" name="numSeats" value="{{ $car->numSeats }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+            <input id="numSeats" type="integer" class="form-control{{ $errors->has('numSeats') ? ' is-invalid' : '' }}" name="numSeats" value="{{ $car->numSeats }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
             @if ($errors->has('numSeats'))
               <span class="invalid-feedback">
