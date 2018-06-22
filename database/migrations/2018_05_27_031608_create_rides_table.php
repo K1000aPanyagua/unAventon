@@ -28,7 +28,7 @@ class CreateRidesTable extends Migration
             $table->foreign('card_id')->references('id')->on('cars');
             $table->decimal('amount');
             $table->string('remarks');
-            $table->boolean('done')->defaul(FALSE);
+            $table->boolean('done')->default(FALSE);
             $table->date('departDate');
             $table->string('departHour');
             $table->timestamps();
