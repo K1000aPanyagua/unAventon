@@ -46,13 +46,14 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data){
+
         
         return Validator::make($data, [
             'name' => 'required|string',
             'lastname' => 'required|string',
             'birthdate' => 'required|date',
-            'pass' => 'min:6|required_with:password-confirm',
-            'password-confirm' => 'min:6',
+            'pass' => 'required|min:6|confirmed',
+            'pass_confirmation' => 'required|min:6',
             'email' => 'required|email|unique:users',
         ]);
     }
