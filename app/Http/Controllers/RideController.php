@@ -7,6 +7,7 @@ use App\Ride;
 use Auth;
 use App\Card;
 use App\Comment;
+use Illuminate\Support\Facades\Validator;
 
 class RideController extends Controller
 {
@@ -50,19 +51,19 @@ class RideController extends Controller
     protected function validator(array $data){
         
         return Validator::make($data, [
-            'origin' => 'required|varchar',
-            'destination' => 'required|varchar',
-            'duration' => 'required|time',
+            'origin' => 'required|string',
+            'destination' => 'required|string',
+            'duration' => 'required',
             'amount' => 'required|decimal',
-            'remarks' => 'varchar',
+            'remarks' => 'string',
             'departDate' => 'date|required',
-            'departHour' => 'time|required',
+            'departHour' => 'required',
         ]);
     }
 
     public function store(Request $request)
     {
-        $this->Validator($request->all())->validate();
+        
 
         $ride = new Ride;
         $ride->user_id =        Auth::User()->id;
@@ -77,9 +78,7 @@ class RideController extends Controller
         $ride->card_id =        $request->idCard;
         $ride->save();
         
-
-        return view('ride.show')->with('ride', $ride);
-        
+        return view('ride.show')->with('ride', $ride)->with('success', 'Viaje publicado!');
     }
 
     /**
@@ -202,7 +201,10 @@ class RideController extends Controller
             $query->where('event.slug', $request->input('event'));
         });
         }
+<<<<<<< HEAD
     
+=======
+>>>>>>> e2108f67eac59872e258a91c302488b3747a96b7
         // Only return rides who have responded
         // to the invitation (with any type of
         // response).
