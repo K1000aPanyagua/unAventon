@@ -7,6 +7,7 @@ use App\Ride;
 use Auth;
 use App\Card;
 use App\Comment;
+use Illuminate\Support\Facades\Validator;
 
 class RideController extends Controller
 {
@@ -50,19 +51,19 @@ class RideController extends Controller
     protected function validator(array $data){
         
         return Validator::make($data, [
-            'origin' => 'required|varchar',
-            'destination' => 'required|varchar',
-            'duration' => 'required|time',
+            'origin' => 'required|string',
+            'destination' => 'required|string',
+            'duration' => 'required',
             'amount' => 'required|decimal',
-            'remarks' => 'varchar',
+            'remarks' => 'string',
             'departDate' => 'date|required',
-            'departHour' => 'time|required',
+            'departHour' => 'required',
         ]);
     }
 
     public function store(Request $request)
     {
-        $this->Validator($request->all())->validate();
+        
 
         $ride = new Ride;
         $ride->user_id =        Auth::User()->id;
@@ -77,9 +78,7 @@ class RideController extends Controller
         $ride->card_id =        $request->idCard;
         $ride->save();
         
-
-        return view('ride.show')->with('ride', $ride);
-        
+        return view('ride.show')->with('ride', $ride)->with('success', 'Viaje publicado!');
     }
 
     /**
@@ -91,7 +90,7 @@ class RideController extends Controller
     public function show($id){
         $ride = Ride::find($id);
         $comments = Comment::where('ride_id', $id)->get();
-        if (count($comments) = 0) {
+        if (count($comments) == 0) {
             $comments = 'Aún no hay comentarios';
         }
         return view('ride.show')->with('ride', $ride)->with('comments', $comments);
@@ -107,7 +106,7 @@ class RideController extends Controller
         //CONTROLAR QUE NO HAYA COPILOTOS PENDIENTES O ACEPTADOS
         $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
         if (count($passengers) > 0 ){
-            return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje')
+            return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje');
         }
         $ride = Ride::find($id);
         return view('ride.show')->with('ride', $ride);
@@ -162,7 +161,7 @@ class RideController extends Controller
         //SI NO HAY SE LLAMA A DESTROY
         $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
         if (count($passengers) > 0 ){
-            return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)')//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
+            return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
         }else{
             $this->destroy($id);
         }
@@ -201,7 +200,7 @@ class RideController extends Controller
             $ride->whereHas('rsvp.event', function ($query) use ($request) {
             $query->where('event.slug', $request->input('event'));
         });
-    
+        }
         // Only return rides who have responded
         // to the invitation (with any type of
         // response).

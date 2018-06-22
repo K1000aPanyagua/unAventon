@@ -45,7 +45,7 @@ class Ride extends Model{
     
     public function qualificationsAsPassenger(){
     	return $this->hasMany(QualificationPassenger::class);
-   
+    }
 }
 
 

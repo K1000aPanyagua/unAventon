@@ -87,7 +87,7 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required oninput="check2(this)">
                             </div>
                                  <script language='javascript' type='text/javascript'>
-                                    function check2(input) {
+                                    function check2() {
                                         if (input.value != document.getElementById('pass').value) {
                                             input.setCustomValidity('Las contraseñas deben coincidir.');
                                         } else {

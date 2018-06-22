@@ -12,7 +12,7 @@
 
             <div class="col-md-6">
                                 
-            <input value="{{ old('license') }}" id="license" type="text" class="form-control{{ $errors->has('license') ? ' is-invalid' : '' }}" name="license" required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+            <input value="{{ old('license') }}" name="license" id="license" type="text" class="form-control{{ $errors->has('license') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
             @if ($errors->has('license'))
               <span class="invalid-feedback">
