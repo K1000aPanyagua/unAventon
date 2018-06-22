@@ -22,6 +22,7 @@
            {{ $ride->departHour }}
            {{ $ride->departDate }} 
       </div>
+       <a class="btn" href="{{ route('ride.edit', $ride->id) }}">Editar</a>
   </div>
 </header>
 

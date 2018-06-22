@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserRide extends Pivot{
+class PassengerRide extends Pivot{
 
 	protected $table = 'user_ride';
 
