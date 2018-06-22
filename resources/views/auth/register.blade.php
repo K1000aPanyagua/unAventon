@@ -81,11 +81,17 @@
                         </div>
 
                             <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña') }}*</label>
+                            <label for="pass_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña') }}*</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required oninput="check2(this)">
+                                <input id="pass_confirmation" type="password" class="form-control" name="pass_confirmation" required oninput="check2(this)">
                             </div>
+                            @if ($errors->has('pass_confirmation'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('pass_confirmation') }}</strong>
+                                    </span>
+                                @endif
+
                                  <script language='javascript' type='text/javascript'>
                                     function check2() {
                                         if (input.value != document.getElementById('pass').value) {

@@ -17,12 +17,35 @@
     @foreach($cards as $card)
       <div class="row" >
 
-      	<a class="col-sm-12" href="{{action('CardController@destroy', ['id'=> $card->id])}}">
+      
 
-           {{ $card->model }} {{ $card->license }} {{ $card->id }}
-        </a>
+          Número:{{ $card->numCard }} Fecha de vencimiento:{{ $card->expiration }} 
+
+
+           <form action="{{ route('card.destroy', $card->id) }}" method="POST" onsubmit="return ConfirmDelete()">
+                {{method_field('DELETE')}}
+                {{ csrf_field() }}
+                <input type="submit" class="btn btn-danger" value="Eliminar"/>
+                <script>
+                  function ConfirmDelete(){
+                    var x = confirm("¿Está seguro que quiere eliminar la tarjeta?");
+                    if (x)
+                      return true;
+                    else
+                      return false;
+                  }
+                </script>
+              </form>
+
+              
+      
       </div>
-    @endforeach    
+    @endforeach
+    <div class="col-lg-4 offset-4">
+        <a class="btn btn-xl btn-outline-light text-center color-aventon" href="/configurationAccount">
+          Volver
+        </a>
+    </div>
   </div>
 </header>
 

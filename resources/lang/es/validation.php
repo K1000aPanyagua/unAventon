@@ -14,7 +14,7 @@ return [
 
     'accepted' => ':attribute debe ser aceptado.',
     'active_url' => ':attribute no es una URL válida.',
-    'after' => ':attribute debe ser una fecha posterior a :date.',
+    'after' => ':attribute debe ser una fecha posterior a :date',
     'after_or_equal' => ':attribute debe ser una fecha posterior o igual a :date.',
     'alpha' => ':attribute sólo debe contener letras.',
     'alpha_dash' => ':attribute sólo debe contener letras, números y guiones.',
@@ -174,6 +174,7 @@ return [
         'time' => 'hora',
         'subject' => 'asunto',
         'message' => 'mensaje',
-        'numCard' => 'número de tarjeta',
+        'numCard' => 'Número de tarjeta',
+        'expiration' => 'Fecha de vencimiento',
     ],
 ];
