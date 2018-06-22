@@ -16,10 +16,10 @@
       			<h5>Origen: </h5><input type="text" name="origen" value="" size="50" />
       		</div>
       		<div class="col-4 search-form-item">
-      			<h5>Fecha salida: </h5><input type="date" name="fecha" min="1950-01-01" max="2020-01-01">
+      			<h5>Fecha salida: </h5><input type="date" name="fecha salida" min="1950-01-01" max="2020-01-01">
       	    </div>
       	    <div class="col-4 search-form-item">
-      			<h5>Fecha llegada: </h5><input type="date" name="fecha" min="1950-01-01" max="2020-01-01">
+      			<h5>Fecha llegada: </h5><input type="date" name="fecha llegada" min="1950-01-01" max="2020-01-01">
       	    </div>
       	    <div class="col-4 search-form-item">
       			<h5>Tipo de vehiculo: </h5>
@@ -30,6 +30,9 @@
                     <option value="sin preferencia">Sin preferencia</option>
       			  </select>
       	    </div>
+            <div class="col-4 search-form-item">
+            <h5>Asientos disponbibles: </h5><input type="number" name="asientos">
+            </div>
       	 </div>
       </div>
   </header>
