@@ -38,12 +38,12 @@
     @endif
 
 	<br>
-	<label for="mount">Monto:</label>
-	<input type="number" name="mount" id="mount" class="form-control{{ $errors->has('mount') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+	<label for="amount">Monto:</label>
+	<input type="number" step="0.1" name="amount" id="amount" class="form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 	
-	@if ($errors->has('mount'))
+	@if ($errors->has('amount'))
     	<span class="invalid-feedback">
-    		<strong>{{ $errors->first('mount') }}</strong>
+    		<strong>{{ $errors->first('amount') }}</strong>
     	</span>
     @endif
 
@@ -78,8 +78,19 @@
     @endif
 
 	<br>
+	
+	<label class="col-md-4 col-form-label text-md-right">Vehiculo*</label>
+    <select name="car" id="car" required="required" class="form-control{{ $errors->has('car') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
+    	<option value="">Seleccionar</option>
+    	@foreach ($cars as $car)
+        	<option  value="{{$car->id}}">Marca: {{$car->brand}} Modelo: {{ $car->model}} Asientos: {{$car->numSeats}}</option>
+        @endforeach
+        
+    </select>
+    <br>
+
 	<label class="col-md-4 col-form-label text-md-right">Tarjeta*</label>
-    <select name="idCard" id="idCard" required="required" class="form-control{{ $errors->has('idCard') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
+    <select name="card" id="card" required="required" class="form-control{{ $errors->has('card') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
     	<option value="">Seleccionar</option>
     	@foreach ($cards as $card)
         	<option  value="{{$card->id}}"> Tarjeta {{ $card->numCard }}</option>

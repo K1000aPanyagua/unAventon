@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
+use App\Account;
+
 class RegisterController extends Controller
 {
     /*
@@ -86,9 +88,8 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-
         $this->guard()->login($this->create($request->all()));
-
+        $this->createAccount();
         return redirect('/')->with('success', 'Usuario creado!');
     }
 
@@ -100,5 +101,12 @@ class RegisterController extends Controller
     {
         return Auth::guard('guard-name');
     }*/
+
+    protected function createAccount(){
+        $account = new Account;
+        $account->user_id = Auth::user()->id;
+        $account->amount = 0;
+        $account->save();
+    }
 
 }

@@ -8,6 +8,8 @@ use Auth;
 use App\Card;
 use App\Comment;
 use Illuminate\Support\Facades\Validator;
+use App\Account;
+use App\Car;
 
 class RideController extends Controller
 {
@@ -19,8 +21,8 @@ class RideController extends Controller
 
     public function index()
     {
-        $rides= Ride::all(); //RIDE INDEX DEBERIA LLAMARSE CON UN INCLUDE EN EL HOME
-        return view('ride.index')->with('rides', $rides);
+        //$rides= Ride::all(); //RIDE INDEX DEBERIA LLAMARSE CON UN INCLUDE EN EL HOME
+        //return view('ride.index')->with('rides', $rides);
     }
 
     /**
@@ -36,10 +38,14 @@ class RideController extends Controller
         }
         $id = Auth::user()->id;
         $cards = Card::where('user_id', $id)->get();
-        if ( $cards == null) {
+        if ( count($cards) == 0) {
             return redirect('card/create')->with('error', 'Usted no posee tarjeta asignada, ingrese una.');
         }
-        return view('ride.create')->with('cards', $cards);
+        $cars = Car::where('user_id', $id)->get();
+        if ( count($cars) == 0) {
+            return redirect('car/create')->with('error', 'Usted no posee un vehiculo asignado.');
+        }
+        return view('ride.create')->with('cards', $cards)->with('cars', $cars);
     }
 
     /**
@@ -61,9 +67,8 @@ class RideController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
-        
+    public function store(Request $request){
+        $account = Account::where('user_id', Auth::user()->id)->first();
 
         $ride = new Ride;
         $ride->user_id =        Auth::User()->id;
@@ -74,8 +79,9 @@ class RideController extends Controller
         $ride->remarks =        $request->remarks;
         $ride->departDate =     $request->departDate;
         $ride->departHour =     $request->departHour;
-        $ride->account_id =     Account::where('user_id', Auth::User()->id);
-        $ride->card_id =        $request->idCard;
+        $ride->account_id =     $account->id;
+        $ride->card_id =        $request->card;
+        $ride->car_id =         $request->car;
         $ride->save();
         
         return view('ride.show')->with('ride', $ride)->with('success', 'Viaje publicado!');
