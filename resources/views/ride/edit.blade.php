@@ -57,7 +57,7 @@
 
           <br>
           <label for="departDate">Fecha de salida:</label>
-          <input value=" {{ $ride->departDate }}" type="date" name="departDate" id="departDate" class="form-control{{ $errors->has('departDate') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+          <input value="{{ $ride->departDate }}" type="date" name="departDate" id="departDate" class="form-control{{ $errors->has('departDate') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
           
           @if ($errors->has('departDate'))
               <span class="invalid-feedback">

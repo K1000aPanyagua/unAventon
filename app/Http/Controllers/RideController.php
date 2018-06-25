@@ -118,7 +118,7 @@ class RideController extends Controller
         $ride = Ride::find($id);
         $cars = Car::where('user_id', Auth::user()->id);
         $cards = Card::where('user_id', Auth::user()->id);
-        return view('ride.edit')->with('ride', $ride)->with('cars', $cars)->with('cards', $cards);
+        return view('ride.edit')->with('cars', $cars)->with('cards', $cards)->with('ride', $ride);
     }
 
     /**

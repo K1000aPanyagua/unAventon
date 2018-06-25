@@ -83,7 +83,7 @@
     <select name="car" id="car" required="required" class="form-control{{ $errors->has('car') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
     	<option value="">Seleccionar</option>
     	@foreach ($cars as $car)
-        	<option  value="{{$car->id}}">Marca: {{$car->brand}} Modelo: {{ $car->model}} Asientos: {{$car->numSeats}}</option>
+        	<option value="{{$car->id}}">Marca: {{$car->brand}} Modelo: {{ $car->model}} Asientos: {{$car->numSeats}}</option>
         @endforeach
         
     </select>
