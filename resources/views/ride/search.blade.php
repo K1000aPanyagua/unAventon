@@ -6,6 +6,7 @@
 @include('menu')
 
 <header class="masthead background-w-imagebgprimary text-white row" style="background-image: url('{{ asset('assets/autos.jpg') }}')">
+    <form method="GET" action="{{action('RideController@getBy')}}">  
       <div class="col-12">
       	<h3 class="m-left"> Buscar por: </h3>
       	<div class="row color-aventon-bk">
@@ -32,6 +33,8 @@
       	    </div>
       	 </div>
       </div>
+      <button class="btn-button btn" type="submit">Buscar</button>
+    </form>
   </header>
 @include('modal')
 @include('copyrigtharrow')
