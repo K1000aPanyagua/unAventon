@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-lg-8 mx-auto">
         <h1 class=" text-white text-uppercase mb-0">Agregar <div style="height: 0.17em;"></div> vehículo</h1>
+        @include('flash_message')
         <br>
         <br> 
         <form method="POST" action="{{ route('car.store') }}">

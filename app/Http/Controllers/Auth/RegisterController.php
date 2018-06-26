@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
+use App\Account;
+
 class RegisterController extends Controller
 {
     /*
@@ -46,13 +48,14 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data){
+
         
         return Validator::make($data, [
             'name' => 'required|string',
             'lastname' => 'required|string',
             'birthdate' => 'required|date',
-            'pass' => 'min:6|required_with:password-confirm',
-            'password-confirm' => 'min:6',
+            'pass' => 'required|min:6|confirmed',
+            'pass_confirmation' => 'required|min:6',
             'email' => 'required|email|unique:users',
         ]);
     }
@@ -86,9 +89,8 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-
         $this->guard()->login($this->create($request->all()));
-
+        $this->createAccount();
         return redirect('/')->with('success', 'Usuario creado!');
     }
 
@@ -100,5 +102,12 @@ class RegisterController extends Controller
     {
         return Auth::guard('guard-name');
     }*/
+
+    protected function createAccount(){
+        $account = new Account;
+        $account->user_id = Auth::user()->id;
+        $account->amount = 0;
+        $account->save();
+    }
 
 }

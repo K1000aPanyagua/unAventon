@@ -23,7 +23,7 @@
 
                             <div class="col-md-6">
                                 
-                                <input id="numCard" type="text" class="form-control{{ $errors->has('numCard') ? ' is-invalid' : '' }}" name="numCard" value="{{ old('numCard') }}" required="required" autofocus oninvalid="this.setCustomValidity('El campo debe contener los 16 dígitos de la tarjeta')"
+                                <input id="numCard" type="text" class="form-control{{ $errors->has('numCard') ? ' is-invalid' : '' }}" name="numCard" value="{{ old('numCard') }}" placeholder="Ingrese los 16 dígitos de su tarjeta..." required="required" autofocus oninvalid="this.setCustomValidity('El campo debe contener los 16 dígitos de la tarjeta')"
                                     oninput="setCustomValidity('')">
 
                                 @if ($errors->has('numCard'))
@@ -38,7 +38,7 @@
                             <label for="expiration" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de vencimiento') }}*</label>
 
                             <div class="col-md-6">
-                                <input value="{{ old('expiration') }}" type="date" id="expiration" name="expiration" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                <input value="{{ old('expiration') }}" type="date" id="expiration" name="expiration" required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
                                     oninput="setCustomValidity('')">
 
                                 @if ($errors->has('expiration'))

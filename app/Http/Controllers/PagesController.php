@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Car;
 use App\Card;
+use App\Ride;
+use Illuminate\Support\Facades\DB;
+
 class PagesController extends Controller {
 
 	public function getIndex(){
-		return view('home');
+		$rides = DB::table('rides')->paginate(15);
+		return view('home')->with('rides', $rides);
 	}
 
 	public function getSearch(){

@@ -19,7 +19,7 @@ class CardController extends Controller
      */
     public function index()
     {
-        $cards = Card::where('user_id', Auth::user()->id)->get();
+        $cards = Card::where('user_id', Auth::user()->id)->orderBy('expiration')->get();
         return view('card.allCards')->with('cards', $cards);
     }
 
@@ -54,7 +54,7 @@ class CardController extends Controller
         $card->save();
 
         //Redireccion
-        return view('card.show')->with('card', $card);
+        return $this->index();
     }
 
     /**
@@ -114,15 +114,16 @@ class CardController extends Controller
         Card::destroy($id);
         
         //Se redirecciona a la vista de tarjetas
-        return view('card.allCards');
+        return $this->index();
     }
 
     protected function validator(array $data){
         
-        $today = today();
+        $today=Carbon::today();
+        $today=$today->toDateString();
         return Validator::make($data, [
-            'numCard' => 'required|digits:16|numeric',
-            'expiration' => 'required|date|after:today',
+            'numCard' => 'required|digits:16',
+            'expiration' => 'required|after:'.$today,
         ]);
     }
 
