@@ -208,7 +208,6 @@ class RideController extends Controller
             $ride->whereHas('rides', function ($query) use ($request) {
             $query->where('kind', $request->kind);
             })->get();
-        }
 
         $rides = $rides->get();
         return view('ride.searchResult')->with('rides', $rides);
