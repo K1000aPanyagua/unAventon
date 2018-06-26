@@ -5,12 +5,12 @@
   
     @foreach ($rides as $ride)
       <tr>
-        <td>
-        Origen: {{$ride->origin}}
-        </td>
-        <td>
-        Destino: {{$ride->destination}}
-        </td>
+        <a href="{{route('ride.show', $ride->id)}}">
+          <td>
+            Origen: {{$ride->origin}}
+            Destino: {{$ride->destination}}
+          </td>
+        </a>
       </tr>
     @endforeach
 
