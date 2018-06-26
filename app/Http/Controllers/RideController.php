@@ -10,6 +10,7 @@ use App\Comment;
 use Illuminate\Support\Facades\Validator;
 use App\Account;
 use App\Car;
+use App\PassengerRide;
 
 class RideController extends Controller
 {
@@ -115,7 +116,9 @@ class RideController extends Controller
             return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje');
         }
         $ride = Ride::find($id);
-        return view('ride.show')->with('ride', $ride);
+        $cars = Car::where('user_id', Auth::user()->id);
+        $cards = Card::where('user_id', Auth::user()->id);
+        return view('ride.edit')->with('cars', $cars)->with('cards', $cards)->with('ride', $ride);
     }
 
     /**
