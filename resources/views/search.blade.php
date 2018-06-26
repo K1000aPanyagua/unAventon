@@ -31,7 +31,7 @@
       			  </select>
       	    </div>
             <div class="col-4 search-form-item">
-            <h5>Asientos disponbibles: </h5><input type="number" name="asientos">
+            <h5>Asientos disponibles: </h5><input type="number" name="asientos">
             </div>
       	 </div>
       </div>

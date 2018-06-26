@@ -201,10 +201,7 @@ class RideController extends Controller
             $query->where('event.slug', $request->input('event'));
         });
         }
-<<<<<<< HEAD
-    
-=======
->>>>>>> e2108f67eac59872e258a91c302488b3747a96b7
+
         // Only return rides who have responded
         // to the invitation (with any type of
         // response).

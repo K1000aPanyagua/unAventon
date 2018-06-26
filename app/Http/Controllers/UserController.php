@@ -42,7 +42,7 @@ class UserController extends Controller
     }
 
     public function editPassword(){
-        return view('user.passForm');
+        return view('user/passForm');
     }
     
     public function edit($id){
@@ -73,6 +73,12 @@ class UserController extends Controller
         ]);
     }
 
+    protected function passValidator(array $data){
+        return  Validator::make($data, [
+            'pass' => 'string|required|min:6'
+            ]);
+    }
+
     public function update(Request $request, $id)
     {
         $this->updateValidator($request->all())->validate();
@@ -95,13 +101,17 @@ class UserController extends Controller
     }
 
     public function updatePassword(Request $request){
-        $passw = $request->input('pass');
-        $newPass = $request->input('newPass');
-        return  Validator::make($request, ['pass' => 'string|required|min:6']);
+        $this->passValidator($request->all())->validate();
+        dd($request->all());
+        $passw = $request->pass;
         if ($passw == Auth::user()->pass) {
             $user = User::find($email);
-            $user->pass = bcrypt($request->input('pass'));
+            $user->pass = bcrypt($request->input('newPass'));
             $user->save();
+        return redirect('user.show')->with('user', $user)->with('success', 'Cambios guardados');
+        }
+        else{
+            dd('caaca');
         }
     }
 

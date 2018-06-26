@@ -18,6 +18,8 @@ Route::get('/resultregister','PagesController@getResultRegister');
 
 Route::resource('user', 'UserController');
 Route::get('/editPass', 'UserController@editPassword');
+Route::post('/newPass', 'UserController@updatePassword');
+
 
 Route::resource('card', 'CardController');
 
@@ -36,6 +38,7 @@ Route::get('/getRecover', 'Auth\LoginController@getLogInDeleted');
 Route::resource('auth', 'AuthController');
 
 Route::resource('ride', 'RideController');
+
 Route::post('/delete', 'RideController@askDeletion');
 
 Route::resource('comment', 'Comment@Controller');
