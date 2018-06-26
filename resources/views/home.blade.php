@@ -8,6 +8,7 @@
 @include('menu')
 @include('header') 
 @include('buttonsearch')
+@include('rideshome')
 
 <!--fin header-->
 @include('footer')
