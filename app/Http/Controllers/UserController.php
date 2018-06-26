@@ -37,16 +37,23 @@ class UserController extends Controller
      */
 
     public function show($id){
+        if ($id != Auth::user()->id) {
+            return view('user.showOtherUser');
+        }
+
         $user = User::find($id);
         return view('user.show', compact('user'));
     }
 
     public function editPassword(){
+         if ($id != Auth::user()->id) {
+            return view('/');
+        }
+
         return view('user.passForm');
     }
     
     public function edit($id){
-
         //Carga vista de editar perfil
 
         $user=User::find($id);
@@ -73,8 +80,11 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
+        if ($id != Auth::user()->id) {
+            return view('/');
+        }
+
         $this->updateValidator($request->all())->validate();
         $user = User::find($id);
 
@@ -90,11 +100,19 @@ class UserController extends Controller
     }
 
     public function destroy($id){   
+        if ($id != Auth::user()->id) {
+            return view('/');
+        }
+
         User::destroy($id);
         return redirect('/')->with('success', 'Usuario eliminado');
     }
 
     public function updatePassword(Request $request){
+        if ($id != Auth::user()->id) {
+            return view('/');
+        }
+
         $passw = $request->input('pass');
         $newPass = $request->input('newPass');
         return  Validator::make($request, ['pass' => 'string|required|min:6']);
