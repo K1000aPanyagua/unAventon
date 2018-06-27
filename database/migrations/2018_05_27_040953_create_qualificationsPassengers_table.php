@@ -21,9 +21,10 @@ class CreateQualificationsPassengersTable extends Migration
             $table->foreign('pilot_id')->references('id')->on('users');
             $table->integer('passenger_id')->unsigned();
             $table->foreign('passenger_id')->references('id')->on('users');
-            $table->string('review');
+            $table->string('review')->nullable();
             $table->integer('ride_id')->unsigned();
-            $table->foreign('ride_id')->references('id')->on('rides');
+            $table->foreign('ride_id')->references('id')->on('rides')
+            $table->boolean('done')->default(FALSE);
         });
     }
 

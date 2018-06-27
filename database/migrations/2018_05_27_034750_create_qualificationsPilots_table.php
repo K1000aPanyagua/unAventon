@@ -24,6 +24,7 @@ class CreateQualificationsPilotsTable extends Migration
             $table->string('review');
             $table->integer('ride_id')->unsigned();
             $table->foreign('ride_id')->references('id')->on('rides');
+            $table->boolean('done')->default(FALSE);
         });
     }
 
