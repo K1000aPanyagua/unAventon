@@ -34,14 +34,14 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="newPass" class="col-md-4 col-form-label text-md-right">Nueva contraseña*</label>
+            <label for="nuevaContraseña" class="col-md-4 col-form-label text-md-right">Nueva contraseña*</label>
 
             <div class="col-md-6">
-               <input id="newPass" type="password" class="form-control{{ $errors->has('pass') ? ' is-invalid' : '' }}" name="newPass" required oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+               <input id="nuevaContraseña" type="password" class="form-control{{ $errors->has('nuevaContraseña') ? ' is-invalid' : '' }}" name="nuevaContraseña" required oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
-               @if ($errors->has('newPass'))
+               @if ($errors->has('nuevaContraseña'))
                  <span class="invalid-feedback">
-                   <strong>{{ $errors->first('pass') }}</strong>
+                   <strong>{{ $errors->first('nuevaContraseña') }}</strong>
                  </span>
                 @endif
             </div>
@@ -54,7 +54,7 @@
              </div>
              <script language='javascript' type='text/javascript'>
                 function check2(input) {
-                  if (input.value != document.getElementById('newPass').value) {
+                  if (input.value != document.getElementById('nuevaContraseña').value) {
                      input.setCustomValidity('Las contraseñas deben coincidir.');
                   } else {
                      // input is valid -- reset the error message

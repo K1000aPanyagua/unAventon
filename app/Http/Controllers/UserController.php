@@ -51,8 +51,15 @@ class UserController extends Controller{
 
 
     public function editPassword(){
+<<<<<<< HEAD
+
+        return view('user/passForm');
+     if ($id != Auth::user()->id) {
+            return view('/');
+=======
         if ($id != Auth::user()->id) {
             return redirect('/');
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
         }
         return view('user.passForm');
     }
@@ -84,17 +91,28 @@ class UserController extends Controller{
         ]);
     }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
     protected function passValidator(array $data){
         return  Validator::make($data, [
-            'pass' => 'string|required|min:6'
+            'nuevaContraseña' => 'string|required|min:6'
             ]);
     }
 
+<<<<<<< HEAD
+   
+=======
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
     public function update(Request $request, $id){
         if ($id != Auth::user()->id) {
             return view('/');
         }
+<<<<<<< HEAD
+
+=======
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
         $this->updateValidator($request->all())->validate();
         $user = User::find($id);
 
@@ -119,6 +137,14 @@ class UserController extends Controller{
 
     public function updatePassword(Request $request){
         $this->passValidator($request->all())->validate();
+<<<<<<< HEAD
+        $passw = $request->input('pass');
+        
+        if (\Hash::check($passw, Auth::user()->pass)){
+            Auth::user()->pass = bcrypt($request->input('nuevaContraseña'));
+            Auth::user()->save();
+        return redirect('/editPass')->with('user', Auth::user()->email)->with('success', 'Cambios guardados');
+=======
         dd($request->all());
         $passw = $request->pass;
 
@@ -135,9 +161,10 @@ class UserController extends Controller{
             $user->pass = bcrypt($request->input('newPass'));
             $user->save();
         return redirect('user.show')->with('user', $user)->with('success', 'Cambios guardados');
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
         }
         else{
-            dd('caaca');
+            return redirect('/editPass')->with('user', Auth::user()->email)->with('error', 'Contraseña actual incorrecta');
         }
     }
 
@@ -202,3 +229,10 @@ class UserController extends Controller{
 }
 
 
+   /*  if ($id != Auth::user()->id) {
+            return view('/');
+        }
+
+        $passw = $request->input('pass');
+        $nuevaContraseña = $request->input('nuevaContraseña');
+        return  Validator::make($request, ['pass' => 'string|required|min:6']);

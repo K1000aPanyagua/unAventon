@@ -6,12 +6,12 @@
 
     <div class="col-sm-4">
       <div class="color-aventon-bk col-account">
-      <h1 class="text-uppercase  separator-m col-sm-12">Mis vehículos:</h1>  
+      <h2 class="text-uppercase  separator-m col-sm-12">Mis vehículos:</h2>  
         <a class="listitem text-white "  href="{{ action('CarController@create') }}"> 
-          <h2> ► Cargar nuevo vehículo</h2>
+          <p> ► Cargar nuevo vehículo</p>
         </a>
         <a class="listitem text-white "  href="{{ action('CarController@index')}}"> 
-          <h2> ► Editar vehículos</h2>
+          <p> ► Editar vehículos</p>
         </a>
       </div>
     </div>
@@ -19,24 +19,24 @@
 
       <div class="col-sm-4 ">
         <div class="color-aventon-bk col-account">
-         <h1 class="text-uppercase text-left separator-m col-sm-12">Mis Tarjetas:</h1>  
+         <h2 class="text-uppercase text-left separator-m col-sm-12">Mis Tarjetas:</h2>  
            <a class="listitem text-white" href="{{action('CardController@create')}}"> 
-              <h2> ► Cargar nueva tarjeta</h2>
+              <p> ► Cargar nueva tarjeta</p>
             </a>
             <a class="listitem text-white" href="{{action('CardController@index')}}"> 
-              <h2> ► Eliminar tarjeta</h2>
+              <p> ► Eliminar tarjeta</p>
             </a>
           </div>
       </div>
    
     <div class="col-sm-4">   
        <div class="color-aventon-bk col-account">
-         <h1 class="text-uppercase text-left separator-m col-sm-12">Mi <br> perfil:</h1> 
+         <h2 class="text-uppercase text-left separator-m col-sm-12">Mi <br> perfil:</h2> 
             <a class="listitem text-white" href=" {{route('user.edit', Auth::User()->id)}} "> 
-              <h2> ► Editar datos personales</h2>
+              <p> ► Editar datos personales</p>
             </a>
             <a class="listitem text-white" href="/editPass"> 
-              <h2> ► Cambiar contraseña</h2>
+              <p> ► Cambiar contraseña</p>
             </a>
 
               <form action="{{ route('user.destroy', Auth::User()->id) }}" method="POST" onsubmit="return ConfirmDelete()">
