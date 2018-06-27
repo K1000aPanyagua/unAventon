@@ -17,7 +17,7 @@ class PagesController extends Controller {
 	}
 
 	public function getSearch(){
-		return view('search');
+		return view('ride.search');
 	}
 
 	public function getUpdate(){
