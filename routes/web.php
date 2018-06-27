@@ -35,10 +35,9 @@ Route::post('/postRecover', 'Auth\LoginController@recoverAccount');
 Route::get('/logout', 'Auth\LoginController@logOut');
 Route::get('/getRecover', 'Auth\LoginController@getLogInDeleted');
 
-Route::resource('auth', 'AuthController');
 
 Route::resource('ride', 'RideController');
+Route::get('/result', 'RideController@getBy');
 
-Route::post('/delete', 'RideController@askDeletion');
 
-Route::resource('comment', 'Comment@Controller');
+Route::resource('comment', 'CommentController');

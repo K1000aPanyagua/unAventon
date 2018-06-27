@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
 use App\User;
+use App\PassengerRide;
+use App\QualificationPassenger;
+use App\QualificationPilot;
+use App\Comment;
+use App\Car;
 
-class UserController extends Controller
-{
+class UserController extends Controller{
   
     /*public function __construct()
     {
@@ -45,13 +49,18 @@ class UserController extends Controller
         return view('user.show', compact('user'));
     }
 
+
     public function editPassword(){
+<<<<<<< HEAD
 
         return view('user/passForm');
      if ($id != Auth::user()->id) {
             return view('/');
+=======
+        if ($id != Auth::user()->id) {
+            return redirect('/');
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
         }
-
         return view('user.passForm');
     }
     
@@ -82,18 +91,28 @@ class UserController extends Controller
         ]);
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
     protected function passValidator(array $data){
         return  Validator::make($data, [
             'nuevaContraseña' => 'string|required|min:6'
             ]);
     }
 
+<<<<<<< HEAD
    
+=======
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
     public function update(Request $request, $id){
         if ($id != Auth::user()->id) {
             return view('/');
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
         $this->updateValidator($request->all())->validate();
         $user = User::find($id);
 
@@ -112,23 +131,96 @@ class UserController extends Controller
         if ($id != Auth::user()->id) {
             return view('/');
         }
-
         User::destroy($id);
         return redirect('/')->with('success', 'Usuario eliminado');
     }
 
     public function updatePassword(Request $request){
         $this->passValidator($request->all())->validate();
+<<<<<<< HEAD
         $passw = $request->input('pass');
         
         if (\Hash::check($passw, Auth::user()->pass)){
             Auth::user()->pass = bcrypt($request->input('nuevaContraseña'));
             Auth::user()->save();
         return redirect('/editPass')->with('user', Auth::user()->email)->with('success', 'Cambios guardados');
+=======
+        dd($request->all());
+        $passw = $request->pass;
+
+        if ($id != Auth::user()->id) {
+            return view('/');
+        }
+
+        $passw = $request->input('pass');
+        $newPass = $request->input('newPass');
+        return  Validator::make($request, ['pass' => 'string|required|min:6']);
+
+        if ($passw == Auth::user()->pass) {
+            $user = User::find($email);
+            $user->pass = bcrypt($request->input('newPass'));
+            $user->save();
+        return redirect('user.show')->with('user', $user)->with('success', 'Cambios guardados');
+>>>>>>> d528c186b2ea0dad8ca0b19b55a5e1da0bb0180b
         }
         else{
             return redirect('/editPass')->with('user', Auth::user()->email)->with('error', 'Contraseña actual incorrecta');
         }
+    }
+
+    public function postulate($idViaje){
+        //UN USUARIO QUE NO POSEA TARJETA NO PODRÁ POSTULARSE
+        //TAMPOCO PODRÁ POSTULARSE SI HA SIDO ACEPTADO EN UN VIAJE
+        //QUE SE SUPERPONGA 
+        //UN USUARIO CON UN PAGO ADEUDADO NO PODRÁ POSTULARSE
+        //UN USUARIO UNA CALIFICACIÓN PENDIENTE NO PODRÁ POSTULARSE
+        
+        //cargo datos del viaje
+        $ride = Ride::find('$idViaje');
+        $comments = Comment::where('ride_id', $id)->get();
+        $car = Car::where('id', $ride->car_id)->first();
+
+        //valido que el usuario tenga tarjeta
+        $cards = Card::where('user_id', Auth::user()->id)->get();
+        if ( count($cards) == 0) {
+            return redirect('card/create')->with('error', 'Usted no posee tarjeta asignada, ingrese una.');
+        }
+
+        //valido que el usuario no sea pasajero de un viaje con misma fecha
+        $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
+        $endDate = date('m-d-Y H:i:s',strtotime($ride->duration, strtotime($ride->departTime)));
+        if (count($auxRide) > 0){
+            foreach ($auxRide as $currentRide) {
+                $endDateVal = date('m-d-Y H:i:s',strtotime($auxRide->duration, strtotime($auxRide->departTime)));
+                if !($ride->departTime > $auxRide->departTime) && !($ride->departTime > $endDateVal) {
+                    return redirect()->back()->with('error', 'Usted poseé un viaje como pasajero el cual se superpone con el viaje al que usted desea postularse');
+                }elseif !($endDate < $auxRide->departTime) && !($endDate < $endDateVal) {
+                    return redirect()->back()->with('error', 'Usted poseé un viaje como pasajero el cual se superpone con el viaje al que usted desea postularse');
+                }
+                //valido que no adeude pagos
+                if ($currentRide->paid == FALSE) {
+                    return redirect()->back()->with('error', 'Ustéd adeuda pagos');
+                }
+
+            }
+        }
+        //valido que no adeude calificaciones
+        $qualificationsAsPassenger = QualificationsPassengers::where('done', FALSE)->get();
+        if ($qualificationsAsPassenger != null) {
+            return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
+        }
+        $qualificationsAsPilot = QualificationsPilots::where('done', FALSE)->get();
+        if ($qualificationsAsPilot != null) {
+            return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
+        }
+
+        $passengerRide = new PassengerRide;
+        $passengerRide->user_id = Auth::user()->id;
+        $passengerRide->ride_id = $idViaje;
+        $passengerRide->state = "pendiente";
+        $passengerRide->save();
+        
+        return view('ride.show')->with('comments', $comments)->with('car', $car);
     }
 
 }

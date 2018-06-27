@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Account;
 use App\Car;
 use App\PassengerRide;
-
+use DB;
 class RideController extends Controller
 {
     /**
@@ -82,10 +82,17 @@ class RideController extends Controller
         $ride->departHour =     $request->departHour;
         $ride->account_id =     $account->id;
         $ride->card_id =        $request->card;
-        $ride->car_id =         $request->car;
+        $ride->car_id =         $request->car_id;
         $ride->save();
         
-        return view('ride.show')->with('ride', $ride)->with('success', 'Viaje publicado!');
+        $car = Car::where('id', $ride->car_id)->first();
+        $card = Card::where('id', $ride->card_id)->first();
+        $comments = Comment::where('ride_id', $ride->id)->get();
+        if (count($comments) == 0) {
+            $comments = 'Aún no hay comentarios';
+        }
+
+        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje publicado!')->with('comments', $comments);
     }
 
     /**
@@ -97,10 +104,11 @@ class RideController extends Controller
     public function show($id){
         $ride = Ride::find($id);
         $comments = Comment::where('ride_id', $id)->get();
+        $car = Car::find($ride->car_id)->first();
         if (count($comments) == 0) {
             $comments = 'Aún no hay comentarios';
         }
-        return view('ride.show')->with('ride', $ride)->with('comments', $comments);
+        return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car);
     }
 
     /**
@@ -116,8 +124,8 @@ class RideController extends Controller
             return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje');
         }
         $ride = Ride::find($id);
-        $cars = Car::where('user_id', Auth::user()->id);
-        $cards = Card::where('user_id', Auth::user()->id);
+        $cars = Car::where('user_id', Auth::user()->id)->get();
+        $cards = Card::where('user_id', Auth::user()->id)->get();
         return view('ride.edit')->with('cars', $cars)->with('cards', $cards)->with('ride', $ride);
     }
 
@@ -131,9 +139,9 @@ class RideController extends Controller
     public function update(Request $request, $id)
     {
         //SI SE LLEGA ACÁ ES POR QUE NO HAY COPILOTOS ASOCIADOS
-        $this->validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
 
-        $ride = ride::find($id);
+        $ride = Ride::find($id);
 
         $ride->origin =         $request->origin;
         $ride->destination =    $request->destination;
@@ -143,11 +151,21 @@ class RideController extends Controller
         $ride->departDate =     $request->departDate;
         $ride->departHour =     $request->departHour;
         //$ride->account_id =     Account::where('user_id', Auth::User()->id);
-        $ride->card_id =        $request->idCard;
+        $ride->card_id =        $request->card;
+        $ride->car_id =        $request->car;
         
         $ride->save();
-        $ride = ride::find($id);
-        return view('ride.show')->with('ride', $ride)->with('success', 'Viaje editado');
+        
+    
+        $car = Car::where('id', $ride->car_id)->first();
+        $card = Card::where('id', $ride->card_id)->first();
+        $comments = Comment::where('ride_id', $ride->id)->get();
+        if (count($comments) == 0) {
+            $comments = 'Aún no hay comentarios';
+        }
+
+        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje editado!')->with('comments', $comments);
+        
     }
 
     /**
@@ -157,13 +175,6 @@ class RideController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        Ride::destroy($id);
-        $rides = Ride::where('user_id', Auth::user()->id)->get();
-        //redirecciona a cualquier lugar
-        return view('ride.allrides')->with('rides', $rides)->with('success', 'viaje eliminado');
-    }
-
-    public function askDeletion($id){
         //SE CONTROLA QUE NO HAYA PASAJEROS ACEPTADOS O PENDIENTES
         //SI HAY, SE LE PREGUNTA SI REALMENTE QUIERE ELIMINAR 
         //ADVIRTIENDO DE LA PENALIZACION
@@ -172,12 +183,16 @@ class RideController extends Controller
         if (count($passengers) > 0 ){
             return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
         }else{
-            $this->destroy($id);
+            Ride::destroy($id);
+        $rides = Ride::where('user_id', Auth::user()->id)->get();
+        //redirecciona a cualquier lugar
+        return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
         }
+        
     }
 
     public function getBy(Request $request){
-        $rides = $rides->newQuery();
+        $rides = DB::table('rides');
 
         // Search for a ride based on their destination.
         if ($request->has('destination')) {
@@ -194,45 +209,21 @@ class RideController extends Controller
             $ride->where('duration', $request->input('duration'));
         }
 
-        // Only return rides who are assigned
-        // to the given sales manager(s).
-        if ($request->has('managers')) {
-           $ride->whereHas('managers', function ($query) use ($request) {
-           $query->whereIn('managers.name', $request->input('managers'));
-            });
+        if ($request->has('departDate')) {
+           $ride->where('departDate', $request->input('departDate'));
         }
 
-        // Has an 'event' parameter been provided?
-        if ($request->has('event')) {
-            // Only return rides who have
-            // been invited to the event.
-            $ride->whereHas('rsvp.event', function ($query) use ($request) {
-            $query->where('event.slug', $request->input('event'));
-        });
+        // Has an 'departHour' parameter been provided?
+        if ($request->has('departHour')) {
+            $ride->whereHas('rsvp.departHour', $request->input('departHour'));
         }
-
-        // Only return rides who have responded
-        // to the invitation (with any type of
-        // response).
-        if ($request->has('responded')) {
-            $ride->whereHas('rsvp', function ($query) use ($request) {
-            $query->whereNotNull('responded_at');
-            });
+      
+        if ($request->has('kind')) {
+            $ride->whereHas('rides', function ($query) use ($request) {
+            $query->where('kind', $request->kind);
+            })->get();
         }
-
-        // Only return rides who have responded
-        // to the invitation with a specific
-        // response.
-        if ($request->has('response')) {
-            $ride->whereHas('rsvp', function ($query) use ($request) {
-            $query->where('response', 'I will be attending');
-        });
-        }
-    
-        // Get the results and return them.
         $rides = $rides->get();
-        return view('ride.index')->with('rides', $rides);
+        return view('ride.searchResult')->with('rides', $rides);
     }
-
-
 }

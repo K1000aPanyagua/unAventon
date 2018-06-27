@@ -80,7 +80,7 @@
 	<br>
 	
 	<label class="col-md-4 col-form-label text-md-right">Vehiculo*</label>
-    <select name="car" id="car" required="required" class="form-control{{ $errors->has('car') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
+    <select name="car_id" id="car_id" required="required" class="form-control{{ $errors->has('car_id') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
     	<option value="">Seleccionar</option>
     	@foreach ($cars as $car)
         	<option value="{{$car->id}}">Marca: {{$car->brand}} Modelo: {{ $car->model}} Asientos: {{$car->numSeats}}</option>
@@ -98,7 +98,7 @@
         
     </select>
     <br>
-	<textarea name="remarks" id="remarks" placeholder="Observaciones..."></textarea>
+	<textarea required="required" name="remarks" id="remarks" placeholder="Observaciones..."></textarea>
 	
 	@if ($errors->has('remarks'))
     	<span class="invalid-feedback">

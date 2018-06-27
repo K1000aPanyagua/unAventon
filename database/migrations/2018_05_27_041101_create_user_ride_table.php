@@ -19,6 +19,7 @@ class CreateUserRideTable extends Migration
             $table->integer('ride_id')->unsigned();
             $table->foreign('ride_id')->references('id')->on('rides');
             $table->string('state');
+            $table->boolean('paid')->default(FALSE);
             $table->timestamps();
         });
     }
