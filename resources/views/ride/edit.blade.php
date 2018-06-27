@@ -16,6 +16,7 @@
 
         <form method="POST" action="{{ route('ride.update', $ride->id) }}">
           {{ csrf_field() }}
+         {{ method_field('PUT') }}
           <label for="origin">Origen:</label>
           <input value="{{ $ride->origin }}" type="text" name="origin" id="origin" class="form-control{{ $errors->has('origin') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
           
@@ -80,11 +81,11 @@
           <label class="col-md-4 col-form-label text-md-right">Vehiculo*</label>
             <select name="car" id="car" required="required" class="form-control{{ $errors->has('car') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">  
               <option value="">Seleccionar</option>
-              @foreach ($cars as $i)
-                  <option  value="{{$i->id}}" 
-                    @if ($i->id == $car->id) 
+              @foreach ($cars as $car)
+                  <option  value="{{$car->id}}" 
+                    @if ($car->id == $ride->car_id) 
                       {{'selected'}}   
-                    @endif>Marca: {{$i->brand}} Modelo: {{ $i->model}} Asientos: {{$i->numSeats}}</option>
+                    @endif>Marca: {{$car->brand}} Modelo: {{ $car->model}} Asientos: {{$car->numSeats}}</option>
                 @endforeach
                 
             </select>
@@ -93,8 +94,11 @@
           <label class="col-md-4 col-form-label text-md-right">Tarjeta*</label>
             <select name="card" id="card" required="required" class="form-control{{ $errors->has('card') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')"> 
               <option value="">Seleccionar</option>
-              @foreach ($cards as $i)
-                  <option  value="{{$i->id}}" @if($i->id == $card->id) {{ 'selected' }} @endif> Tarjeta {{ $i->numCard }}</option>
+              @foreach ($cards as $card)
+                  <option  value="{{$card->id}}" 
+                    @if ($card->id == $ride->card_id) 
+                      {{'selected'}}   
+                    @endif>{{ $card->numCard }}</option>
                 @endforeach
                 
             </select>

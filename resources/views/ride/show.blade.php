@@ -7,7 +7,7 @@
 <body id="page-top" class="container-fluid">
 <!--Body -->
 @include('menu')
-
+@include('flash_message')
 
 
 <header class="masthead bg-primary text-white text-center row">
@@ -21,7 +21,7 @@
           {{ $ride->remarks }} 
           {{ $ride->departHour }}
           {{ $ride->departDate }} 
-          {{$car->kind}}
+          {{ $car->kind }}
           
           @if ($comments == 'Aún no hay comentarios')
             {{$comments}}
@@ -33,6 +33,22 @@
         
       </div>
        <a class="btn" href="{{ route('ride.edit', $ride->id) }}">Editar</a>
+
+       <form action="{{ route('ride.destroy', $ride->id) }}" method="POST" onsubmit="return ConfirmDelete()">
+          {{method_field('DELETE')}}
+          {{ csrf_field() }}
+          <input type="submit" class="btn btn-danger" value="Delete"/>
+          <script>
+            function ConfirmDelete(){
+              var x = confirm("¿Está seguro que quiere eliminar el viaje?");
+              if (x)
+                return true;
+              else
+                return false;
+              }
+          </script>
+        </form>
+
   </div>
 </header>
 

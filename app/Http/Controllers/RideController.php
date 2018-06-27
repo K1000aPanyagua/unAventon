@@ -85,7 +85,14 @@ class RideController extends Controller
         $ride->car_id =         $request->car_id;
         $ride->save();
         
-        return view('ride.show')->with('ride', $ride)->with('success', 'Viaje publicado!');
+        $car = Car::where('id', $ride->car_id)->first();
+        $card = Card::where('id', $ride->card_id)->first();
+        $comments = Comment::where('ride_id', $ride->id)->get();
+        if (count($comments) == 0) {
+            $comments = 'Aún no hay comentarios';
+        }
+
+        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje publicado!')->with('comments', $comments);
     }
 
     /**
@@ -97,7 +104,7 @@ class RideController extends Controller
     public function show($id){
         $ride = Ride::find($id);
         $comments = Comment::where('ride_id', $id)->get();
-        $car = Car::where('id', $ride->car_id)->first();
+        $car = Car::find($ride->car_id)->first();
         if (count($comments) == 0) {
             $comments = 'Aún no hay comentarios';
         }
@@ -117,8 +124,8 @@ class RideController extends Controller
             return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje');
         }
         $ride = Ride::find($id);
-        $cars = Car::where('user_id', Auth::user()->id);
-        $cards = Card::where('user_id', Auth::user()->id);
+        $cars = Car::where('user_id', Auth::user()->id)->get();
+        $cards = Card::where('user_id', Auth::user()->id)->get();
         return view('ride.edit')->with('cars', $cars)->with('cards', $cards)->with('ride', $ride);
     }
 
@@ -132,9 +139,9 @@ class RideController extends Controller
     public function update(Request $request, $id)
     {
         //SI SE LLEGA ACÁ ES POR QUE NO HAY COPILOTOS ASOCIADOS
-        $this->validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
 
-        $ride = ride::find($id);
+        $ride = Ride::find($id);
 
         $ride->origin =         $request->origin;
         $ride->destination =    $request->destination;
@@ -144,11 +151,21 @@ class RideController extends Controller
         $ride->departDate =     $request->departDate;
         $ride->departHour =     $request->departHour;
         //$ride->account_id =     Account::where('user_id', Auth::User()->id);
-        $ride->card_id =        $request->idCard;
+        $ride->card_id =        $request->card;
+        $ride->car_id =        $request->car;
         
         $ride->save();
-        $ride = ride::find($id);
-        return view('ride.show')->with('ride', $ride)->with('success', 'Viaje editado');
+        
+    
+        $car = Car::where('id', $ride->car_id)->first();
+        $card = Card::where('id', $ride->card_id)->first();
+        $comments = Comment::where('ride_id', $ride->id)->get();
+        if (count($comments) == 0) {
+            $comments = 'Aún no hay comentarios';
+        }
+
+        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje editado!')->with('comments', $comments);
+        
     }
 
     /**
@@ -158,13 +175,6 @@ class RideController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        Ride::destroy($id);
-        $rides = Ride::where('user_id', Auth::user()->id)->get();
-        //redirecciona a cualquier lugar
-        return view('ride.allrides')->with('rides', $rides)->with('success', 'viaje eliminado');
-    }
-
-    public function askDeletion($id){
         //SE CONTROLA QUE NO HAYA PASAJEROS ACEPTADOS O PENDIENTES
         //SI HAY, SE LE PREGUNTA SI REALMENTE QUIERE ELIMINAR 
         //ADVIRTIENDO DE LA PENALIZACION
@@ -173,8 +183,12 @@ class RideController extends Controller
         if (count($passengers) > 0 ){
             return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
         }else{
-            $this->destroy($id);
+            Ride::destroy($id);
+        $rides = Ride::where('user_id', Auth::user()->id)->get();
+        //redirecciona a cualquier lugar
+        return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
         }
+        
     }
 
     public function getBy(Request $request){

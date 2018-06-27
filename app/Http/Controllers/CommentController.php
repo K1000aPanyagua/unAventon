@@ -37,7 +37,7 @@ class CommentController extends Controller
     public function store(Request $request, $ride_id)
     {   
         //Validacion
-        $this->validator($request->all())->validate()
+        $this->validator($request->all())->validate();
         //Almacenamiento
         $comment = new Comment;
         $comment->content = $request->content;

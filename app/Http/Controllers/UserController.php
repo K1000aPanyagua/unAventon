@@ -50,14 +50,11 @@ class UserController extends Controller{
     }
 
 
-        return view('user/passForm');
-
-         if ($id != Auth::user()->id) {
-            return view('/');
+    public function editPassword(){
+        if ($id != Auth::user()->id) {
+            return redirect('/');
         }
-
         return view('user.passForm');
-
     }
     
     public function edit($id){

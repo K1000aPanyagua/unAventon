@@ -98,7 +98,7 @@
         
     </select>
     <br>
-	<textarea name="remarks" id="remarks" placeholder="Observaciones..."></textarea>
+	<textarea required="required" name="remarks" id="remarks" placeholder="Observaciones..."></textarea>
 	
 	@if ($errors->has('remarks'))
     	<span class="invalid-feedback">
