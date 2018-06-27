@@ -23,6 +23,22 @@
            {{ $ride->departDate }} 
       </div>
        <a class="btn" href="{{ route('ride.edit', $ride->id) }}">Editar</a>
+
+       <form action="{{ route('/rideDelete', ['id' => $ride->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
+          {{method_field('DELETE')}}
+          {{ csrf_field() }}
+          <input type="submit" class="btn btn-danger" value="Delete"/>
+          <script>
+            function ConfirmDelete(){
+              var x = confirm("¿Está seguro que quiere eliminar el viaje?");
+              if (x)
+                return true;
+              else
+                return false;
+              }
+          </script>
+        </form>
+
   </div>
 </header>
 

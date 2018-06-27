@@ -39,6 +39,6 @@ Route::resource('auth', 'AuthController');
 
 Route::resource('ride', 'RideController');
 
-Route::post('/delete', 'RideController@askDeletion');
+Route::post('/rideDelete', 'RideController@askDeletion');
 
 Route::resource('comment', 'Comment@Controller');
