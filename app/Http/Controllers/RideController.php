@@ -108,7 +108,8 @@ class RideController extends Controller
         if (count($comments) == 0) {
             $comments = 'Aún no hay comentarios';
         }
-        return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car);
+        $passengerRide = PassengerRide::where('ride_id', $id)->where('user_id', Auth::user()->id)->first();
+        return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide);
     }
 
     /**

@@ -54,7 +54,7 @@ class CardController extends Controller
         $card->save();
 
         //Redireccion
-        return $this->index();
+        return view('card.show')->with('card', $card);
     }
 
     /**
