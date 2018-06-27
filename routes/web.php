@@ -19,6 +19,7 @@ Route::get('/resultregister','PagesController@getResultRegister');
 Route::resource('user', 'UserController');
 Route::get('/editPass', 'UserController@editPassword');
 Route::post('/newPass', 'UserController@updatePassword');
+Route::put('/postulate', 'UserController@postulate');
 
 
 Route::resource('card', 'CardController');

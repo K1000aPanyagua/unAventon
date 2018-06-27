@@ -22,6 +22,38 @@
           {{ $ride->departHour }}
           {{ $ride->departDate }} 
           {{ $car->kind }}
+
+          @if ($ride->user_id == Auth::user()->id)
+            <a class="btn" href="{{ route('ride.edit', $ride->id) }}">Editar</a>
+
+            <form action="{{ route('ride.destroy', $ride->id) }}" method="POST" onsubmit="return ConfirmDelete()">
+            {{method_field('DELETE')}}
+            {{ csrf_field() }}
+            <input type="submit" class="btn btn-danger" value="Delete"/>
+            <script>
+            function ConfirmDelete(){
+              var x = confirm("¿Está seguro que quiere eliminar el viaje?");
+              if (x)
+                return true;
+              else
+                return false;
+              }
+            </script>
+            </form>
+          @elseif ($passengerRide != null)
+            @if ($passengerRide->state == 'Pendiente')
+              <button>Cancelar solicitud</button>
+            @elseif ($passengerRide->state == 'Aceptado')
+              <button>Darse de baja del viaje</button> 
+            @endif
+          @else
+            <form method="POST" href="{{action('UserController@postulate',  $ride->id)}}">
+              {{method_field('POST')}}
+              {{ csrf_field() }}
+              <button class="btn-primary" type="submit">Postularse</button>
+            </form>
+          
+          @endif
           
           @if ($comments == 'Aún no hay comentarios')
             {{$comments}}
@@ -32,22 +64,6 @@
           @endif
         
       </div>
-       <a class="btn" href="{{ route('ride.edit', $ride->id) }}">Editar</a>
-
-       <form action="{{ route('ride.destroy', $ride->id) }}" method="POST" onsubmit="return ConfirmDelete()">
-          {{method_field('DELETE')}}
-          {{ csrf_field() }}
-          <input type="submit" class="btn btn-danger" value="Delete"/>
-          <script>
-            function ConfirmDelete(){
-              var x = confirm("¿Está seguro que quiere eliminar el viaje?");
-              if (x)
-                return true;
-              else
-                return false;
-              }
-          </script>
-        </form>
 
   </div>
 </header>
@@ -55,9 +71,6 @@
 <a class="btn btn-primary" href="/"> 
   Volver al inicio 
 </a>
-
-
-
 
 <!--fin header-->
 @include('copyrigtharrow')

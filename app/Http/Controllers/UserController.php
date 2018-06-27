@@ -147,7 +147,10 @@ class UserController extends Controller{
         //QUE SE SUPERPONGA 
         //UN USUARIO CON UN PAGO ADEUDADO NO PODRÁ POSTULARSE
         //UN USUARIO UNA CALIFICACIÓN PENDIENTE NO PODRÁ POSTULARSE
-        
+        if (!Auth::check()) {
+            return redirect('/register')->with('error','Registrate para postularte a un viaje!');
+        }
+
         //cargo datos del viaje
         $ride = Ride::find('$idViaje');
         $comments = Comment::where('ride_id', $id)->get();
@@ -165,9 +168,9 @@ class UserController extends Controller{
         if (count($auxRide) > 0){
             foreach ($auxRide as $currentRide) {
                 $endDateVal = date('m-d-Y H:i:s',strtotime($auxRide->duration, strtotime($auxRide->departTime)));
-                if !($ride->departTime > $auxRide->departTime) && !($ride->departTime > $endDateVal) {
+                if (!($ride->departTime > $auxRide->departTime && !($ride->departTime > $endDateVal))) {
                     return redirect()->back()->with('error', 'Usted poseé un viaje como pasajero el cual se superpone con el viaje al que usted desea postularse');
-                }elseif !($endDate < $auxRide->departTime) && !($endDate < $endDateVal) {
+                }elseif (!($endDate < $auxRide->departTime && !($endDate < $endDateVal))) {
                     return redirect()->back()->with('error', 'Usted poseé un viaje como pasajero el cual se superpone con el viaje al que usted desea postularse');
                 }
                 //valido que no adeude pagos
@@ -193,7 +196,7 @@ class UserController extends Controller{
         $passengerRide->state = "pendiente";
         $passengerRide->save();
         
-        return view('ride.show')->with('comments', $comments)->with('car', $car);
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide);
     }
 
 }
