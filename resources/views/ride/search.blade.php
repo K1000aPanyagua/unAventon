@@ -39,7 +39,6 @@
       <button class="btn-button btn" type="submit">Buscar</button>
     </form>
   </header>
-@include('modal')
 @include('copyrigtharrow')
 @include('javascript')
 </body>

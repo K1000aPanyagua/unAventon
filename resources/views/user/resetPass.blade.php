@@ -1,3 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+
+@include('head')
+
+
+<body id="page-top" class="container-fluid">
+<!--Body -->
+
+@include('menu')
+<header class="masthead bg-primary text-white text-center row">
+      
+    <h1 class="text-uppercase  col-sm-12">Cambiar contraseña</h1>
+    <p class="separator-l col-sm-12"> * Campo obligatorio</p>
+    
+    <div class="container text-center">
+        <div class="row justify-content-center">
+        <div class="col-md-8">
+          @include('flash_message')
+
+
 <form method="POST" action="{{ route('password.request') }}">
                         @csrf
 
@@ -47,3 +68,14 @@
                             </div>
                         </div>
                     </form>
+                     </div>
+    </div>
+   </div>
+</header>
+
+
+<!--fin header-->
+@include('footer')
+@include('javascript')
+</body>
+</html>

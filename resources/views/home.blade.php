@@ -12,7 +12,6 @@
 
 <!--fin header-->
 @include('footer')
-@include('modal')
 @include('javascript')
 </body>
 </html>
