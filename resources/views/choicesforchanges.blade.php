@@ -31,7 +31,7 @@
    
     <div class="col-sm-4">   
        <div class="color-aventon-bk col-account">
-         <h2 class="text-uppercase text-left separator-m col-sm-12">Mi <br> perfil:</h2> 
+         <h2 class="text-uppercase text-left separator-m col-sm-12">Mi perfil:</h2> 
             <a class="listitem text-white" href=" {{route('user.edit', Auth::User()->id)}} "> 
               <p> ► Editar datos personales</p>
             </a>
