@@ -23,7 +23,7 @@ Route::put('/postulate', 'UserController@postulate');
 
 
 Route::resource('card', 'CardController');
-
+Route::post('/eliminate', 'CarController@eliminate');
 Route::get('/list', 'CarController@list');
 Route::resource('car', 'CarController');
 

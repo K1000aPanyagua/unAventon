@@ -13,6 +13,9 @@
         <a class="listitem text-white "  href="{{ action('CarController@index')}}"> 
           <p> ► Editar vehículos</p>
         </a>
+        <a class="listitem text-white "  href="/eliminate"> 
+          <p> ► Eliminar vehículo</p>
+        </a>
       </div>
     </div>
      

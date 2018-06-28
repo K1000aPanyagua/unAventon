@@ -25,9 +25,9 @@
                                 
                                 <input id="numCard" type="text" class="form-control{{ $errors->has('numCard') ? ' is-invalid' : '' }}" name="numCard" value="{{ old('numCard') }}" placeholder="Ingrese los 16 dígitos de su tarjeta..." required="required" autofocus oninvalid="this.setCustomValidity('El campo debe contener los 16 dígitos de la tarjeta')"
                                     oninput="setCustomValidity('')">
-
+                                    <br>
                                 @if ($errors->has('numCard'))
-                                    <span class="invalid-feedback">
+                                    <span class="text-danger">
                                         <strong>{{ $errors->first('numCard') }}</strong>
                                     </span>
                                 @endif
@@ -40,9 +40,9 @@
                             <div class="col-md-6">
                                 <input value="{{ old('expiration') }}" type="date" id="expiration" name="expiration" required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
                                     oninput="setCustomValidity('')">
-
+                                    <br><br>   
                                 @if ($errors->has('expiration'))
-                                    <span class="invalid-feedback">
+                                    <span class="text-danger">
                                         <strong>{{ $errors->first('expiration') }}</strong>
                                     </span>
                                 @endif
@@ -65,7 +65,6 @@
 
 <!--fin header-->
 @include('footer')
-@include('modal')
 @include('javascript')
 </body>
 </html>
