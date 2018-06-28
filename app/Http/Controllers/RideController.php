@@ -81,8 +81,9 @@ class RideController extends Controller
         $ride->departDate =     $request->departDate;
         $ride->departHour =     $request->departHour;
         $ride->account_id =     $account->id;
-        $ride->card_id =        $request->card;
         $ride->car_id =         $request->car_id;
+        $ride->card_id =        $request->card;
+        
         $ride->save();
         
         $car = Car::where('id', $ride->car_id)->first();

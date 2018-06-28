@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Car;
 use App\User;
+use App\Ride;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Session;
 
 class CarController extends Controller
 {
@@ -63,23 +67,21 @@ class CarController extends Controller
         $car = Car::find($id);
         return view('car.show')->with('car', $car)->with('success', 'Vehiculo editado');
     }
-    
-    public function eliminate(){
-        dd('pepa');
-         $cars = Car::where('user_id', Auth::user()->id)->get();
-        return view('car.eliminate')->with('cars', $cars);
-    }
 
     public function destroy($id){
         //Se elimina el auto con id $id
         //Hay que verificar que no haya viajes pendientes
-        $cars = Car::where('user_id', Auth::user()->id)->get();
-        $rides = Ride::where('car_id', $id);
-        if(count($rides) != 0){
-            dd('posee viajes pendientes');
+        
+        $count = Ride::where('car_id', $id)->count();
+        if($count != 0){
+            $cars = Car::where('user_id', Auth::user()->id)->get();
+            //redirecciona a cualquier lugar
+            return redirect()->back()->with('cars', $cars)->with('error', 'Usted posee aún un viaje asociado a este vehículo.');
         }
         else{
-            //Car::destroy($id);
+
+            Car::destroy($id);
+            $cars = Car::where('user_id', Auth::user()->id)->get();
             //redirecciona a cualquier lugar
             return view('car.allCars')->with('cars', $cars)->with('success', 'Vehiculo eliminado');    
         }

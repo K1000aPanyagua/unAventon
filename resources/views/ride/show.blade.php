@@ -29,7 +29,7 @@
             <form action="{{ route('ride.destroy', $ride->id) }}" method="POST" onsubmit="return ConfirmDelete()">
             {{method_field('DELETE')}}
             {{ csrf_field() }}
-            <input type="submit" class="btn btn-danger" value="Delete"/>
+            <input type="submit" class="btn btn-danger" value="Eliminar"/>
             <script>
             function ConfirmDelete(){
               var x = confirm("¿Está seguro que quiere eliminar el viaje?");
