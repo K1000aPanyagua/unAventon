@@ -22,8 +22,7 @@
             @endif
             </div>
           </div>
-          <br>
-          <br>
+          
           <div class="form-group row" >
           <label for="brand" class="col-md-4 col-form-label text-md-right">{{ __('Marca') }}*</label>
 
@@ -37,8 +36,7 @@
               </span>
             @endif
             </div>
-          <br>
-          <br>
+          </div>
           <div class="form-group row" >
           <label for="model" class="col-md-4 col-form-label text-md-right">{{ __('Modelo') }}*</label>
 
@@ -53,10 +51,10 @@
             @endif
             </div>
           </div>
-          <br>
-          <br>
+        
+
           <div class="form-group row" >
-          <h5>Tipo: </h5>
+          <label for="model" class="col-md-4 col-form-label text-md-right">{{__('Tipo') }}*</label>
             <select name="kind" required="required">
               <option value="">Seleccionar</option>
               <option value="camioneta" @if (old('kind')== "camioneta") {{ 'selected' }} @endif>Camioneta</option>
@@ -64,8 +62,7 @@
               <option value="camion" @if (old('kind')== "camion") {{ 'selected' }} @endif>Camión</option>
             </select>
           </div>
-          <br>
-          <br>
+          
           <div class="form-group row" >
           <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Color') }}*</label>
 
@@ -80,8 +77,7 @@
             @endif
             </div>
           </div>
-          <br>
-          <br>
+          
           <div class="form-group row" >
           <label for="numSeats" class="col-md-4 col-form-label text-md-right">{{ __('Numero de asientos') }}*</label>
 

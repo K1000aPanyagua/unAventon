@@ -25,7 +25,7 @@
                             
                             <div class="col-md-6">
                                 
-                                <input value="{{ $user->name }}" id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                <input value="{{ $user->name }}" id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
                                     oninput="setCustomValidity('')">
 
                                 @if ($errors->has('name'))
@@ -40,7 +40,7 @@
                             <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}*</label>
 
                             <div class="col-md-6">
-                                <input id="lastname" type="string" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ $user->lastname }}" required autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                <input id="lastname" type="string" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ $user->lastname }}" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')"
                                     oninput="setCustomValidity('')">
 
                                 @if ($errors->has('lastname'))

@@ -7,12 +7,12 @@
 <body id="page-top" class="container-fluid">
 <!--Body -->
 @include('menu')
-@include('flash_message')
 
 
 <header class="masthead bg-primary text-white text-center row">
   <div class="container">
-    <h1 class="text-uppercase separator-l col-sm-12">datos del viaje</h1>  
+    <h1 class="text-uppercase separator-l col-sm-12">datos del viaje</h1> @include('flash_message')  
+    
       <div class="row" >
           {{ $ride->origin }} 
           {{ $ride->destination }} 
@@ -41,18 +41,42 @@
             </script>
             </form>
           @elseif ($passengerRide != null)
-            @if ($passengerRide->state == 'Pendiente')
-              <button>Cancelar solicitud</button>
-            @elseif ($passengerRide->state == 'Aceptado')
-              <button>Darse de baja del viaje</button> 
+            @if ($passengerRide->state == 'pendiente')
+              <form action="{{ route('user.cancelSolicitude', ['id' => $ride->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
+                {{method_field('DELETE')}}
+                {{ csrf_field() }}
+                <input type="submit" class="btn btn-danger" value="Cancelar solicitud"/>
+                <script>
+                  function ConfirmDelete(){
+                    var x = confirm("¿Está seguro que quiere cancelar la postulación?");
+                      if (x)
+                        return true;
+                      else
+                        return false;
+                  }
+                </script>
+              </form>
+            @elseif ($passengerRide->state == 'aceptado')
+              <form action="{{ route('user.cancelSolicitude', ['id' => $ride->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
+                {{method_field('DELETE')}}
+                {{ csrf_field() }}
+                <input type="submit" class="btn btn-danger" value="Darse de baja del viaje"/>
+                <script>
+                  function ConfirmDelete(){
+                    var x = confirm("¿Está seguro que quiere darse de baja?. Ustéd será penalizado");
+                      if (x)
+                        return true;
+                      else
+                        return false;
+                  }
+                </script>
+              </form> 
             @endif
           @else
-            <form method="POST" href="{{action('UserController@postulate',  $ride->id)}}">
-              {{method_field('POST')}}
-              {{ csrf_field() }}
-              <button class="btn-primary" type="submit">Postularse</button>
-            </form>
-          
+            <form  action="{{route('user.postulate', ['id' => $ride->id])}}">
+              <button type="submit">Postular</button>
+              {{method_field('GET')}}
+            </form>          
           @endif
           
           @if ($comments == 'Aún no hay comentarios')
