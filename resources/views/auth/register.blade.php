@@ -145,7 +145,6 @@
 
 <!--fin header-->
 @include('footer')
-
 @include('javascript')
 </body>
 </html>
