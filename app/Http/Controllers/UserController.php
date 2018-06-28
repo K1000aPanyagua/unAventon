@@ -13,6 +13,8 @@ use App\QualificationPassenger;
 use App\QualificationPilot;
 use App\Comment;
 use App\Car;
+use App\Ride;
+use App\Card;
 
 class UserController extends Controller{
   
@@ -51,19 +53,13 @@ class UserController extends Controller{
 
 
     public function editPassword(){
-
-
-        return view('user/passForm');
-     if ($id != Auth::user()->id) {
-            return view('/');
-
         if ($id != Auth::user()->id) {
             return redirect('/');
 
         }
         return view('user.passForm');
     }
-}
+
     
     public function edit($id){
         //Carga vista de editar perfil
@@ -141,7 +137,7 @@ class UserController extends Controller{
         }
     }
 
-    public function postulate($idViaje){
+    public function postulate(Request $request, $idViaje){
         //UN USUARIO QUE NO POSEA TARJETA NO PODRÁ POSTULARSE
         //TAMPOCO PODRÁ POSTULARSE SI HA SIDO ACEPTADO EN UN VIAJE
         //QUE SE SUPERPONGA 
@@ -152,8 +148,8 @@ class UserController extends Controller{
         }
 
         //cargo datos del viaje
-        $ride = Ride::find('$idViaje');
-        $comments = Comment::where('ride_id', $id)->get();
+        $ride = Ride::where('id', $idViaje)->first();
+        $comments = Comment::where('ride_id', $idViaje)->get();
         $car = Car::where('id', $ride->car_id)->first();
 
         //valido que el usuario tenga tarjeta
@@ -181,11 +177,11 @@ class UserController extends Controller{
             }
         }
         //valido que no adeude calificaciones
-        $qualificationsAsPassenger = QualificationsPassengers::where('done', FALSE)->get();
+        $qualificationsAsPassenger = QualificationPassenger::where('done', FALSE)->first();
         if ($qualificationsAsPassenger != null) {
             return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
         }
-        $qualificationsAsPilot = QualificationsPilots::where('done', FALSE)->get();
+        $qualificationsAsPilot = QualificationPilot::where('done', FALSE)->first();
         if ($qualificationsAsPilot != null) {
             return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
         }
@@ -196,9 +192,21 @@ class UserController extends Controller{
         $passengerRide->state = "pendiente";
         $passengerRide->save();
         
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide);
-    }
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride);
+    }   
 
+    public function cancelSolicitude(Request $request ,$idViaje){
+        $solicitude = PassengerRide::where('user_id', Auth::user()->id)->where('ride_id', $idViaje)->first();
+        if ($solicitude->state == 'aceptado') {
+            //SE PENALIZA AL USUARIO
+        }
+        PassengerRide::destroy($solicitude->id);
+        $passengerRide = null;
+        $ride = Ride::where('id', $idViaje)->first();
+        $comments = Comment::where('ride_id', $idViaje)->get();
+        $car = Car::where('id', $ride->car_id)->first();
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride);
+    }
 }
 
 

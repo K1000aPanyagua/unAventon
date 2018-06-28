@@ -33,7 +33,7 @@ class CarController extends Controller
 
         $car->user_id = Auth::user()->id;
         $car->save();
-        return view('car.show')->with('car', $car);
+        return view('car.show')->with('car', $car)->with('success', 'Vehiculo agregado');
     }
 
     public function show($id){
@@ -61,7 +61,8 @@ class CarController extends Controller
         
         $car->save();
         $car = Car::find($id);
-        return view('car.show')->with('car', $car)->with('success', 'Vehiculo editado');
+        \Session::flash('success', 'Veiculo modificado' );
+        return view('car.show')->with('car', $car);
     }
     
 

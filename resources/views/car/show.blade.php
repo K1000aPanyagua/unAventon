@@ -13,6 +13,7 @@
 <header class="masthead bg-primary text-white text-center row">
   <div class="container">
     <h1 class="text-uppercase separator-l col-sm-12">datos del vehiculo</h1>  
+    @include('flash_message')
       <div class="row" >
            {{ $car->model }} 
            {{ $car->license }} 
