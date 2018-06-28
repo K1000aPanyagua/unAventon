@@ -4,12 +4,12 @@
    
     <div class="col-sm-8">   
        <div class="color-aventon-bk">
-         <h1 class="text-uppercase text-center separator-m col-sm-12">Mi perfil:</h1> 
+         <h2 class="text-uppercase text-center separator-m col-sm-12">Mi perfil:</h2> 
             
-            <h2>► Nombre: {{ $user->name }}</h2> <br>
-            <h2>► Apellido: {{ $user->lastname }}</h2> <br>
-            <h2>► Fecha de nacimiento: {{ $user->birthdate }}</h2> <br>
-            <h2>► Email: {{ $user->email }}</h2> <br>
+            <p>► Nombre: {{ $user->name }}</p> <br>
+            <p>► Apellido:  {{ $user->lastname }}</p> <br>
+            <p>► Fecha de nacimiento:  {{ $user->birthdate }}</p> <br>
+            <p>► Email:  {{ $user->email }}</p> <br>
             
             <a class="listitem text-white" href=" {{route('user.edit', Auth::User()->id)}} "> 
               <h2> ► Editar datos personales</h2>

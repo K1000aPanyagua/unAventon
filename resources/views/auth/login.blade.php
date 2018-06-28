@@ -55,12 +55,14 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Inicia sesión') }}
                                 </button>                   
-                              </a>
                             </div>
                         </div>
-
+                        <br>
+                        <br>
+                    <p><a href="/password/reset"> Olvidé mi contraseña </a></p>
 
                     </form>
+
               </div>
     </div>
 </div>
@@ -69,7 +71,6 @@
 
 <!--fin header-->
 @include('footer')
-@include('modal')
 @include('javascript')
 </body>
 </html>

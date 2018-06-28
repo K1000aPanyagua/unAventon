@@ -36,8 +36,20 @@ Route::post('/postRecover', 'Auth\LoginController@recoverAccount');
 Route::get('/logout', 'Auth\LoginController@logOut');
 Route::get('/getRecover', 'Auth\LoginController@getLogInDeleted');
 
+Route::get('/resetPassword', 'Auth\ForgotPasswordController@reset');
+
+
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+Route::post('password/new', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
 
 Route::resource('ride', 'RideController');
+Route::resource('auth', 'AuthController');
+
 Route::get('/result', 'RideController@getBy');
 
 

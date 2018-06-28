@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Routing\ResponseFactory;
 
 class ForgotPasswordController extends Controller
 {
@@ -19,6 +20,7 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+   
 
     /**
      * Create a new controller instance.
@@ -29,4 +31,24 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+
+   
+    public function reset(Request $request){   
+
+
+    }
+
+
+public function  showLinkRequestForm(){
+            return view('user.resetPass');
+}
+
+
+
+public function sendResetLinkEmail(Request $request)
+    {
+        
+        return view ('user.resetPassw');
+}
 }

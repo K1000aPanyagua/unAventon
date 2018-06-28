@@ -51,19 +51,15 @@ class UserController extends Controller{
 
 
     public function editPassword(){
-
-
-        return view('user/passForm');
-     if ($id != Auth::user()->id) {
-            return view('/');
-
         if ($id != Auth::user()->id) {
             return redirect('/');
 
         }
         return view('user.passForm');
     }
-}
+
+
+
     
     public function edit($id){
         //Carga vista de editar perfil
@@ -201,11 +197,3 @@ class UserController extends Controller{
 
 }
 
-
-   /*  if ($id != Auth::user()->id) {
-            return view('/');
-        }
-
-        $passw = $request->input('pass');
-        $nuevaContraseña = $request->input('nuevaContraseña');
-        return  Validator::make($request, ['pass' => 'string|required|min:6']);
