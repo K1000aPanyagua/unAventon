@@ -60,6 +60,11 @@ class UserController extends Controller{
         return view('user.passForm');
     }
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> a3fc134659649d1cb178eafae0164dbe90358098
     
     public function edit($id){
         //Carga vista de editar perfil
@@ -208,6 +213,7 @@ class UserController extends Controller{
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride);
     }
 
+<<<<<<< HEAD
     public function acceptSolicitude($idViaje, $idSolicitude){
         $solicitude = PassengerRide::find($idSolicitude);
         $solicitude->state = 'aceptado';
@@ -228,3 +234,5 @@ class UserController extends Controller{
 
 
 }
+=======
+>>>>>>> 00485d400d26d1f512394535ca1d586906866cbf

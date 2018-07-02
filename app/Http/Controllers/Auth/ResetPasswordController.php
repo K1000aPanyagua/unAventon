@@ -36,4 +36,12 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+
+    public function changePass(){
+        $user = User::find($request->email);
+        $user->pass = bcrypt($request->input('nuevaContraseña'));
+        $user->save();
+        return redirect('/')->with('user', Auth::user()->email)->with('success', 'Cambios guardados');
+    }
 }
