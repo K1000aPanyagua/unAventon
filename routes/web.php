@@ -16,7 +16,9 @@ Route::get('/search','PagesController@getSearch');
 Route::get('/configurationAccount','PagesController@getAccount');
 Route::get('/resultregister','PagesController@getResultRegister');
 
+
 Route::pattern('users', '[0-9]+');
+Route::post('/accept', 'UserController@acceptSolicitude');
 Route::delete('/cancel/{ride}', 'UserController@cancelSolicitude')
 		->name('user.cancelSolicitude');
 Route::get('/postulate/{ride}', 'UserController@postulate')

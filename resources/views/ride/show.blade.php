@@ -40,8 +40,10 @@
               }
             </script>
             </form>
+
+
           @elseif ($passengerRide != null)
-            @if ($passengerRide->state == 'pendiente')
+            @if ($passengerRide->attributes['state'] == 'pendiente')
               <form action="{{ route('user.cancelSolicitude', ['id' => $ride->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
                 {{method_field('DELETE')}}
                 {{ csrf_field() }}

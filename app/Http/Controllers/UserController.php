@@ -195,7 +195,7 @@ class UserController extends Controller{
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride);
     }   
 
-    public function cancelSolicitude(Request $request ,$idViaje){
+    public function cancelSolicitude($idViaje){
         $solicitude = PassengerRide::where('user_id', Auth::user()->id)->where('ride_id', $idViaje)->first();
         if ($solicitude->state == 'aceptado') {
             //SE PENALIZA AL USUARIO
@@ -207,13 +207,24 @@ class UserController extends Controller{
         $car = Car::where('id', $ride->car_id)->first();
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride);
     }
-}
 
+    public function acceptSolicitude($idViaje, $idSolicitude){
+        $solicitude = PassengerRide::find($idSolicitude);
+        $solicitude->state = 'aceptado';
+        $solicitude->save();
 
-   /*  if ($id != Auth::user()->id) {
-            return view('/');
+        $aux =  PassengerRide::where('ride_id', $idViaje)->get();
+        foreach ($aux as $i) {
+            $passengers->push(User::find($i->user_id)->first());
         }
+        $solicitude = PassengerRide::where('ride_id', $idViaje)->get();
+        $ride = Ride::where('id', $idViaje)->first();
+        $comments = Comment::where('ride_id', $idViaje)->get();
+        $car = Car::where('id', $ride->car_id)->first();
+        $pilot = User::find($ride->user_id)->first();
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $solicitude)->with('ride', $ride)->with('passengers', $passengers);
+    }
 
-        $passw = $request->input('pass');
-        $nuevaContraseña = $request->input('nuevaContraseña');
-        return  Validator::make($request, ['pass' => 'string|required|min:6']);
+
+
+}
