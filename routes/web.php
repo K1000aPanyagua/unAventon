@@ -18,7 +18,10 @@ Route::get('/resultregister','PagesController@getResultRegister');
 
 
 Route::pattern('users', '[0-9]+');
-Route::post('/accept', 'UserController@acceptSolicitude');
+Route::get('/decline/{idRide}/{idPostulant}', 'UserController@declineSolicitude')
+		->name('user.declineSolicitude');
+Route::get('/accept/{idRidede}/{idPostulant}', 'UserController@acceptSolicitude')
+		->name('user.acceptSolicitude');
 Route::delete('/cancel/{ride}', 'UserController@cancelSolicitude')
 		->name('user.cancelSolicitude');
 Route::get('/postulate/{ride}', 'UserController@postulate')
@@ -53,9 +56,10 @@ Route::post('password/new', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-
+Route::pattern('rides', '[0-9]+');
+Route::get('/solicitudes/{solicitudes}', 'RideController@getSolicitudes')
+		->name('ride.getSolicitudes');
 Route::resource('ride', 'RideController');
-Route::resource('auth', 'AuthController');
 
 Route::get('/result', 'RideController@getBy');
 

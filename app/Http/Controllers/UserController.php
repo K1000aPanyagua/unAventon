@@ -59,12 +59,6 @@ class UserController extends Controller{
         }
         return view('user.passForm');
     }
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> a3fc134659649d1cb178eafae0164dbe90358098
     
     public function edit($id){
         //Carga vista de editar perfil
@@ -142,7 +136,7 @@ class UserController extends Controller{
         }
     }
 
-    public function postulate(Request $request, $idViaje){
+    public function postulate(Request $request, $idRide){
         //UN USUARIO QUE NO POSEA TARJETA NO PODRÁ POSTULARSE
         //TAMPOCO PODRÁ POSTULARSE SI HA SIDO ACEPTADO EN UN VIAJE
         //QUE SE SUPERPONGA 
@@ -153,20 +147,26 @@ class UserController extends Controller{
         }
 
         //cargo datos del viaje
-        $ride = Ride::where('id', $idViaje)->first();
-        $comments = Comment::where('ride_id', $idViaje)->get();
+        $ride = Ride::where('id', $idRide)->first();
+        $comments = Comment::where('ride_id', $idRide)->get();
         $car = Car::where('id', $ride->car_id)->first();
-
+        $solicitudes = null;
+        $pilot = User::find($ride->user_id)->first();
         //valido que el usuario tenga tarjeta
         $cards = Card::where('user_id', Auth::user()->id)->get();
-        if ( count($cards) == 0) {
+        if ( $cards->count() == 0) {
             return redirect('card/create')->with('error', 'Usted no posee tarjeta asignada, ingrese una.');
+        }
+        //valido que haya lugares libres en el vehiculo
+        $passengers = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado')->get();
+        if ($passengers->count() == $car->numSeats) {
+            return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
 
         //valido que el usuario no sea pasajero de un viaje con misma fecha
         $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
         $endDate = date('m-d-Y H:i:s',strtotime($ride->duration, strtotime($ride->departTime)));
-        if (count($auxRide) > 0){
+        if ($auxRide->count() > 0){
             foreach ($auxRide as $currentRide) {
                 $endDateVal = date('m-d-Y H:i:s',strtotime($auxRide->duration, strtotime($auxRide->departTime)));
                 if (!($ride->departTime > $auxRide->departTime && !($ride->departTime > $endDateVal))) {
@@ -193,46 +193,91 @@ class UserController extends Controller{
 
         $passengerRide = new PassengerRide;
         $passengerRide->user_id = Auth::user()->id;
-        $passengerRide->ride_id = $idViaje;
+        $passengerRide->ride_id = $idRide;
         $passengerRide->state = "pendiente";
         $passengerRide->save();
         
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride);
+        $postulant = null;
+        if ($solicitudes != null){
+            foreach ($solicitudes as $solicitude) {
+                $postulant->push(User::find($solicitude->user_id));
+            }
+        }
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
     }   
 
-    public function cancelSolicitude($idViaje){
-        $solicitude = PassengerRide::where('user_id', Auth::user()->id)->where('ride_id', $idViaje)->first();
+    public function cancelSolicitude($idRide){
+        $solicitude = PassengerRide::where('user_id', Auth::user()->id)->where('ride_id', $idRide)->first();
         if ($solicitude->state == 'aceptado') {
             //SE PENALIZA AL USUARIO
         }
         PassengerRide::destroy($solicitude->id);
-        $passengerRide = null;
-        $ride = Ride::where('id', $idViaje)->first();
-        $comments = Comment::where('ride_id', $idViaje)->get();
-        $car = Car::where('id', $ride->car_id)->first();
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride);
-    }
-
-<<<<<<< HEAD
-    public function acceptSolicitude($idViaje, $idSolicitude){
-        $solicitude = PassengerRide::find($idSolicitude);
-        $solicitude->state = 'aceptado';
-        $solicitude->save();
-
-        $aux =  PassengerRide::where('ride_id', $idViaje)->get();
-        foreach ($aux as $i) {
-            $passengers->push(User::find($i->user_id)->first());
-        }
-        $solicitude = PassengerRide::where('ride_id', $idViaje)->get();
-        $ride = Ride::where('id', $idViaje)->first();
-        $comments = Comment::where('ride_id', $idViaje)->get();
+        
+        $solicitudes = null;
+        $ride = Ride::where('id', $idRide)->first();
+        $comments = Comment::where('ride_id', $idRide)->get();
         $car = Car::where('id', $ride->car_id)->first();
         $pilot = User::find($ride->user_id)->first();
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $solicitude)->with('ride', $ride)->with('passengers', $passengers);
+        $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
+        $postulant = null;
+        
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('pilot', $pilot)->with('postulant', $postulant);
     }
 
+    public function acceptSolicitude($idRide, $idPostulant){
+        $aux = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPostulant)->first();
+        $aux->state = 'aceptado';
+        $aux->save();
 
+        //CARGO LAS SOLICITUDES Y TODOS LOS DATOS NECESARIOS PARA LA VISTA DEL VIAJE
+        
+        $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
+        $postulant = collect([]);
+        //CARGO LOS POSTULANTES PARA MOSTRARLOS EN LA VISTA
+        foreach ($solicitudes as $i) {    
+            $postulant->push(User::find($i->user_id)->first());
+        }
+        if ($solicitudes->count() == 0) {
+            $solicitudes = 'No hay postulaciones';
+        }
+        $ride = Ride::where('id', $idRide)->first();
+        $comments = Comment::where('ride_id', $idRide)->get();
+        $car = Car::where('id', $ride->car_id)->first();
+        $pilot = User::find($ride->user_id)->first();
+        $passengers = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado')->get();
+        if ($aux->count() == $car->numSeats) {
+            return redirect()->back()->with('error', 'No hay lugares disponibles para este viaje');
+        }
+        if ($solicitudes != 'No hay postulaciones'){
+            foreach ($solicitudes as $solicitude) {
+                $postulant->push(User::find($solicitude->user_id));
+            }
+        }
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant);
+    }
+
+    public function declineSolicitude(Request $request, $idRide, $idPostulant){
+        $aux = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPostulant)->first();
+        $aux->state = 'rechazado';
+        $aux->save();
+
+        $passengers = null;
+        $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
+        if ($solicitudes->count() == 0) {
+            $solicitudes = 'No hay postulaciones';
+        }
+        $ride = Ride::where('id', $idRide)->first();
+        $comments = Comment::where('ride_id', $idRide)->get();
+        $car = Car::where('id', $ride->car_id)->first();
+        $pilot = User::find($ride->user_id)->first();
+        $postulant = null;
+        if ($solicitudes != 'No hay postulaciones'){
+            foreach ($solicitudes as $solicitude) {
+                $postulant->push(User::find($solicitude->user_id));
+            }
+        }
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant);
+    }
 
 }
-=======
->>>>>>> 00485d400d26d1f512394535ca1d586906866cbf
+

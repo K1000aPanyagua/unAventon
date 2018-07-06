@@ -83,7 +83,7 @@
 
             <div class="col-md-6">
                                 
-            <input value="{{ old('numSeats') }}" id="numSeats" type="integer" class="form-control{{ $errors->has('numSeats') ? ' is-invalid' : '' }}" name="numSeats" required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+            <input value="{{ old('numSeats') }}" min="1" id="numSeats" type="integer" class="form-control{{ $errors->has('numSeats') ? ' is-invalid' : '' }}" name="numSeats" required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
 
             @if ($errors->has('numSeats'))
               <span class="invalid-feedback">

@@ -14,6 +14,8 @@
     <h1 class="text-uppercase separator-l col-sm-12">datos del viaje</h1> @include('flash_message')  
     
       <div class="row" >
+          <a href="{{route('user.show', ['id' => $pilot->id])}}">{{$pilot->email}}</a>
+
           {{ $ride->origin }} 
           {{ $ride->destination }} 
           {{ $ride->duraton}} 
@@ -23,6 +25,8 @@
           {{ $ride->departDate }} 
           {{ $car->kind }}
 
+          <!-- SI EL USUARIO ES DUEÑO DEL VIAJE -->
+          
           @if ($ride->user_id == Auth::user()->id)
             <a class="btn" href="{{ route('ride.edit', $ride->id) }}">Editar</a>
 
@@ -40,10 +44,35 @@
               }
             </script>
             </form>
+            <!-- MUESTRO LAS SOLICITUDES PENDIENTES -->
+            @if ($solicitudes == 'No hay postulaciones')
+              {{$solicitudes}}
+            @else
+                Solicitudes pendientes: 
+                <!-- MUESTRA LOS PENDIENTES Y ACEPTADOS DEBERIA MOSTRAR SOLO PENDIENTES -->
+                @foreach($postulant as $postu)
+                  <div class="row" >
 
+                  <a href="">{{$postu->email}} {{$postu->name}} {{$postu->lastname}}</a> <!-- el href lleva a ver el perfil del usuario -->
+                  
+                  <form action="{{ route('user.declineSolicitude', ['idRide' => $ride->id, 'idPostulant' => $postu->id]) }}" method="POST" >
+                  {{ csrf_field() }}
+                  {{method_field('GET')}}
+                  <input type="submit" class="btn btn-outline-light text-center color-aventon" value="Rechazar"/>
+                  </form>
 
-          @elseif ($passengerRide != null)
-            @if ($passengerRide->attributes['state'] == 'pendiente')
+                  <form action="{{ route('user.acceptSolicitude', ['idRide' => $ride->id, 'idPostulant' => $postu->id]) }}" method="POST" >
+                  {{ csrf_field() }}
+                  {{method_field('GET')}}
+                  <input type="submit" class="btn btn-outline-light text-center color-aventon" value="Aceptar"/>
+                  </form>
+                  </div>
+                @endforeach
+            @endif
+
+          <!-- SI EL USUARIO NO ES DUEÑO Y SE HA POSTULADO PREVIAMENTE -->
+          @elseif (isset($passengerRide))
+            @if ($passengerRide->state == 'pendiente')
               <form action="{{ route('user.cancelSolicitude', ['id' => $ride->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
                 {{method_field('DELETE')}}
                 {{ csrf_field() }}
@@ -73,6 +102,10 @@
                   }
                 </script>
               </form> 
+            <!-- SI HA SIDO RECHAZADO -->
+            @elseif ($passengerRide->state == 'rechazado')
+            <div>Usted ha sido rechazado. :< </div>
+            <!-- SI NO SE HA POSTULADO-->
             @endif
           @else
             <form  action="{{route('user.postulate', ['id' => $ride->id])}}">
@@ -80,7 +113,7 @@
               {{method_field('GET')}}
             </form>          
           @endif
-          
+          <!-- MUESTRO COMENTARIOS SI ES QUE EXISTEN -->
           @if ($comments == 'Aún no hay comentarios')
             {{$comments}}
           @else
