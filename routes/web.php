@@ -16,10 +16,15 @@ Route::get('/search','PagesController@getSearch');
 Route::get('/configurationAccount','PagesController@getAccount');
 Route::get('/resultregister','PagesController@getResultRegister');
 
+Route::pattern('users', '[0-9]+');
+Route::delete('/cancel/{ride}', 'UserController@cancelSolicitude')
+		->name('user.cancelSolicitude');
+Route::get('/postulate/{ride}', 'UserController@postulate')
+		->name('user.postulate');
 Route::resource('user', 'UserController');
 Route::get('/editPass', 'UserController@editPassword');
 Route::post('/newPass', 'UserController@updatePassword');
-Route::put('/postulate', 'UserController@postulate');
+
 
 
 Route::resource('card', 'CardController');

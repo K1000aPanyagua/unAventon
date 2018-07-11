@@ -12,6 +12,7 @@ use App\Account;
 use App\Car;
 use App\PassengerRide;
 use DB;
+use Carbon;
 class RideController extends Controller
 {
     /**
@@ -56,15 +57,16 @@ class RideController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected function validator(array $data){
-        
+        $today=Carbon::today();
+        $today=$today->toDateString();
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
             'duration' => 'required',
             'amount' => 'required|decimal',
             'remarks' => 'string',
-            'departDate' => 'date|required',
             'departHour' => 'required',
+            'departDate' => 'required|after:'.$today,
         ]);
     }
 

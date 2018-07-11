@@ -23,3 +23,4 @@ class QualificationPilot extends Model{
 		return $this->belongsTo(Ride::class);
 	}
 
+}

@@ -13,8 +13,9 @@
   <div class="container">
     <h1 class="text-uppercase separator-l col-sm-12">datos de la tarjeta</h1>  
       <div class="row" >
-           {{ $card->nroCard }} 
-           {{ $card->expiration }} 
+            
+           Vencimiento: {{ $card->expiration }} <br>
+           Numero: {{ $card->numCard }}
       </div>
   </div>
 </header>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class QualificationPassenger extends Model{
 
-    protected $table = 'QualificationsPassengers';
+    protected $table = 'qualificationsPassengers';
 
     protected $fillable = ['value', 'review'];
 
@@ -22,4 +22,4 @@ class QualificationPassenger extends Model{
     public function ride(){
         return $this->belongsTo(Ride::class);
     }
-
+}
