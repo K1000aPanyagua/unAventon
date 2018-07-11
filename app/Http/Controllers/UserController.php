@@ -209,7 +209,8 @@ class UserController extends Controller{
     public function cancelSolicitude($idRide){
         $solicitude = PassengerRide::where('user_id', Auth::user()->id)->where('ride_id', $idRide)->first();
         if ($solicitude->state == 'aceptado') {
-            //SE PENALIZA AL USUARIO
+            //!!!!!!!!!!!!!!!!!!!!!!FALTA PENALIZAR AL USUARIO!!!!!!!!!!!!!!!!!
+            PassengerRide::destroy($solicitude->id);
         }
         PassengerRide::destroy($solicitude->id);
         
@@ -279,5 +280,15 @@ class UserController extends Controller{
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant);
     }
 
+    public function deletePassenger($idRide, $idPassenger){
+        //!!!!!!!!!!!!!!FALTA PENALIZAR AL USUARIO!!!!!!!!!!!!!!!!!!!!
+        $passenger = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPassenger)->find();
+        $passenger->state = 'eliminado';
+        $passemger->save();
+        
+        $passengers = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado');
+        return view('ride.showPassengers')->with('passengers', $passengers);
+
+    }
 }
 

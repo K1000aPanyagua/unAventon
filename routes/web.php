@@ -15,6 +15,8 @@ Route::get('/','PagesController@getIndex');
 Route::get('/search','PagesController@getSearch');
 Route::get('/configurationAccount','PagesController@getAccount');
 Route::get('/resultregister','PagesController@getResultRegister');
+Route::get('/showPassengers/{idRide}', 'PagesController@showPassengers')
+		->name('page.showPassengers');
 
 
 Route::pattern('users', '[0-9]+');

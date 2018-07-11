@@ -16,18 +16,21 @@
       <div class="row" >
           <a href="{{route('user.show', ['id' => $pilot->id])}}">{{$pilot->email}}</a>
 
-          {{ $ride->origin }} 
-          {{ $ride->destination }} 
-          {{ $ride->duraton}} 
-          {{ $ride->amount }} 
-          {{ $ride->remarks }} 
-          {{ $ride->departHour }}
-          {{ $ride->departDate }} 
-          {{ $car->kind }}
+          Origen: {{ $ride->origin }} 
+          Destino: {{ $ride->destination }} 
+          Duración: {{ $ride->duraton}} 
+          Monto: {{ $ride->amount }} Pesos 
+          Observaciones: {{ $ride->remarks }} 
+          Hora de partida: {{ $ride->departHour }}
+          Fecha de partida: {{ $ride->departDate }} 
+          Tipo de auto: {{ $car->kind }}
+
 
           <!-- SI EL USUARIO ES DUEÑO DEL VIAJE -->
-          
           @if ($ride->user_id == Auth::user()->id)
+            <a href="{{route('page.showPassengers', ['idRide' => $ride->id])}}">
+          Ver pasajeros aceptados</a>
+
             <a class="btn" href="{{ route('ride.edit', $ride->id) }}">Editar</a>
 
             <form action="{{ route('ride.destroy', $ride->id) }}" method="POST" onsubmit="return ConfirmDelete()">
@@ -88,6 +91,7 @@
                 </script>
               </form>
             @elseif ($passengerRide->state == 'aceptado')
+              <div>Ustéd ha sido aceptado como pasajero en este viaje</div>
               <form action="{{ route('user.cancelSolicitude', ['id' => $ride->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
                 {{method_field('DELETE')}}
                 {{ csrf_field() }}
@@ -104,8 +108,10 @@
               </form> 
             <!-- SI HA SIDO RECHAZADO -->
             @elseif ($passengerRide->state == 'rechazado')
-            <div>Usted ha sido rechazado. :< </div>
+              <div>Usted ha sido rechazado. :< </div>
             <!-- SI NO SE HA POSTULADO-->
+            @elseif ($passengerRide->state == 'elimindo')
+              <div>Ustéd ha sido eliminado de este viaje :< </div>
             @endif
           @else
             <form  action="{{route('user.postulate', ['id' => $ride->id])}}">
