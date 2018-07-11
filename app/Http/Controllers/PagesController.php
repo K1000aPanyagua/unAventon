@@ -8,6 +8,8 @@ use App\Car;
 use App\Card;
 use App\Ride;
 use Illuminate\Support\Facades\DB;
+use App\PassengerRide;
+use App\User;
 
 class PagesController extends Controller {
 
@@ -38,4 +40,12 @@ class PagesController extends Controller {
 		return view('resultregister');
 	}
  		
+ 	public function showPassengers($idRide){
+ 		$solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado')->get();
+ 		$passengers = collect([]);
+ 		foreach ($solicitudes as $solicitude) {
+ 			$passengers->push(User::find($solicitude->user_id)->first());
+ 		}
+ 		return view('ride.showPassengers')->with('passengers', $passengers);
+ 	}
 }
