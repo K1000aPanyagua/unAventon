@@ -11,10 +11,7 @@
           <p> ► Cargar nuevo vehículo</p>
         </a>
         <a class="listitem text-white "  href="{{ action('CarController@index')}}"> 
-          <p> ► Editar vehículos</p>
-        </a>
-        <a class="listitem text-white "  href="/eliminate"> 
-          <p> ► Eliminar vehículo</p>
+          <p> ► Editar o eliminar vehículos</p>
         </a>
       </div>
     </div>

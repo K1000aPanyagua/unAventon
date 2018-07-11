@@ -15,12 +15,12 @@
     <h1 class="text-uppercase separator-l col-sm-12">datos del vehiculo</h1>  
     @include('flash_message')
       <div class="row" >
-           {{ $car->model }} 
-           {{ $car->license }} 
-           {{ $car->brand}} 
-           {{ $car->color }} 
-           {{ $car->numSeats }} 
-           {{ $car->kind }} 
+           MODELO: {{ $car->model }} <br> 
+           PATENTE: {{ $car->license }} <br>
+           MARCA: {{ $car->brand}} <br>
+           COLOR: {{ $car->color }} <br>
+           ASIENTOS: {{ $car->numSeats }} <br>
+           TIPO: {{ $car->kind }} <br>
       </div>
   </div>
 </header>

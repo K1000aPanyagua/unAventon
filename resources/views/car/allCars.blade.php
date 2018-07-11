@@ -17,10 +17,26 @@
     @foreach($cars as $car)
       <div class="row" >
 
-      	<a class="col-sm-12" href="{{action('CarController@edit', ['id'=> $car->id])}}">
+      	<a href="{{action('CarController@edit', ['id'=> $car->id])}}">
 
            {{ $car->model }} {{ $car->license }} {{ $car->id }}
         </a>
+
+         <form action="{{ route('car.destroy', ['id' => $car->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
+          {{method_field('DELETE')}}
+          {{ csrf_field() }}
+          <input type="submit" class="btn btn-outline-light text-center color-aventon" value="Eliminar"/>
+          <script>
+            function ConfirmDelete(){
+              var x = confirm("¿Está seguro que quiere eliminar el vehiculo?");
+              if (x)
+                return true;
+              else
+                return false;
+              }
+          </script>
+        </form>
+
       </div>
     @endforeach    
   </div>

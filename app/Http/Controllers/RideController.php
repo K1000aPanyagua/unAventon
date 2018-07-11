@@ -12,7 +12,9 @@ use App\Account;
 use App\Car;
 use App\PassengerRide;
 use DB;
+use Carbon;
 use App\User;
+
 
 class RideController extends Controller
 {
@@ -58,15 +60,16 @@ class RideController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected function validator(array $data){
-        
+        $today=Carbon::today();
+        $today=$today->toDateString();
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
             'duration' => 'required',
             'amount' => 'required|decimal',
             'remarks' => 'string',
-            'departDate' => 'date|required',
             'departHour' => 'required',
+            'departDate' => 'required|after:'.$today,
         ]);
     }
 
@@ -83,8 +86,9 @@ class RideController extends Controller
         $ride->departDate =     $request->departDate;
         $ride->departHour =     $request->departHour;
         $ride->account_id =     $account->id;
-        $ride->card_id =        $request->card;
         $ride->car_id =         $request->car_id;
+        $ride->card_id =        $request->card;
+        
         $ride->save();
         
         $pilot = Auth::user();

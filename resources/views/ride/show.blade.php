@@ -14,17 +14,23 @@
     <h1 class="text-uppercase separator-l col-sm-12">datos del viaje</h1> @include('flash_message')  
     
       <div class="row" >
-          <a href="{{route('user.show', ['id' => $pilot->id])}}">{{$pilot->email}}</a>
-
-          Origen: {{ $ride->origin }} 
-          Destino: {{ $ride->destination }} 
-          Duración: {{ $ride->duraton}} 
-          Monto: {{ $ride->amount }} Pesos 
-          Observaciones: {{ $ride->remarks }} 
-          Hora de partida: {{ $ride->departHour }}
-          Fecha de partida: {{ $ride->departDate }} 
-          Tipo de auto: {{ $car->kind }}
-
+          E-MAIL PILOTO: <a href="{{route('user.show', ['id' => $pilot->id])}}">{{$pilot->email}}</a>
+          <br>
+          ORIGEN: {{ $ride->origin }}
+          <br>
+          DESTINO: {{ $ride->destination }}
+          <br> 
+          DURACION: {{ $ride->duration}}
+          <br> 
+          MONTO: {{ $ride->amount }}
+          <br> 
+          HOAR DE SALIDA: {{ $ride->departHour }}
+          <br>
+          FECHA DE SALIDA: {{ $ride->departDate }}
+          <br> 
+          TIPO DE VEHICULO: {{ $car->kind }}
+          <br> 
+          OBSERVACIONES: {{ $ride->remarks }}
 
           <!-- SI EL USUARIO ES DUEÑO DEL VIAJE -->
           @if ($ride->user_id == Auth::user()->id)
@@ -36,7 +42,7 @@
             <form action="{{ route('ride.destroy', $ride->id) }}" method="POST" onsubmit="return ConfirmDelete()">
             {{method_field('DELETE')}}
             {{ csrf_field() }}
-            <input type="submit" class="btn btn-danger" value="Delete"/>
+            <input type="submit" class="btn btn-danger" value="Eliminar"/>
             <script>
             function ConfirmDelete(){
               var x = confirm("¿Está seguro que quiere eliminar el viaje?");
@@ -110,7 +116,7 @@
             @elseif ($passengerRide->state == 'rechazado')
               <div>Usted ha sido rechazado. :< </div>
             <!-- SI NO SE HA POSTULADO-->
-            @elseif ($passengerRide->state == 'elimindo')
+            @elseif ($passengerRide->state == 'eliminado')
               <div>Ustéd ha sido eliminado de este viaje :< </div>
             @endif
           @else
