@@ -16,7 +16,12 @@ Route::get('/search','PagesController@getSearch');
 Route::get('/configurationAccount','PagesController@getAccount');
 Route::get('/resultregister','PagesController@getResultRegister');
 
+
 Route::pattern('users', '[0-9]+');
+Route::get('/decline/{idRide}/{idPostulant}', 'UserController@declineSolicitude')
+		->name('user.declineSolicitude');
+Route::get('/accept/{idRidede}/{idPostulant}', 'UserController@acceptSolicitude')
+		->name('user.acceptSolicitude');
 Route::delete('/cancel/{ride}', 'UserController@cancelSolicitude')
 		->name('user.cancelSolicitude');
 Route::get('/postulate/{ride}', 'UserController@postulate')
@@ -40,8 +45,21 @@ Route::post('/postRecover', 'Auth\LoginController@recoverAccount');
 Route::get('/logout', 'Auth\LoginController@logOut');
 Route::get('/getRecover', 'Auth\LoginController@getLogInDeleted');
 
+Route::get('/resetPassword', 'Auth\ForgotPasswordController@reset');
 
+
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+Route::post('password/new', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+Route::pattern('rides', '[0-9]+');
+Route::get('/solicitudes/{solicitudes}', 'RideController@getSolicitudes')
+		->name('ride.getSolicitudes');
 Route::resource('ride', 'RideController');
+
 Route::get('/result', 'RideController@getBy');
 
 

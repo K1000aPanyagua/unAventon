@@ -13,6 +13,9 @@ use App\Car;
 use App\PassengerRide;
 use DB;
 use Carbon;
+use App\User;
+
+
 class RideController extends Controller
 {
     /**
@@ -88,14 +91,24 @@ class RideController extends Controller
         
         $ride->save();
         
+        $pilot = Auth::user();
         $car = Car::where('id', $ride->car_id)->first();
         $card = Card::where('id', $ride->card_id)->first();
         $comments = Comment::where('ride_id', $ride->id)->get();
-        if (count($comments) == 0) {
+        $solicitudes = PassengerRide::where('ride_id', $ride->id)->where('state', 'pendiente')->where('state', 'aceptado')->get();
+        if ($solicitudes->count() == 0) {
+            $solicitudes = 'No hay postulaciones';
+        }
+        if ($comments->count() == 0) {
             $comments = 'Aún no hay comentarios';
         }
-
-        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje publicado!')->with('comments', $comments);
+        $postulant = collect([]);
+        if ($solicitudes != 'No hay postulaciones'){
+            foreach ($solicitudes as $solicitude) {
+                $postulant->push(User::find($solicitude->user_id));
+            }
+        }
+        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje publicado!')->with('comments', $comments)->with('postulant', $postulant)->with('pilot', $pilot)->with('solicitudes', $solicitudes);
     }
 
     /**
@@ -108,11 +121,22 @@ class RideController extends Controller
         $ride = Ride::find($id);
         $comments = Comment::where('ride_id', $id)->get();
         $car = Car::find($ride->car_id)->first();
-        if (count($comments) == 0) {
+        $pilot = User::find($ride->user_id)->first();
+        $solicitudes = PassengerRide::where('ride_id', $id)->where('state', 'pendiente')->get();
+        if ($solicitudes->count() == 0) {
+            $solicitudes = 'No hay postulaciones';
+        }
+        if ($comments->count() == 0) {
             $comments = 'Aún no hay comentarios';
         }
         $passengerRide = PassengerRide::where('ride_id', $id)->where('user_id', Auth::user()->id)->first();
-        return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide);
+        $postulant = collect([]);
+        if ($solicitudes != 'No hay postulaciones'){
+            foreach ($solicitudes as $solicitude) {
+                $postulant->push(User::find($solicitude->user_id));
+            }
+        }
+        return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
     }
 
     /**
@@ -124,7 +148,7 @@ class RideController extends Controller
     public function edit($id){
         //CONTROLAR QUE NO HAYA COPILOTOS PENDIENTES O ACEPTADOS
         $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
-        if (count($passengers) > 0 ){
+        if ($passengers->count() > 0 ){
             return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje');
         }
         $ride = Ride::find($id);
@@ -163,12 +187,22 @@ class RideController extends Controller
     
         $car = Car::where('id', $ride->car_id)->first();
         $card = Card::where('id', $ride->card_id)->first();
+        $pilot = User::find($ride->user_id)->first();
+        $solicitudes = PassengerRide::where('ride_id', $id)->where('state', 'pendiente')->get();
+        if ($solicitudes->count() == 0) {
+            $solicitudes = 'No hay postulaciones';
+        }
         $comments = Comment::where('ride_id', $ride->id)->get();
-        if (count($comments) == 0) {
+        if ($comments->count() == 0) {
             $comments = 'Aún no hay comentarios';
         }
-
-        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje editado!')->with('comments', $comments);
+        $postulant = collect([]);
+        if ($solicitudes != 'No hay postulaciones'){
+            foreach ($solicitudes as $solicitude) {
+                $postulant->push(User::find($solicitude->user_id));
+            }
+        }
+        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje editado!')->with('comments', $comments)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
         
     }
 
@@ -184,7 +218,7 @@ class RideController extends Controller
         //ADVIRTIENDO DE LA PENALIZACION
         //SI NO HAY SE LLAMA A DESTROY
         $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
-        if (count($passengers) > 0 ){
+        if ($passengers->count() > 0 ){
             return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
         }else{
             Ride::destroy($id);
@@ -230,4 +264,5 @@ class RideController extends Controller
         $rides = $rides->get();
         return view('ride.searchResult')->with('rides', $rides);
     }
+
 }

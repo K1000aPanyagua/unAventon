@@ -144,7 +144,7 @@
 
 
 <!--fin header-->
-@include('footer')
+@include('footer')  
 @include('javascript')
 </body>
 </html>
