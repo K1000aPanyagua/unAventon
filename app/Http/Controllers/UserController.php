@@ -288,7 +288,6 @@ class UserController extends Controller{
         
         $passengers = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado');
         return view('ride.showPassengers')->with('passengers', $passengers);
-
     }
 }
 

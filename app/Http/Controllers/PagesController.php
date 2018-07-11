@@ -44,7 +44,7 @@ class PagesController extends Controller {
  		$solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado')->get();
  		$passengers = collect([]);
  		foreach ($solicitudes as $solicitude) {
- 			$passengers->push(User::find($solicitude->user_id)->first());
+ 			$passengers->push(User::find($solicitude->user_id));
  		}
  		return view('ride.showPassengers')->with('passengers', $passengers);
  	}
