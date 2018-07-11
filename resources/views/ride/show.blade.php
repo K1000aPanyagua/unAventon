@@ -14,14 +14,13 @@
     <h1 class="text-uppercase separator-l col-sm-12">datos del viaje</h1> @include('flash_message')  
     
       <div class="row" >
-<<<<<<< HEAD
           E-MAIL PILOTO: <a href="{{route('user.show', ['id' => $pilot->id])}}">{{$pilot->email}}</a>
           <br>
           ORIGEN: {{ $ride->origin }}
           <br>
           DESTINO: {{ $ride->destination }}
           <br> 
-          DURACION: {{ $ride->duraton}}
+          DURACION: {{ $ride->duration}}
           <br> 
           MONTO: {{ $ride->amount }}
           <br> 
@@ -32,20 +31,6 @@
           TIPO DE VEHICULO: {{ $car->kind }}
           <br> 
           OBSERVACIONES: {{ $ride->remarks }}
-          
-=======
-          <a href="{{route('user.show', ['id' => $pilot->id])}}">{{$pilot->email}}</a>
-
-          Origen: {{ $ride->origin }} 
-          Destino: {{ $ride->destination }} 
-          Duración: {{ $ride->duraton}} 
-          Monto: {{ $ride->amount }} Pesos 
-          Observaciones: {{ $ride->remarks }} 
-          Hora de partida: {{ $ride->departHour }}
-          Fecha de partida: {{ $ride->departDate }} 
-          Tipo de auto: {{ $car->kind }}
-
->>>>>>> f6cc89f0d7ffdeb1c208898d50009fcf553bf1ac
 
           <!-- SI EL USUARIO ES DUEÑO DEL VIAJE -->
           @if ($ride->user_id == Auth::user()->id)
@@ -131,7 +116,7 @@
             @elseif ($passengerRide->state == 'rechazado')
               <div>Usted ha sido rechazado. :< </div>
             <!-- SI NO SE HA POSTULADO-->
-            @elseif ($passengerRide->state == 'elimindo')
+            @elseif ($passengerRide->state == 'eliminado')
               <div>Ustéd ha sido eliminado de este viaje :< </div>
             @endif
           @else

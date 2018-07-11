@@ -43,12 +43,13 @@ class UserController extends Controller{
      */
 
     public function show($id){
-        if ($id != Auth::user()->id) {
-            return view('user.showOtherUser');
-        }
-
         $user = User::find($id);
-        return view('user.show', compact('user'));
+        if ($id != Auth::user()->id) {
+            return view('user.showOtherUser', compact('user'));
+        }
+        else{
+            return view('user.show', compact('user'));
+        }
     }
 
 
@@ -277,11 +278,11 @@ class UserController extends Controller{
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant);
     }
 
-    public function deletePassenger($idRide, $idPassenger){
+    public function deletePassenger(Request $Request, $idRide, $idPassenger){
         //!!!!!!!!!!!!!!FALTA PENALIZAR AL USUARIO!!!!!!!!!!!!!!!!!!!!
-        $passenger = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPassenger)->find();
+        $passenger = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPassenger)->first();
         $passenger->state = 'eliminado';
-        $passemger->save();
+        $passenger->save();
         
         $passengers = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado');
         return view('ride.showPassengers')->with('passengers', $passengers);

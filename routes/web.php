@@ -28,6 +28,8 @@ Route::delete('/cancel/{ride}', 'UserController@cancelSolicitude')
 		->name('user.cancelSolicitude');
 Route::get('/postulate/{ride}', 'UserController@postulate')
 		->name('user.postulate');
+Route::get('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePassenger')
+		->name('user.deletePassenger');
 Route::resource('user', 'UserController');
 Route::get('/editPass', 'UserController@editPassword');
 Route::post('/newPass', 'UserController@updatePassword');
