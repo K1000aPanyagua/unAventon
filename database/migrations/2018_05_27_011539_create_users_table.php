@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->rememberToken();
             $table->time('deleted_at')->nullable();
+            $table->integer('reputation')->default(0);
         });
     }
 

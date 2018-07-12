@@ -125,7 +125,7 @@ class RideController extends Controller
         $ride = Ride::find($id);
         $comments = Comment::where('ride_id', $id)->get();
         $car = Car::find($ride->car_id)->first();
-        $pilot = User::find($ride->user_id)->first();
+        $pilot = User::find($ride->user_id);
         $solicitudes = PassengerRide::where('ride_id', $id)->where('state', 'pendiente')->get();
         if ($solicitudes->count() == 0) {
             $solicitudes = 'No hay postulaciones';
