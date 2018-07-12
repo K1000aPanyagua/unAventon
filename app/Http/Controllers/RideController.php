@@ -23,6 +23,10 @@ class RideController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('askDeletion')->only('delete');
+    }
 
     public function index()
     {
@@ -213,20 +217,21 @@ class RideController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        //SE CONTROLA QUE NO HAYA PASAJEROS ACEPTADOS O PENDIENTES
-        //SI HAY, SE LE PREGUNTA SI REALMENTE QUIERE ELIMINAR 
-        //ADVIRTIENDO DE LA PENALIZACION
-        //SI NO HAY SE LLAMA A DESTROY
-        $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
-        if ($passengers->count() > 0 ){
-            return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
-        }else{
-            Ride::destroy($id);
-        $rides = Ride::where('user_id', Auth::user()->id)->get();
-        //redirecciona a cualquier lugar
-        return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
+        $passengers = PassengerRide::where('ride_id', $id)->get();
+        foreach ($passengers as $passenger) {
+            $passenger->delete();
         }
+        Ride::destroy($id);
+        $rides = Ride::all();
+        return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
         
+        
+    }
+
+    public function delete($id){
+        Ride::destroy($id);
+        $rides = Ride::all();
+        return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
     }
 
     public function getBy(Request $request){

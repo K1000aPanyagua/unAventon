@@ -9,6 +9,7 @@
           <td>
             Origen: {{$ride->origin}}
             Destino: {{$ride->destination}}
+            <br><br>
           </td>
         </a>
       </tr>

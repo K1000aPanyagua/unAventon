@@ -36,6 +36,7 @@ Route::post('/newPass', 'UserController@updatePassword');
 
 
 
+
 Route::resource('card', 'CardController');
 Route::get('/list', 'CarController@list');
 Route::resource('car', 'CarController');
@@ -63,6 +64,7 @@ Route::pattern('rides', '[0-9]+');
 Route::get('/solicitudes/{solicitudes}', 'RideController@getSolicitudes')
 		->name('ride.getSolicitudes');
 Route::resource('ride', 'RideController');
+Route::delete('delete/{id}', 'RideController@delete')->name('ride.delete');
 
 Route::get('/result', 'RideController@getBy');
 
