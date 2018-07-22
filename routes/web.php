@@ -68,5 +68,8 @@ Route::delete('delete/{id}', 'RideController@delete')->name('ride.delete');
 
 Route::get('/result', 'RideController@getBy');
 
-
+Route::post('/answer', 'CommentController@answer')
+		->name('comment.answer');
 Route::resource('comment', 'CommentController');
+
+Route::resource('qualification', 'QualificationController');

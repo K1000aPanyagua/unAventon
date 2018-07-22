@@ -125,12 +125,40 @@
               {{method_field('GET')}}
             </form>          
           @endif
+          <!-- TEXTBOX PARA COMENTAR -->
+          <form method="POST" id="formComment" action="{{route('comment.store')}}">
+            {{method_field('POST')}}
+            {{ csrf_field() }}
+            <input type="hidden" name="rideId" value="{{$ride->id}}">
+            <input type="textarea" name="content" oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')" required="required">
+            <input type="submit" value="Comentar">
+          </form>
           <!-- MUESTRO COMENTARIOS SI ES QUE EXISTEN -->
           @if ($comments == 'Aún no hay comentarios')
             {{$comments}}
           @else
             @foreach ($comments as $comment)
               {{$comment->content}}
+              @if ($ride->user_id == Auth::user()->id)
+                <form method="POST" action="{{route('comment.destroy', ['id' => $comment->id])}}">
+                  {{method_field('DELETE')}}
+                  {{csrf_field()}}
+                  <input type="submit" value="Eliminar comentario">
+                </form>
+              @endif
+              @if ($ride->user_id == Auth::user()->id)
+                @if ($comment->answer == null)
+                  <form method="POST" action="{{route('comment.answer')}}">
+                    {{method_field('POST')}}
+                    {{ csrf_field() }}
+                    <input type="hidden" name="commentId" value="{{$comment->id}}">
+                    <input type="textarea" name="content" oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')" required="required">
+                    <input type="submit" value="Responder" >
+                  </form>
+                @else
+                  {{$comment->answer}}
+                @endif    
+              @endif
             @endforeach
           @endif
         

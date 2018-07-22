@@ -7,16 +7,19 @@
 
 <header class="masthead background-w-imagebgprimary text-white row" style="background-image: url('{{ asset('assets/autos.jpg') }}')">
    
-  @foreach ($passengers as $passenger)
-    <a href="{{route('user.show', ['id' => $passenger->id])}}">{{$passenger->name}} {{$passenger->lastname}} ({{$passenger->email}})</a>
+  @if ($passengers->count() == 0)
+    No hay pasajeros aceptados
+    @foreach ($passengers as $passenger)
+      <a href="{{route('user.show', ['id' => $passenger->id])}}">{{$passenger->name}} {{$passenger->lastname}} ({{$passenger->email}})</a>
 
-    <form method="POST" action="{{ route('user.deletePassenger', ['ride' => $ride->id, 'passenger' => $passenger->id]) }}">
-    	{{method_field('GET')}}
+      <form method="POST" action="{{ route('user.deletePassenger', ['ride' =>   $ride->id, 'passenger' => $passenger->id]) }}">
+    	 {{method_field('GET')}}
         {{ csrf_field() }}
-    	<button class="btn" type="submit">Eliminar copiloto</button>
+    	 <button class="btn" type="submit">Eliminar copiloto</button>
     	
-    </form>
-  @endforeach
+      </form>
+    @endforeach
+  @endif
 
   </header>
 @include('copyrigtharrow')
