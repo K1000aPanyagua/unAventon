@@ -23,6 +23,10 @@ class RideController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('askDeletion')->only('delete');
+    }
 
     public function index()
     {
@@ -231,8 +235,21 @@ class RideController extends Controller
         $rides = Ride::where('user_id', Auth::user()->id)->get();
         //redirecciona a cualquier lugar
         return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
+
+        $passengers = PassengerRide::where('ride_id', $id)->get();
+        foreach ($passengers as $passenger) {
+            $passenger->delete();
+
         }
-        
+        Ride::destroy($id);
+        $rides = Ride::all();
+        return redirect('home')->with('rides', $rides)->with('success', 'viaje eliminado');  
+        }
+    }
+    public function delete($id){
+        Ride::destroy($id);
+        $rides = Ride::all();
+        return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
     }
 
     public function getBy(Request $request){

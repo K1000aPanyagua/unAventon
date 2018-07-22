@@ -20,6 +20,19 @@
 
 @endif
 
+@if ($message = Session::has('rideConfirmationDelete'))
+
+<div class="alert alert-info alert-block">
+	<form action="{{ route('ride.destroy', $ride->id) }}" method="POST">
+            {{method_field('DELETE')}}
+            {{ csrf_field() }}
+            <button type="button" class="close" data-dismiss="alert">×</button>	
+			<strong><button type="submit">{{$message = Session::get('rideConfirmationDelete')}}</button></strong>
+    </form>
+</div>
+
+@endif
+
 
 @if ($message = Session::has('error'))
 	
