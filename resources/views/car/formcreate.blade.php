@@ -91,6 +91,7 @@
               </span>
             @endif
             </div>
+       
         </div>
           <button type="submit" class="btn btn-primary btn-lg rounded-pill"> Confirmar </button>
         </form>

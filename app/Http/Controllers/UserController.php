@@ -269,7 +269,7 @@ class UserController extends Controller{
         $comments = Comment::where('ride_id', $idRide)->get();
         $car = Car::where('id', $ride->car_id)->first();
         $pilot = User::find($ride->user_id)->first();
-        $postulant = null;
+        $postulant = collect([]);
         if ($solicitudes != 'No hay postulaciones'){
             foreach ($solicitudes as $solicitude) {
                 $postulant->push(User::find($solicitude->user_id));

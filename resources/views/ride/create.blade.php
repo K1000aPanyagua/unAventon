@@ -111,17 +111,14 @@
 
 </form>
 </div>
-            </div>
+</div>
 </div>
 </header>
 
 
 <!--fin header-->
 @include('footer')
-<<<<<<< HEAD
-=======
 
->>>>>>> a3fc134659649d1cb178eafae0164dbe90358098
 @include('javascript')
 </body>
 </html>

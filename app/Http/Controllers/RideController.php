@@ -221,6 +221,12 @@ class RideController extends Controller
         if ($passengers->count() > 0 ){
             return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
         }else{
+            $comments = Comment::where('ride_id', $id)->get();
+            if ($comments != null) {
+                foreach ($comments as $comment) {
+                     Comment::destroy($comment->id);
+                }
+            }
             Ride::destroy($id);
         $rides = Ride::where('user_id', Auth::user()->id)->get();
         //redirecciona a cualquier lugar

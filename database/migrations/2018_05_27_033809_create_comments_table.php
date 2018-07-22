@@ -21,6 +21,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('ride_id')->references('id')->on('rides');
             $table->string('content');
             $table->timestamps();
+            $table->string('answer')->nullable();
         });
     }
 

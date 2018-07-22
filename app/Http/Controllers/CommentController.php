@@ -7,15 +7,19 @@ use App\Comment;
 use App\User;
 use Auth;
 use App\Ride;
+use Illuminate\Support\Facades\Validator;
+use App\Car;
+use App\PassengerRide;
+
 
 class CommentController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($ride_id){
+    public function index(){
        //
     }
 
@@ -34,21 +38,22 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $ride_id)
+    public function store(Request $request)
     {   
-        //Validacion
-        $this->validator($request->all())->validate();
         //Almacenamiento
         $comment = new Comment;
         $comment->content = $request->content;
-        $comment->ride_id = $ride_id;
+        $comment->ride_id = $request->rideId;
         $comment->user_id = Auth::User()->id;
+        $comment->answer = null;
 
         $comment->save();
-        $ride = Ride::find($ride_id);
+        
+        //cargo informacion del viaje
+        $ride = Ride::find($request->rideId);
         
         //Redireccion
-        return view('ride.show')->with('ride', $ride);
+       return redirect()->route('ride.show', [$ride->id]);
     }
 
     /**
@@ -68,11 +73,11 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id_comment){
+    public function edit($idComment){
         //LA EDICION DE UN COMENTARIO ES SUPER CHOTA POR QUE NOS VA A
         //REDIRECCIONAR A UN MINIFORM EDIT, Y UNA VEZ HECHO EL UPDATE
         //SE REDIRECCIONA A RIDE SHOW
-        $comment = comment::find($id);
+        $comment = comment::find($id)->first();
         return view('comment.edit')->with('comment', $comment);
     }
 
@@ -84,16 +89,7 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        //Validacion
-        $this->validator($request->all())->validate();
-        //Almacenamiento
-        $comment = Comment::find($id);
-        $comment->content = $request->content;
-        $comment->save();
 
-        $ride = Ride::find($ride_id);
-        //Redireccion
-        return view('ride.show')->with('success', 'Cambios guardados');
     }
 
     /**
@@ -103,14 +99,28 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id_comment){
+        $id = Comment::find($id_comment)->first()->ride_id;
         Comment::destroy($id_comment);
-        return view('ride.show');
+        
+        //cargo informacion del viaje
+        
+        $ride = Ride::find($id);
+       
+        //Redireccion
+        return redirect()->route('ride.show', [$ride->id]);
     }
 
-    protected function validator(array $data){
-        return Validator::make($data, [
-            'content' => 'required',
-        ]);
+    public function answer(Request $request){
+        //Almacenamiento
+        $comment = Comment::find($request->commentId)->first();
+        $comment->answer = $request->content;
+        $comment->save();
+        
+        //cargo informacion del viaje
+        $ride = Ride::find($comment->ride_id);
+
+        //Redireccion
+        return redirect()->route('ride.show', [$ride->id]);
     }
 
 }

@@ -66,5 +66,8 @@ Route::resource('ride', 'RideController');
 
 Route::get('/result', 'RideController@getBy');
 
-
+Route::post('/answer', 'CommentController@answer')
+		->name('comment.answer');
 Route::resource('comment', 'CommentController');
+
+Route::resource('qualification', 'QualificationController')
