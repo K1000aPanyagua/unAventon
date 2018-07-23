@@ -16,12 +16,12 @@ class CreateQualificationsPilotsTable extends Migration
         Schema::create('qualificationsPilots', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->integer('pilot_id')->unsigned();
             $table->foreign('pilot_id')->references('id')->on('users');
             $table->integer('passenger_id')->unsigned();
             $table->foreign('passenger_id')->references('id')->on('users');
-            $table->string('review');
+            $table->string('review')->nullable();
             $table->integer('ride_id')->unsigned();
             $table->foreign('ride_id')->references('id')->on('rides');
             $table->boolean('done')->default(FALSE);

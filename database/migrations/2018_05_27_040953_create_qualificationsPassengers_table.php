@@ -16,7 +16,7 @@ class CreateQualificationsPassengersTable extends Migration
         Schema::create('qualificationsPassengers', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->integer('pilot_id')->unsigned();
             $table->foreign('pilot_id')->references('id')->on('users');
             $table->integer('passenger_id')->unsigned();

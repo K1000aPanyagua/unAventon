@@ -6,9 +6,9 @@
 @include('menu')
 
 <header class="masthead background-w-imagebgprimary text-white row" style="background-image: url('{{ asset('assets/autos.jpg') }}')">
-   
   @if ($passengers->count() == 0)
     No hay pasajeros aceptados
+  @else  
     @foreach ($passengers as $passenger)
       <a href="{{route('user.show', ['id' => $passenger->id])}}">{{$passenger->name}} {{$passenger->lastname}} ({{$passenger->email}})</a>
 
