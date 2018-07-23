@@ -112,7 +112,8 @@ class CommentController extends Controller
 
     public function answer(Request $request){
         //Almacenamiento
-        $comment = Comment::find($request->commentId)->first();
+        $comment = Comment::find($request->commentId);
+
         $comment->answer = $request->content;
         $comment->save();
         
