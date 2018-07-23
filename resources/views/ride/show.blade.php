@@ -70,21 +70,21 @@
               @if ($solicitudes == 'No hay postulaciones')
                 {{$solicitudes}}
               @else
-                Solicitudes pendientes: 
+                <h6 class="separator-l">Solicitudes pendientes: </h6> 
                 <!-- MUESTRA LOS PENDIENTES Y ACEPTADOS DEBERIA MOSTRAR SOLO PENDIENTES -->
                 @foreach($postulant as $postu)
                   <div class="row" >
 
-                   <a href="">{{$postu->name}} {{$postu->lastname}} <br> {{$postu->email}}</a> <!-- el href lleva a ver el perfil del usuario -->
+                   <a class="separator" href="">{{$postu->name}} {{$postu->lastname}} <br> {{$postu->email}}</a> <!-- el href lleva a ver el perfil del usuario -->
                   
                   <ul style="list-style: none">
-                  <li class="separator"> <form action="{{ route('user.declineSolicitude', ['idRide' => $ride->id, 'idPostulant' => $postu->id]) }}" method="POST" >
+                  <li class="separator-s"> <form action="{{ route('user.declineSolicitude', ['idRide' => $ride->id, 'idPostulant' => $postu->id]) }}" method="POST" >
                   {{ csrf_field() }}
                   {{method_field('GET')}}
                   <input type="submit" class="btn btn-outline-light text-center color-aventon" value="Rechazar"/>
                   </form> </li>
 
-                  <li class="separator"> <form action="{{ route('user.acceptSolicitude', ['idRide' => $ride->id, 'idPostulant' => $postu->id]) }}" method="POST" >
+                  <li class="separator-s"> <form action="{{ route('user.acceptSolicitude', ['idRide' => $ride->id, 'idPostulant' => $postu->id]) }}" method="POST" >
                   {{ csrf_field() }}
                   {{method_field('GET')}}
                   <input type="submit" class="btn btn-outline-light text-center color-aventon" value="Aceptar"/>
@@ -113,7 +113,7 @@
                 </form></li>
               <!-- SI HA SIDO ACEPTADO -->
               @elseif ($passengerRide->state == 'aceptado')
-                <li><h2>Ustéd ha sido aceptado como pasajero en este viaje</h2></li>
+                <li><h4>Ustéd ha sido aceptado como pasajero en este viaje</h4></li>
                 <form action="{{ route('user.cancelSolicitude', ['id' => $ride->id]) }}" method="POST" onsubmit="return ConfirmDelete()">
                   {{method_field('DELETE')}} {{ csrf_field() }}
                   <input type="submit" class="btn btn-danger" value="Darse de baja del viaje"/>
@@ -129,10 +129,10 @@
                 </form> 
               <!-- SI HA SIDO RECHAZADO -->
               @elseif ($passengerRide->state == 'rechazado')
-                <li><h2>Usted ha sido rechazado.:</h2></li>
+                <li><h4>Usted ha sido rechazado.</h4></li>
               <!-- SI HA SIDO ELIMINADO-->
               @elseif ($passengerRide->state == 'eliminado')
-                <li> <h2>Ustéd ha sido eliminado de este viaje :</h2></li>
+                <li> <h4>Ustéd ha sido eliminado de este viaje :</h4></li>
 
               @endif
 
@@ -205,13 +205,13 @@
       @endforeach
     @endif  
 
-    @if (Auth::check())
+    @if (Auth::check() and $ride->user_id != Auth::user()->id)
       <!-- TEXTBOX PARA COMENTAR -->  
       <div class="col-sm-12 separator text-center" >       
         <form method="POST" id="formComment" action="{{route('comment.store')}}">
           {{method_field('POST')}} {{ csrf_field() }}
           <input type="hidden" name="rideId" value="{{$ride->id}}">
-          <input type="textarea" name="content" oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')" required="required">
+          <input type="textarea" name="content" oninvalid="this.setCustomValidity('Campo  obligatorio')" oninput="setCustomValidity('')" required="required">
           <input class="btn btn-primary" type="submit" value="Comentar">
         </form>
       </div>
