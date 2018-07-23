@@ -89,7 +89,7 @@ class RideController extends Controller
         $ride->departHour =     $request->departHour;
         $ride->car_id =         $request->car_id;
         $ride->card_id =        $request->card;
-
+        $ride->endDate = $request->departDate;
         $ride->save();
         
         $pilot = Auth::user();
