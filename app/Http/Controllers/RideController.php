@@ -133,14 +133,19 @@ class RideController extends Controller
         if ($comments->count() == 0) {
             $comments = 'Aún no hay comentarios';
         }
-        $passengerRide = PassengerRide::where('ride_id', $id)->where('user_id', Auth::user()->id)->first();
         $postulant = collect([]);
         if ($solicitudes != 'No hay postulaciones'){
             foreach ($solicitudes as $solicitude) {
                 $postulant->push(User::find($solicitude->user_id));
             }
         }
-        return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
+        if (Auth::check()) {
+          $passengerRide = PassengerRide::where('ride_id', $id)->where('user_id', Auth::user()->id)->first();
+          return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
+        }
+        else {
+          return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
+        }
     }
 
     /**

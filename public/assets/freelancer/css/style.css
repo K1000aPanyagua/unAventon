@@ -124,6 +124,20 @@
   margin-bottom: 2em;
 }
 
+.separator{
+  margin: 2em 0;
+}
+
+.sangria{
+  margin-left:2em;
+}
+
+.separator-sangria{
+  margin: 2em 1em 1em 1em;
+}
+
+
+
 .listitem{
   display:block;
   margin-left: 2em;
@@ -138,3 +152,8 @@ padding-top: 3em;
 height: 20em;
 border-radius: 7%
 }
+
+.comentary{
+  background-color: rgba(155, 155, 155, 0.5);
+}
+
