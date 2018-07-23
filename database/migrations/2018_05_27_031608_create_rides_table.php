@@ -21,7 +21,6 @@ class CreateRidesTable extends Migration
             $table->foreign('car_id')->references('id')->on('cars');
             $table->string('origin');
             $table->string('destination');
-            $table->time('duration');
             $table->integer('account_id')->unsigned()->nullable();
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->integer('card_id')->unsigned()->nullable();
@@ -31,10 +30,12 @@ class CreateRidesTable extends Migration
             $table->boolean('done')->default(FALSE);
             $table->boolean('paid')->default(FALSE);
             $table->date('departDate');
-            $table->string('departHour');
+            $table->time('departHour');
+            $table->time('duration');
+            $table->dateTime('endDate');
             $table->timestamps();
         });
-    }
+    }   
 
     /**
      * Reverse the migrations.

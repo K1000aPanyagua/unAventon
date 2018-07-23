@@ -12,8 +12,8 @@ use App\Account;
 use App\Car;
 use App\PassengerRide;
 use DB;
-use Carbon;
 use App\User;
+use Carbon\Carbon;
 
 
 class RideController extends Controller
@@ -78,8 +78,6 @@ class RideController extends Controller
     }
 
     public function store(Request $request){
-        $account = Account::where('user_id', Auth::user()->id)->first();
-
         $ride = new Ride;
         $ride->user_id =        Auth::User()->id;
         $ride->origin =         $request->origin;
@@ -89,10 +87,9 @@ class RideController extends Controller
         $ride->remarks =        $request->remarks;
         $ride->departDate =     $request->departDate;
         $ride->departHour =     $request->departHour;
-        $ride->account_id =     $account->id;
         $ride->car_id =         $request->car_id;
         $ride->card_id =        $request->card;
-        
+        $ride->endDate = $request->departDate;
         $ride->save();
         
         $pilot = Auth::user();
