@@ -24,7 +24,7 @@ class CreateRidesTable extends Migration
             $table->integer('account_id')->unsigned()->nullable();
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->integer('card_id')->unsigned()->nullable();
-            $table->foreign('card_id')->references('id')->on('cars');
+            $table->foreign('card_id')->references('id')->on('cards');
             $table->decimal('amount');
             $table->string('remarks');
             $table->boolean('done')->default(FALSE);
