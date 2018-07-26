@@ -72,3 +72,7 @@ Route::post('/answer', 'CommentController@answer')
 		->name('comment.answer');
 Route::resource('comment', 'CommentController');
 
+Route::get('myRides/{user}', 'RideController@myRides')->name('ride.myRides');
+Route::get('payRide/{ride}', 'UserController@payRide')->name('user.payRide');
+Route::post('pay/{ride}', 'UserController@pay')->name('user.pay');
+

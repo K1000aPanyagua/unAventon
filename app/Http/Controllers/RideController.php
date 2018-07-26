@@ -28,10 +28,13 @@ class RideController extends Controller
         $this->middleware('askDeletion')->only('delete');
     }
 
-    public function index()
+    public function myRides($user_id)
     {
-        //$rides= Ride::all(); //RIDE INDEX DEBERIA LLAMARSE CON UN INCLUDE EN EL HOME
-        //return view('ride.index')->with('rides', $rides);
+        //RETORNA VISTA CON VIAJES A LOS QUE ESTA ASOCIADO UN USUARIO, TANTO COMO PILOTO COMO COPILOTO.
+        $myRides= Ride::where('user_id', $user_id)->get();
+        $rides= PassengerRide::where('user_id', $user_id)->get();
+        return view('user.myRides')->with('myRides', $myRides)->with('rides', $rides);
+
     }
 
     /**
@@ -41,7 +44,7 @@ class RideController extends Controller
      */
     public function create()
     {
-        //VERIFICAR QUE USUARIO TENGA TARJETA Y ESTÉ AUNTENTICADO
+        //VERIFICAR QUE USUARIO TENGA TARJETA, VEHICULO Y ESTÉ AUNTENTICADO
         if (!Auth::check()) {
             return redirect('/register')->with('error','Registrate para publicar tu viaje!');
         }

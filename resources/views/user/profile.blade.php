@@ -12,6 +12,10 @@
             <p>► Email:  {{ $user->email }}</p> <br>
             <p>► Teléfono:  {{ $user->telephone }}</p> <br>
             
+            <a class="listitem text-white" href=" {{route('ride.myRides', Auth::User()->id)}} "> 
+              <h2> ► Mis viajes</h2>
+            </a>
+
             <a class="listitem text-white" href=" {{route('user.edit', Auth::User()->id)}} "> 
               <h2> ► Editar datos personales</h2>
             </a>
