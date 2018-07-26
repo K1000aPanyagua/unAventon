@@ -344,6 +344,26 @@ class UserController extends Controller{
         return redirect()->back();
     }
 
+    public function payRide($ride_id){
+        $cards=Card::where('user_id', Auth::user()->id)->get();
+        return view('user.payRide')->with('ride', $ride_id)->with('cards', $cards);
+    }
+
+    public function pay(Request $request, $ride_id){
+        $num=rand(5, 20);
+        if( ($num % 2) == 0){
+            $ride=Ride::find($ride_id);
+            $ride->paid=TRUE;
+            $ride->save();
+
+            return redirect()->back()->with('success', 'El viaje ha sido pagado!');
+        }
+        else{
+
+            return redirect()->back()->with('error', 'Ha ocurrido un problema, el pago ha fallado...');
+        }
+    }
+
 }
 ?>
 

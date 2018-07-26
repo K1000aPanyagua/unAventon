@@ -34,7 +34,11 @@
           <br>
           <h5 class="col-sm-6">FECHA DE SALIDA:</h5> <p class="col-sm-6">{{ $ride->departDate }}</p>
           <br> 
+<<<<<<< HEAD
           <h5 class="col-sm-6">TIPO DE VEHICULO:</h5> <p class="col-sm-6">{{ $car->kind }}</p>
+=======
+          TIPO DE VEHICULO: {{ $car->kind }}  
+>>>>>>> 46b330e0d151e920255ac0dd1f3085a2e781c78f
           <br> 
           <h5 class="col-sm-6">OBSERVACIONES:</h5> <p class="col-sm-6">{{ $ride->remarks }}</p>
           <br>
@@ -51,7 +55,7 @@
               <li><a href="{{route('page.showPassengers', ['idRide' => $ride->id])}}"> Pasajeros aceptados </a></li>
               <li class="separator" ><a  href="{{ route('ride.edit', $ride->id) }}">Editar</a></li>
 
-              <li class="separator"><form action="{{route('ride.delete', ['id' => $ride->id])}}" method="POST" onsubmit="return ConfirmDelete()">
+              <li class="separator"><form action="{{route('ride.destroy', ['id' => $ride->id])}}" method="POST" onsubmit="return ConfirmDelete()">
                 {{method_field('DELETE')}} {{ csrf_field() }}
                 <input type="submit" class="btn btn-danger" value="Eliminar"/>
                   <script>

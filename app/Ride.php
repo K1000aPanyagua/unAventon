@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ride extends Model{
 
 	protected $table = 'rides';
-
+	protected $dates = ['endDate', 'departDate'];
 	protected $fillable = ['origin', 'destination', 'duration', 'amount', 'remarks', 'departDate', 'departHour'];
 
 	public function pilot(){

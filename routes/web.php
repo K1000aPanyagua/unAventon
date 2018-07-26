@@ -64,11 +64,16 @@ Route::pattern('rides', '[0-9]+');
 Route::get('/solicitudes/{solicitudes}', 'RideController@getSolicitudes')
 		->name('ride.getSolicitudes');
 Route::resource('ride', 'RideController');
-Route::delete('delete/{id}', 'RideController@delete')->name('ride.delete');
+Route::delete('delete/{id}', 'RideController@delete')
+		->name('ride.delete');
 
 Route::get('/result', 'RideController@getBy');
 
 Route::post('/answer', 'CommentController@answer')
 		->name('comment.answer');
 Route::resource('comment', 'CommentController');
+
+Route::get('myRides/{user}', 'RideController@myRides')->name('ride.myRides');
+Route::get('payRide/{ride}', 'UserController@payRide')->name('user.payRide');
+Route::post('pay/{ride}', 'UserController@pay')->name('user.pay');
 
