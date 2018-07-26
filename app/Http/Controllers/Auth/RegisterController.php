@@ -90,7 +90,7 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
         $this->guard()->login($this->create($request->all()));
-        $this->createAccount();
+        
         return redirect('/')->with('success', 'Usuario creado!');
     }
 
@@ -103,11 +103,5 @@ class RegisterController extends Controller
         return Auth::guard('guard-name');
     }*/
 
-    protected function createAccount(){
-        $account = new Account;
-        $account->user_id = Auth::user()->id;
-        $account->amount = 0;
-        $account->save();
-    }
 
 }
