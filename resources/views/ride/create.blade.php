@@ -107,7 +107,7 @@
     @endif
 
 	<br>
-	<button type="submit" class="btn">Publicar</button>
+	<button type="submit" class="btn btn-primary">Publicar</button>
 
 </form>
 </div>

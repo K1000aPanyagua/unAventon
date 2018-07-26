@@ -75,7 +75,9 @@
                 @foreach($postulant as $postu)
                   <div class="row" >
 
-                   <a class="separator" href="">{{$postu->name}} {{$postu->lastname}} <br> {{$postu->email}}</a> <!-- el href lleva a ver el perfil del usuario -->
+                   <a class="separator" href="">{{$postu->name}} {{$postu->lastname}} <br> {{$postu->email}}</a> 
+
+                   <!-- el href lleva a ver el perfil del usuario -->
                   
                   <ul style="list-style: none">
                   <li class="separator-s"> <form action="{{ route('user.declineSolicitude', ['idRide' => $ride->id, 'idPostulant' => $postu->id]) }}" method="POST" >

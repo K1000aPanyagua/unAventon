@@ -14,7 +14,7 @@
   <div class="container">
     <h1 class="text-uppercase separator-l col-sm-12">datos del vehiculo</h1>  
     @include('flash_message')
-      <div class="row" >
+      <div class="col-sm-12" >
            MODELO: {{ $car->model }} <br> 
            PATENTE: {{ $car->license }} <br>
            MARCA: {{ $car->brand}} <br>
@@ -22,13 +22,14 @@
            ASIENTOS: {{ $car->numSeats }} <br>
            TIPO: {{ $car->kind }} <br>
       </div>
+      <div class="separator-both-s">
+        <a class="btn btn-primary" href="/car"> 
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          Mis vehiculos   
+        </a>
+      </div>
   </div>
 </header>
-
-<a class="btn btn-primary" href="/"> 
-  Volver al inicio 
-</a>
-
 
 
 
