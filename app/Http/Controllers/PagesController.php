@@ -16,6 +16,7 @@ class PagesController extends Controller {
 	public function getIndex(){
 		$rides = DB::table('rides')->paginate(15);
 		return view('home')->with('rides', $rides);
+		
 	}
 
 	public function getSearch(){

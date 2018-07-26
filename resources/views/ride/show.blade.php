@@ -37,9 +37,12 @@
           <br>
           FECHA DE SALIDA: {{ $ride->departDate }}
           <br> 
-          TIPO DE VEHICULO: {{ $car->kind }}
+          TIPO DE VEHICULO: {{ $car->kind }}  
           <br> 
           OBSERVACIONES: {{ $ride->remarks }}
+          <br>
+          ASIENTOS DISPONIBLES: {{$disponible}}
+          
       </div>
 
       <div class="col-sm-12 col-md-4">
@@ -51,7 +54,7 @@
               <li><a href="{{route('page.showPassengers', ['idRide' => $ride->id])}}"> Pasajeros aceptados </a></li>
               <li class="separator" ><a  href="{{ route('ride.edit', $ride->id) }}">Editar</a></li>
 
-              <li class="separator"><form action="{{route('ride.delete', ['id' => $ride->id])}}" method="POST" onsubmit="return ConfirmDelete()">
+              <li class="separator"><form action="{{route('ride.destroy', ['id' => $ride->id])}}" method="POST" onsubmit="return ConfirmDelete()">
                 {{method_field('DELETE')}} {{ csrf_field() }}
                 <input type="submit" class="btn btn-danger" value="Eliminar"/>
                   <script>

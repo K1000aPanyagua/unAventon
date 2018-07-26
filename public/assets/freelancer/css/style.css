@@ -161,3 +161,17 @@ border-radius: 7%
   background-color: rgba(155, 155, 155, 0.5);
 }
 
+.container-ride{
+
+  padding: 1em; 
+  text-align: center; 
+  border: 3px #2c3e50 solid; 
+  background: white;
+  border-radius: 1em;
+}
+
+.rides-home{
+
+}
+
+.rides-home a:hover { text-decoration: none; }

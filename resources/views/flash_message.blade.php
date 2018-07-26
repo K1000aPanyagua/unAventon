@@ -23,11 +23,12 @@
 @if ($message = Session::has('rideConfirmationDelete'))
 
 <div class="alert alert-info alert-block">
-	<form action="{{ route('ride.destroy', $ride->id) }}" method="POST">
+	<form action="{{ route('ride.delete', $ride->id) }}" method="GET">
             {{method_field('DELETE')}}
             {{ csrf_field() }}
             <button type="button" class="close" data-dismiss="alert">×</button>	
-			<strong><button type="submit">{{$message = Session::get('rideConfirmationDelete')}}</button></strong>
+			<strong>{{$message = Session::get('rideConfirmationDelete')}}</strong>
+			<button type="submit" class="btn-danger btn">Confirmar</button>
     </form>
 </div>
 
