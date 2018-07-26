@@ -201,7 +201,7 @@ class UserController extends Controller{
                 $postulant->push(User::find($solicitude->user_id));
             }
         }
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
     }   
 
     public function cancelSolicitude($idRide){
@@ -220,7 +220,7 @@ class UserController extends Controller{
         $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
         $postulant = null;
         
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('pilot', $pilot)->with('postulant', $postulant);
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('pilot', $pilot)->with('postulant', $postulant)->with('disponible', $disponible);
     }
 
     public function acceptSolicitude($idRide, $idPostulant){
@@ -272,7 +272,7 @@ class UserController extends Controller{
                 $postulant->push(User::find($solicitude->user_id));
             }
         }
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant);
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant)->with('disponible', $disponible);
     }
 
     public function declineSolicitude(Request $request, $idRide, $idPostulant){
@@ -295,7 +295,7 @@ class UserController extends Controller{
                 $postulant->push(User::find($solicitude->user_id));
             }
         }
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant);
+        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant)->with('disponible', $disponible);
     }
 
     public function deletePassenger(Request $Request, $idRide, $idPassenger){
@@ -345,4 +345,5 @@ class UserController extends Controller{
     }
 
 }
+?>
 

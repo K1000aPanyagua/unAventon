@@ -99,6 +99,7 @@ class RideController extends Controller
         $card = Card::where('id', $ride->card_id)->first();
         $comments = Comment::where('ride_id', $ride->id)->get();
         $solicitudes = PassengerRide::where('ride_id', $ride->id)->where('state', 'pendiente')->where('state', 'aceptado')->get();
+        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
         if ($solicitudes->count() == 0) {
             $solicitudes = 'No hay postulaciones';
         }
@@ -111,8 +112,9 @@ class RideController extends Controller
                 $postulant->push(User::find($solicitude->user_id));
             }
         }
-        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje publicado!')->with('comments', $comments)->with('postulant', $postulant)->with('pilot', $pilot)->with('solicitudes', $solicitudes);
+        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje publicado!')->with('comments', $comments)->with('postulant', $postulant)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('disponible', $disponible);
     }
+
 
     /**
      * Display the specified resource.
@@ -126,6 +128,8 @@ class RideController extends Controller
         $car = Car::find($ride->car_id)->first();
         $pilot = User::find($ride->user_id);
         $solicitudes = PassengerRide::where('ride_id', $id)->where('state', 'pendiente')->get();
+        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
+        
         if ($solicitudes->count() == 0) {
             $solicitudes = 'No hay postulaciones';
         }
@@ -140,10 +144,10 @@ class RideController extends Controller
         }
         if (Auth::check()) {
           $passengerRide = PassengerRide::where('ride_id', $id)->where('user_id', Auth::user()->id)->first();
-          return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
+          return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
         }
         else {
-          return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
+          return view('ride.show')->with('ride', $ride)->with('comments', $comments)->with('car', $car)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
         }
     }
 
@@ -197,6 +201,7 @@ class RideController extends Controller
         $card = Card::where('id', $ride->card_id)->first();
         $pilot = User::find($ride->user_id)->first();
         $solicitudes = PassengerRide::where('ride_id', $id)->where('state', 'pendiente')->get();
+        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
         if ($solicitudes->count() == 0) {
             $solicitudes = 'No hay postulaciones';
         }
@@ -210,7 +215,7 @@ class RideController extends Controller
                 $postulant->push(User::find($solicitude->user_id));
             }
         }
-        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje editado!')->with('comments', $comments)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant);
+        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje editado!')->with('comments', $comments)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
         
     }
 

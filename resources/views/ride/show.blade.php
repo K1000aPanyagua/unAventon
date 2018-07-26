@@ -40,6 +40,9 @@
           TIPO DE VEHICULO: {{ $car->kind }}
           <br> 
           OBSERVACIONES: {{ $ride->remarks }}
+          <br>
+          ASIENTOS DISPONIBLES: {{$disponible}}
+          
       </div>
 
       <div class="col-sm-12 col-md-4">
