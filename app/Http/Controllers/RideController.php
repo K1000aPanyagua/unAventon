@@ -64,8 +64,6 @@ class RideController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected function validator(array $data){
-        $today=Carbon::today();
-        $today=$today->toDateString();
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
@@ -91,7 +89,7 @@ class RideController extends Controller
         $ride->card_id =        $request->card;
         $ride->endDate =        $request->departDate;
         $ride->paid =           FALSE;
-        $ride->done =           FALSE;
+        $ride->done =           FALSE; 
         $ride->save();
         
         $pilot = Auth::user();
@@ -121,6 +119,7 @@ class RideController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id){
+        $this->checkRide($id);
         $ride = Ride::find($id);
         $comments = Comment::where('ride_id', $id)->get();
         $car = Car::find($ride->car_id)->first();
@@ -225,10 +224,22 @@ class RideController extends Controller
         //SI HAY, SE LE PREGUNTA SI REALMENTE QUIERE ELIMINAR 
         //ADVIRTIENDO DE LA PENALIZACION
         //SI NO HAY SE LLAMA A DESTROY
-        $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->where('state', 'pendiente')->get();
+        $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->get();
         if ($passengers->count() > 0 ){
-            return view('ride.show')->with('error', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
+            return redirect()->back()->with('rideConfirmationDelete', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
         }else{
+            $qualiPilot = QualificationPilot::where('ride_id', $id)->get();
+            if ($qualiPilot != null) {
+                foreach ($qualiPilot as $singleQuali) {
+                     QualificationPilot::destroy($singleQuali->id);
+                }
+            }
+            $qualiPassenger = QualificationPassenger::where('ride_id', $id)->get();
+            if ($qualiPassenger != null) {
+                foreach ($qualiPassenger as $singleQuali) {
+                     QualificationPassenger::destroy($singleQuali->id);
+                }
+            }
             $comments = Comment::where('ride_id', $id)->get();
             if ($comments != null) {
                 foreach ($comments as $comment) {
@@ -236,21 +247,36 @@ class RideController extends Controller
                 }
             }
             Ride::destroy($id);
-        $rides = Ride::where('user_id', Auth::user()->id)->get();
+        $rides = Ride::all();
         //redirecciona a cualquier lugar
-        return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
-
+        return redirect('/')->with('rides', $rides)->with('success', 'viaje eliminado');
+        }
+    }
+    
+    public function delete($id){
         $passengers = PassengerRide::where('ride_id', $id)->get();
         foreach ($passengers as $passenger) {
             $passenger->delete();
+        }
+        $qualiPilot = QualificationPilot::where('ride_id', $id)->get();
+        if ($qualiPilot != null) {
+            foreach ($qualiPilot as $singleQuali) {
+                 QualificationPilot::destroy($singleQuali->id);
+            }
+        }
+        $qualiPassenger = QualificationPassenger::where('ride_id', $id)->get();
+        if ($qualiPassenger != null) {
+            foreach ($qualiPassenger as $singleQuali) {
+                QualificationPassenger::destroy($singleQuali->id);
+            }
+        }
+        $comments = Comment::where('ride_id', $id)->get();
+        if ($comments != null) {
+            foreach ($comments as $comment) {
+                Comment::destroy($comment->id);
+            }
+        }
 
-        }
-        Ride::destroy($id);
-        $rides = Ride::all();
-        return redirect('home')->with('rides', $rides)->with('success', 'viaje eliminado');  
-        }
-    }
-    public function delete($id){
         Ride::destroy($id);
         $rides = Ride::all();
         return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
@@ -292,4 +318,13 @@ class RideController extends Controller
         return view('ride.searchResult')->with('rides', $rides);
     }
 
+    public function checkRide($id){
+        $ride = Ride::find($id);
+        $now = Carbon::now();
+        if ($ride->endDate->gt($now)) {
+            $ride->done = TRUE;           
+        }
+    }
+
 }
+
