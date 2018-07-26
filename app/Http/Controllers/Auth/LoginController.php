@@ -56,7 +56,6 @@ class LoginController extends Controller
         $email = $request->input('email');
         $pass = $request->input('pass');
         $user = User::onlyTrashed()->where('email', $email)->first();
-        
         if ( $user != null ){
                 return redirect()->back()->with('deleted', 'Su cuenta ha sido desactivada, ¿Desea recuperarla?');
             }

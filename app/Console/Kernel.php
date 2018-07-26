@@ -28,10 +28,6 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->call(function () {
-            $currentTime = Carbon::now();
-            DB::table('rides')->all();
-        })->daily();
     }
 
     /**
