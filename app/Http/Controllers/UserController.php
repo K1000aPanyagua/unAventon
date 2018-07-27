@@ -211,10 +211,15 @@ class UserController extends Controller{
     public function cancelSolicitude($idRide){
         $solicitude = PassengerRide::where('user_id', Auth::user()->id)->where('ride_id', $idRide)->first();
         if ($solicitude->state == 'aceptado') {
-            //!!!!!!!!!!!!!!!!!!!!!!FALTA PENALIZAR AL USUARIO!!!!!!!!!!!!!!!!!
+            //SI FUÉ ACEPTADO PENALIZO 
+            $user = User::find(Auth::user()->id);
+            $user->reputation = $user->reputation - 1;
+            
+            PassengerRide::destroy($solicitude->id);
+
+        }else{
             PassengerRide::destroy($solicitude->id);
         }
-        PassengerRide::destroy($solicitude->id);
         
         $solicitudes = null;
         $ride = Ride::where('id', $idRide)->first();
@@ -232,27 +237,6 @@ class UserController extends Controller{
         $aux = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPostulant)->first();
         $aux->state = 'aceptado';
         $aux->save();
-
-        //CREO LAS TABLAS DE CALIFICACION PENDIENTE
-        $qualificationPilot = new QualificationPilot;
-        $qualificationPilot->value = null;
-        $qualificationPilot->pilot_id = Auth::user()->id;
-        $qualificationPilot->passenger_id = $idPostulant;
-        $qualificationPilot->review = null;
-        $qualificationPilot->ride_id = $idRide;
-        $qualificationPilot->done = FALSE;
-
-        $qualificationPilot->save();
-        //
-        $qualificationPassenger = new QualificationPassenger;
-        $qualificationPassenger->value = null;
-        $qualificationPassenger->pilot_id = Auth::user()->id;
-        $qualificationPassenger->passenger_id = $idPostulant;
-        $qualificationPassenger->review = null;
-        $qualificationPassenger->ride_id = $idRide;
-        $qualificationPassenger->done = FALSE;
-
-        $qualificationPassenger->save();
 
         //CARGO LAS SOLICITUDES Y TODOS LOS DATOS NECESARIOS PARA LA VISTA DEL VIAJE
         $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
@@ -306,14 +290,9 @@ class UserController extends Controller{
     }
 
     public function deletePassenger(Request $Request, $idRide, $idPassenger){
-        //!!!!!!!!!!!!!!FALTA PENALIZAR AL USUARIO!!!!!!!!!!!!!!!!!!!!
-        
-        //ELIMINO LAS TABLAS DE CALIFICACIONES
-        $qualificationPassenger = QualificationPassenger::where('ride_id', $idRide)->where('passenger_id', $idPassenger)->first();
-        $qualificationPassenger->delete();
-        //
-        $qualificationPilot = QualificationPilot::where('ride_id', $idRide)->where('passenger_id', $idPassenger)->first();
-        $qualificationPilot->delete();
+        //PENALIZO AL USUARIO
+        $user = User::find(Auth::user()->id);
+        $user->reputation = $user->reputation - 1;
         //
         $passenger = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPassenger)->first();
         $passenger->state = 'eliminado';
@@ -334,7 +313,16 @@ class UserController extends Controller{
 
         $qualification->save();
 
+        $passenger = User::find($passenger_id);
+
+        if ($qualification->value = 'positivo') {
+            $passenger->reputation = $passenger->reputation + 1;
+        }elseif ($qualification->value = 'negativo') {
+            $passenger->reputation = $passenger->reputation - 1;
+        }
+
         return redirect()->back();
+        }
     }
 
     public function qualificatePilot(Request $request, $ride_id, $pilot_id){
@@ -347,6 +335,14 @@ class UserController extends Controller{
         $qualification->done = TRUE;
 
         $qualification->save();
+
+        $pilot = User::find($pilot_id);
+
+        if ($qualification->value = 'positivo') {
+            $pilot->reputation = $pilot->reputation + 1;
+        }elseif ($qualification->value = 'negativo') {
+            $pilot->reputation = $pilot->reputation - 1;
+        }
 
         return redirect()->back();
     }
@@ -372,5 +368,4 @@ class UserController extends Controller{
     }
 
 }
-?>
 
