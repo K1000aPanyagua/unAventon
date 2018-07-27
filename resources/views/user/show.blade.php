@@ -7,7 +7,7 @@
 <!--Body -->
 @include('menu')
 @include('user.profile')
-@include('fill')
+
 <!--fin header-->
 @include('copyrigtharrow')
 @include('javascript')

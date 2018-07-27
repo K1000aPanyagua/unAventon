@@ -43,12 +43,15 @@ class UserController extends Controller{
      */
 
     public function show($id){
+        $ridesP = Ride::where('user_id', $id)->paginate(15);
+        $ridesC = PassengerRide::where('user_id', $id)->paginate(15);
         $user = User::find($id);
+  
         if ($id != Auth::user()->id) {
-            return view('user.showOtherUser', compact('user'));
+            return view('user.showOtherUser', compact('user'))->with('myRides', $ridesP)->with('rides', $ridesC);
         }
         else{
-            return view('user.show', compact('user'));
+            return view('user.show', compact('user'))->with('myRides', $ridesP)->with('rides', $ridesC);
         }
     }
 
@@ -152,6 +155,7 @@ class UserController extends Controller{
         $pilot = User::find($ride->user_id)->first();
         //valido que el usuario tenga tarjeta
         $cards = Card::where('user_id', Auth::user()->id)->get();
+        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
         if ( $cards->count() == 0) {
             return redirect('card/create')->with('error', 'Usted no posee tarjeta asignada, ingrese una.');
         }
@@ -219,6 +223,7 @@ class UserController extends Controller{
         $pilot = User::find($ride->user_id)->first();
         $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
         $postulant = null;
+        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
         
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('pilot', $pilot)->with('postulant', $postulant)->with('disponible', $disponible);
     }
@@ -264,6 +269,7 @@ class UserController extends Controller{
         $car = Car::where('id', $ride->car_id)->first();
         $pilot = User::find($ride->user_id)->first();
         $passengers = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado')->get();
+        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
         if ($aux->count() == $car->numSeats) {
             return redirect()->back()->with('error', 'No hay lugares disponibles para este viaje');
         }
@@ -290,6 +296,7 @@ class UserController extends Controller{
         $car = Car::where('id', $ride->car_id)->first();
         $pilot = User::find($ride->user_id)->first();
         $postulant = collect([]);
+        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
         if ($solicitudes != 'No hay postulaciones'){
             foreach ($solicitudes as $solicitude) {
                 $postulant->push(User::find($solicitude->user_id));
