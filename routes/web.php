@@ -31,6 +31,7 @@ Route::get('/postulate/{ride}', 'UserController@postulate')
 Route::get('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePassenger')
 		->name('user.deletePassenger');
 Route::resource('user', 'UserController');
+
 Route::get('/editPass', 'UserController@editPassword');
 Route::post('/newPass', 'UserController@updatePassword');
 
@@ -72,4 +73,8 @@ Route::get('/result', 'RideController@getBy');
 Route::post('/answer', 'CommentController@answer')
 		->name('comment.answer');
 Route::resource('comment', 'CommentController');
+
+Route::get('myRides/{user}', 'RideController@myRides')->name('ride.myRides');
+Route::get('payRide/{ride}', 'UserController@payRide')->name('user.payRide');
+Route::post('pay/{ride}', 'UserController@pay')->name('user.pay');
 

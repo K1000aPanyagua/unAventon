@@ -19,29 +19,30 @@
     <h1 class="text-uppercase separator-l col-sm-12">datos del viaje</h1>  
     <div class="row separator-l">
 
-      <div class="col-sm-12 col-md-4">
-          PILOTO: <br> {{$pilot->name}} {{$pilot->lastname}}
-      </div>
-
-      <div class="col-sm-12 col-md-4 text-left">
+      <div class="col-sm-12 col-md-8 row text-left">
+          <h5 class="col-sm-6">PILOTO:</h5> <p class="col-sm-6">{{$pilot->name}} {{$pilot->lastname}}</p>
           <br>
-          ORIGEN: {{ $ride->origin }}
+          <h5 class="col-sm-6">ORIGEN:</h5> <p class="col-sm-6">{{ $ride->origin }}</p>
           <br>
-          DESTINO: {{ $ride->destination }}
+          <h5 class="col-sm-6">DESTINO:</h5> <p class="col-sm-6">{{ $ride->destination }}</p>
           <br> 
-          DURACION: {{ $ride->duration}}
+          <h5 class="col-sm-6">DURACION:</h5> <p class="col-sm-6">{{ $ride->duration}}</p>
           <br> 
-          MONTO: {{ $ride->amount }}
+          <h5 class="col-sm-6">MONTO:</h5> <p class="col-sm-6">{{ $ride->amount }}</p>
           <br> 
-          HOAR DE SALIDA: {{ $ride->departHour }}
+          <h5 class="col-sm-6">HORA DE SALIDA:</h5> <p class="col-sm-6">{{ $ride->departHour }}</p>
           <br>
-          FECHA DE SALIDA: {{ $ride->departDate }}
+          <h5 class="col-sm-6">FECHA DE SALIDA:</h5> <p class="col-sm-6">{{ $ride->departDate }}</p>
           <br> 
+<<<<<<< HEAD
+          <h5 class="col-sm-6">TIPO DE VEHICULO:</h5> <p class="col-sm-6">{{ $car->kind }}</p>
+=======
           TIPO DE VEHICULO: {{ $car->kind }}  
+>>>>>>> 46b330e0d151e920255ac0dd1f3085a2e781c78f
           <br> 
-          OBSERVACIONES: {{ $ride->remarks }}
+          <h5 class="col-sm-6">OBSERVACIONES:</h5> <p class="col-sm-6">{{ $ride->remarks }}</p>
           <br>
-          ASIENTOS DISPONIBLES: {{$disponible}}
+          <h5 class="col-sm-6">ASIENTOS DISPONIBLES:</h5> <p class="col-sm-6">{{$disponible}}</p>
           
       </div>
 
