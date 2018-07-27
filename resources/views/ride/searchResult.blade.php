@@ -16,7 +16,7 @@
     {{dd($rides)}}
     @foreach($rides as $ride)
       <div class="row" >
-
+   ilughkjl;kjh
           Origen: {{ $ride->origin }} Destino: {{ $ride->destination}} 
           Fecha de salida: {{$ride->departDate}} Hora de salida: {{$ride->departHour}}
           Monto: {{$ride->amount}}

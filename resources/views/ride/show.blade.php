@@ -34,11 +34,7 @@
           <br>
           <h5 class="col-sm-6">FECHA DE SALIDA:</h5> <p class="col-sm-6">{{ $ride->departDate }}</p>
           <br> 
-<<<<<<< HEAD
           <h5 class="col-sm-6">TIPO DE VEHICULO:</h5> <p class="col-sm-6">{{ $car->kind }}</p>
-=======
-          TIPO DE VEHICULO: {{ $car->kind }}  
->>>>>>> 46b330e0d151e920255ac0dd1f3085a2e781c78f
           <br> 
           <h5 class="col-sm-6">OBSERVACIONES:</h5> <p class="col-sm-6">{{ $ride->remarks }}</p>
           <br>

@@ -177,4 +177,10 @@ border-radius: 7%
 .rides-home{
 }
 
-.rides-home a:hover { text-decoration: none; }
+.rides-home a:hover {
+  text-decoration: none; 
+}
+
+ a:hover {
+  text-decoration: none; 
+}

@@ -36,7 +36,8 @@
     
     <div class="background-w-imageaventon text-white mb-0 masthead row" style="background-image: url('{{ asset('assets/autos.jpg') }}')">
       <h1 class="text-uppercase text-center separator-both-xs col-sm-8"> Mis viajes</h1>
-        
+       
+      <div class="col-sm-12"> 
 
         @include('user/myRides')
 

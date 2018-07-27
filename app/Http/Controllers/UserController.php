@@ -97,6 +97,9 @@ class UserController extends Controller{
 
 
     public function update(Request $request, $id){
+        $ridesP = Ride::where('user_id', $id)->paginate(15);
+        $ridesC = PassengerRide::where('user_id', $id)->paginate(15);
+
         if ($id != Auth::user()->id) {
             return view('/');
         }
@@ -112,7 +115,7 @@ class UserController extends Controller{
         $user->save();
 
         //Redireccion
-        return view('user.show')->with('user', $user)->with('success', 'Cambios guardados');
+        return view('user.show')->with('user', $user)->with('success', 'Cambios guardados')->with('myRides', $ridesP)->with('rides', $ridesC);
     }
 
     public function destroy($id){   
