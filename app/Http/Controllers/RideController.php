@@ -14,6 +14,8 @@ use App\PassengerRide;
 use DB;
 use App\User;
 use Carbon\Carbon;
+use App\QualificationPilot;
+use App\QualificationPassenger;
 
 
 class RideController extends Controller
@@ -23,18 +25,17 @@ class RideController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('askDeletion')->only('delete');
+
+   
+    public function index(){
+        //
     }
 
-    public function myRides($user_id)
-    {
+    public function myRides($user_id){
         //RETORNA VISTA CON VIAJES A LOS QUE ESTA ASOCIADO UN USUARIO, TANTO COMO PILOTO COMO COPILOTO.
         $myRides= Ride::where('user_id', $user_id)->get();
         $rides= PassengerRide::where('user_id', $user_id)->get();
         return view('user.myRides')->with('myRides', $myRides)->with('rides', $rides);
-
     }
 
     /**
@@ -44,7 +45,7 @@ class RideController extends Controller
      */
     public function create()
     {
-        //VERIFICAR QUE USUARIO TENGA TARJETA, VEHICULO Y ESTÉ AUNTENTICADO
+        //VERIFICAR QUE USUARIO TENGA TARJETA, VEHICULO NO ADEUDE PAGOS NI CALIFICACIONES
         if (!Auth::check()) {
             return redirect('/register')->with('error','Registrate para publicar tu viaje!');
         }
@@ -57,6 +58,15 @@ class RideController extends Controller
         if ( count($cars) == 0) {
             return redirect('car/create')->with('error', 'Usted no posee un vehiculo asignado.');
         }
+        $rides = Ride::where('paid', FALSE)->get();
+        #if ($rides->count() > 0) {
+         #   return redirect()->route('');//!!!!!!!!!!!!!!!!!!!!!!!!!
+        #}
+        $qualifications1 = QualificationPilot::where('done', FALSE)->get();
+        $qualifications2 = QualificationPassenger::where('done', FALSE)->get();
+        #if ($qualifications1->count() > 0 || $qualifications2->count() > 0){
+         #   return redirect()->route('');//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #}
         return view('ride.create')->with('cards', $cards)->with('cars', $cars);
     }
 
@@ -91,7 +101,6 @@ class RideController extends Controller
         $ride->car_id =         $request->car_id;
         $ride->card_id =        $request->card;
         $ride->endDate =        $request->departDate;
-        $ride->paid =           FALSE;
         $ride->done =           FALSE; 
         $ride->save();
         
@@ -192,7 +201,6 @@ class RideController extends Controller
         $ride->remarks =        $request->remarks;
         $ride->departDate =     $request->departDate;
         $ride->departHour =     $request->departHour;
-        //$ride->account_id =     Account::where('user_id', Auth::User()->id);
         $ride->card_id =        $request->card;
         $ride->car_id =        $request->car;
         
@@ -234,7 +242,7 @@ class RideController extends Controller
         //SI NO HAY SE LLAMA A DESTROY
         $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->get();
         if ($passengers->count() > 0 ){
-            return redirect()->back()->with('rideConfirmationDelete', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
+            return redirect()->back()->with('rideConfirmationDelete', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado por cada pasajero aceptado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
         }else{
             $qualiPilot = QualificationPilot::where('ride_id', $id)->get();
             if ($qualiPilot != null) {
@@ -262,21 +270,12 @@ class RideController extends Controller
     }
     
     public function delete($id){
+        //SI LLEGO ACA ES  POR QUE HAY COPILOTOS ACEPTADOS
         $passengers = PassengerRide::where('ride_id', $id)->get();
+        $user = User::find(Auth::user()->id);
         foreach ($passengers as $passenger) {
+            $user->reputation = $user->reputation - 1;
             $passenger->delete();
-        }
-        $qualiPilot = QualificationPilot::where('ride_id', $id)->get();
-        if ($qualiPilot != null) {
-            foreach ($qualiPilot as $singleQuali) {
-                 QualificationPilot::destroy($singleQuali->id);
-            }
-        }
-        $qualiPassenger = QualificationPassenger::where('ride_id', $id)->get();
-        if ($qualiPassenger != null) {
-            foreach ($qualiPassenger as $singleQuali) {
-                QualificationPassenger::destroy($singleQuali->id);
-            }
         }
         $comments = Comment::where('ride_id', $id)->get();
         if ($comments != null) {
@@ -330,7 +329,29 @@ class RideController extends Controller
         $ride = Ride::find($id);
         $now = Carbon::now();
         if ($ride->endDate->gt($now)) {
-            $ride->done = TRUE;           
+            $ride->done = TRUE;
+            $ride->paid = FALSE;
+
+            //CREO LAS TABLAS DE CALIFICACION PENDIENTE
+            $qualificationPilot = new QualificationPilot;
+            $qualificationPilot->value = null;
+            $qualificationPilot->pilot_id = Auth::user()->id;
+            $qualificationPilot->passenger_id = $idPostulant;
+            $qualificationPilot->review = null;
+            $qualificationPilot->ride_id = $idRide;
+            $qualificationPilot->done = FALSE;
+
+            $qualificationPilot->save();
+            //
+            $qualificationPassenger = new QualificationPassenger;
+            $qualificationPassenger->value = null;
+            $qualificationPassenger->pilot_id = Auth::user()->id;
+            $qualificationPassenger->passenger_id = $idPostulant;
+            $qualificationPassenger->review = null;
+            $qualificationPassenger->ride_id = $idRide;
+            $qualificationPassenger->done = FALSE;
+
+            $qualificationPassenger->save();           
         }
     }
 

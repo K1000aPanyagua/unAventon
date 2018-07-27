@@ -26,7 +26,7 @@ class CreateRidesTable extends Migration
             $table->decimal('amount');
             $table->string('remarks');
             $table->boolean('done')->default(FALSE);
-            $table->boolean('paid')->default(FALSE);
+            $table->boolean('paid')->nullable();
             $table->date('departDate');
             $table->time('departHour');
             $table->time('duration');
