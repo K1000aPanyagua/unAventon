@@ -14,6 +14,8 @@ use App\PassengerRide;
 use DB;
 use App\User;
 use Carbon\Carbon;
+use App\QualificationPilot;
+use App\QualificationPassenger;
 
 
 class RideController extends Controller
@@ -23,11 +25,7 @@ class RideController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('askDeletion')->only('delete');
-    }
-
+   
     public function index()
     {
         //$rides= Ride::all(); //RIDE INDEX DEBERIA LLAMARSE CON UN INCLUDE EN EL HOME
