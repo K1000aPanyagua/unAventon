@@ -15,7 +15,7 @@
 
   <div class="container">
     @include('flash_message') 
-    {{$ride->done}}
+    
 
     <h1 class="text-uppercase separator-l col-sm-12">datos del viaje</h1>  
     <div class="row separator-l">
@@ -44,7 +44,7 @@
           <h5 class="col-sm-6">ASIENTOS DISPONIBLES:</h5> <p class="col-sm-6">{{$disponible}}</p>
           
       </div>
-      
+
       <div class="col-sm-12 col-md-4">
           <!-- SI HAY UN USUARIO IDENTIFICADO -->
           @if (Auth::check())
