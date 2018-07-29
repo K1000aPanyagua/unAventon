@@ -187,11 +187,11 @@ class UserController extends Controller{
             }
         }
         //valido que no adeude calificaciones
-        $qualificationsAsPassenger = QualificationPassenger::where('done', FALSE)->first();
+        $qualificationsAsPassenger = QualificationPassenger::where('done', FALSE)->get();
         if ($qualificationsAsPassenger != null) {
             return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
         }
-        $qualificationsAsPilot = QualificationPilot::where('done', FALSE)->first();
+        $qualificationsAsPilot = QualificationPilot::where('done', FALSE)->get();
         if ($qualificationsAsPilot != null) {
             return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
         }

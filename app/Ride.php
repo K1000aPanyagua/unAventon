@@ -9,7 +9,7 @@ class Ride extends Model{
 
 	protected $table = 'rides';
 	protected $dates = ['endDate', 'departDate'];
-	protected $fillable = ['origin', 'destination', 'duration', 'amount', 'remarks', 'departDate', 'departHour'];
+	protected $fillable = ['origin', 'destination', 'duration', 'amount', 'remarks', 'departDate', 'departHour', 'endDate'];
 
 	public function pilot(){
 		return $this->belongsTo(User::class);

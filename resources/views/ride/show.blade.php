@@ -15,7 +15,8 @@
 
   <div class="container">
     @include('flash_message') 
-    
+    {{$ride->done}}
+
     <h1 class="text-uppercase separator-l col-sm-12">datos del viaje</h1>  
     <div class="row separator-l">
 
@@ -34,6 +35,8 @@
           <br>
           <h5 class="col-sm-6">FECHA DE SALIDA:</h5> <p class="col-sm-6">{{ $ride->departDate }}</p>
           <br> 
+          <h5 class="col-sm-6">FECHA DE LLEGADA:</h5> <p class="col-sm-6">{{ $ride->endDate }}</p>
+          <br> 
           <h5 class="col-sm-6">TIPO DE VEHICULO:</h5> <p class="col-sm-6">{{ $car->kind }}</p>
           <br> 
           <h5 class="col-sm-6">OBSERVACIONES:</h5> <p class="col-sm-6">{{ $ride->remarks }}</p>
@@ -41,7 +44,7 @@
           <h5 class="col-sm-6">ASIENTOS DISPONIBLES:</h5> <p class="col-sm-6">{{$disponible}}</p>
           
       </div>
-
+      
       <div class="col-sm-12 col-md-4">
           <!-- SI HAY UN USUARIO IDENTIFICADO -->
           @if (Auth::check())
