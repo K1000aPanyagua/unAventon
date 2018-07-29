@@ -15,6 +15,7 @@ use App\Comment;
 use App\Car;
 use App\Ride;
 use App\Card;
+use Carbon\Carbon;
 
 class UserController extends Controller{
   
@@ -168,16 +169,14 @@ class UserController extends Controller{
             return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
 
-        //valido que el usuario no sea pasajero de un viaje con misma fecha
+        //VALIDACIONES
         $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
-        $endDate = date('m-d-Y H:i:s',strtotime($ride->duration, strtotime($ride->departTime)));
         if ($auxRide->count() > 0){
             foreach ($auxRide as $currentRide) {
-                $endDateVal = date('m-d-Y H:i:s',strtotime($auxRide->duration, strtotime($auxRide->departTime)));
-                if (!($ride->departTime > $auxRide->departTime && !($ride->departTime > $endDateVal))) {
-                    return redirect()->back()->with('error', 'Usted poseé un viaje como pasajero el cual se superpone con el viaje al que usted desea postularse');
-                }elseif (!($endDate < $auxRide->departTime && !($endDate < $endDateVal))) {
-                    return redirect()->back()->with('error', 'Usted poseé un viaje como pasajero el cual se superpone con el viaje al que usted desea postularse');
+                //valido que el usuario no sea pasajero de un viaje con misma fecha
+                $now = Carbon::now();
+                if ($currentRide->endDate){
+                    /////////////////////DASDASDSNJSDANDANDSNA
                 }
                 //valido que no adeude pagos
                 if ($currentRide->paid == FALSE) {
@@ -186,13 +185,23 @@ class UserController extends Controller{
 
             }
         }
+        $auxRide = Ride::where('paid', FALSE)->where('user_id', Auth::user()->id)->get();
+        $ridesPassenger = PassengerRide::where('user_id', Auth::user()->id)->where('paid', FALSE)->get();
+        //adeuda como piloto?
+        if ($auxRide->count() > 0) {
+           return redirect()->back()->with('error', 'Ustéd adeuda pagos');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
+        }
+        //adeuda como pasajero?
+        if ($ridesPassenger->count() > 0) {
+            return redirect()->back()->with('error', 'Ustéd adeuda pagos');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
+        }
         //valido que no adeude calificaciones
-        $qualificationsAsPassenger = QualificationPassenger::where('done', FALSE)->first();
-        if ($qualificationsAsPassenger != null) {
+        $qualificationsAsPassenger = QualificationPassenger::where('pilot_id', Auth::user()->id)->where('done', FALSE)->get();
+        if ($qualificationsAsPassenger->count() > 0) {
             return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
         }
-        $qualificationsAsPilot = QualificationPilot::where('done', FALSE)->first();
-        if ($qualificationsAsPilot != null) {
+        $qualificationsAsPilot = QualificationPilot::where('passenger_id', Auth::user()->id)->where('done', FALSE)->get();
+        if ($qualificationsAsPilot->count() > 0) {
             return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
         }
 
@@ -323,9 +332,8 @@ class UserController extends Controller{
         }elseif ($qualification->value = 'negativo') {
             $passenger->reputation = $passenger->reputation - 1;
         }
-
-        return redirect()->back();
-        }
+            return redirect()->back();
+        
     }
 
     public function qualificatePilot(Request $request, $ride_id, $pilot_id){

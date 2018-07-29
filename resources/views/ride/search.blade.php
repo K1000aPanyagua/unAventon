@@ -25,12 +25,12 @@
       	    </div>
       	    <div class="col-4 search-form-item">
       			<h5>Tipo de vehiculo: </h5>
-      			  <select>
-      			  	<option value="camioneta">Camioneta</option>
-                    <option value="auto">Auto</option>
-                    <option value="camion">Camión</option>
-                    <option value="sin preferencia">Sin preferencia</option>
-      			  </select>
+      			  <select name="kind" >
+                <option value="">Seleccionar</option>
+                <option value="camioneta" @if (old('kind')== "camioneta") {{ 'selected' }} @endif>Camioneta</option>
+                <option value="auto" @if (old('kind')== "auto") {{ 'selected' }} @endif>Auto</option>
+                <option value="camion" @if (old('kind')== "camion") {{ 'selected' }} @endif>Camión</option>
+              </select>
       	    </div>
             <div class="col-4 search-form-item">
             <h5>Asientos disponibles: </h5><input class="form-control" type="number" name="asientos">
@@ -47,3 +47,4 @@
 @include('javascript')
 </body>
 </html>
+
