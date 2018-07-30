@@ -13,15 +13,20 @@
   <div class="container">
     @include('flash_message')
     <h1 class="text-uppercase separator-l col-sm-12">Resultados de la busqueda:</h1>  
-    @foreach($rides as $ride)
-    
-      <div class="row" > 
-           Origen: {{ $ride->origin }} Destino: {{ $ride->destination}} 
-          Fecha de salida: {{$ride->departDate}} Hora de salida: {{$ride->departHour}}
-          Monto: {{$ride->amount}}
 
-      </div>
-    @endforeach
+    @if ($rides instanceof Collection)
+      @foreach($rides as $ride)
+        <div class="row" >
+            Origen: {{ $ride->origin }} Destino: {{ $ride->destination}} 
+            Fecha de salida: {{$ride->departDate}} Hora de salida: {{$ride->departHour}}
+            Monto: {{$ride->amount}}
+
+       </div>
+      @endforeach
+    @else
+      {{$rides}}
+    @endif
+
     <div class="col-lg-4 offset-4">
         <a class="btn btn-xl btn-outline-light text-center color-aventon" href="/configurationAccount">
           Volver
