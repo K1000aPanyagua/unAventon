@@ -31,6 +31,7 @@ Route::get('/postulate/{ride}', 'UserController@postulate')
 Route::get('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePassenger')
 		->name('user.deletePassenger');
 Route::resource('user', 'UserController');
+
 Route::get('/editPass', 'UserController@editPassword');
 Route::post('/newPass', 'UserController@updatePassword');
 

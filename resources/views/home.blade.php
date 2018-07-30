@@ -15,11 +15,3 @@
 @include('javascript')
 </body>
 </html>
-
-
-
-
-
-
-
-

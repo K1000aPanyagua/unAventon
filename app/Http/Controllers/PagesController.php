@@ -28,7 +28,9 @@ class PagesController extends Controller {
 	}
 
 	public function getOwnProfile(){
-		return view('myprofile');
+		$rides = DB::table('rides')->paginate(15);
+
+		return view('myprofile')->with('rides', $rides);
 	}
 
 	public function getAccount(){

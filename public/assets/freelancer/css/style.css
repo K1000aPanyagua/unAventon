@@ -132,6 +132,10 @@
   margin:  2em 0 0.3em 0; 
 }
 
+.separator-both-xs{
+  margin:  1em 0 0.3em 0; 
+}
+
 .sangria{
   margin-left:2em;
 }
@@ -171,7 +175,12 @@ border-radius: 7%
 }
 
 .rides-home{
-
 }
 
-.rides-home a:hover { text-decoration: none; }
+.rides-home a:hover {
+  text-decoration: none; 
+}
+
+ a:hover {
+  text-decoration: none; 
+}
