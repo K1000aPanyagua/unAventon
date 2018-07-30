@@ -13,6 +13,7 @@
   <div class="container">
     @include('flash_message')
     <h1 class="text-uppercase separator-l col-sm-12">Resultados de la busqueda:</h1>  
+
     @if ($rides instanceof Collection)
       @foreach($rides as $ride)
         <div class="row" >
@@ -25,6 +26,7 @@
     @else
       {{$rides}}
     @endif
+
     <div class="col-lg-4 offset-4">
         <a class="btn btn-xl btn-outline-light text-center color-aventon" href="/configurationAccount">
           Volver
@@ -32,9 +34,6 @@
     </div>
   </div>
 </header>
-
-
-
 
 <!--fin header-->
 @include('copyrigtharrow')
