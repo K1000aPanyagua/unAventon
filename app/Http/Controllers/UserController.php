@@ -355,8 +355,7 @@ class UserController extends Controller{
             $ride=Ride::find($ride_id);
             $ride->paid=TRUE;
             $ride->save();
-
-            return redirect()->back()->with('success', 'El viaje ha sido pagado!');
+            
         }
         else{
 

@@ -8,6 +8,7 @@
 	<div class="container">
    
   <div>
+    @include('flash_message')
   	Viajes como piloto
   
     @foreach ($myRides as $myRide)
@@ -17,9 +18,16 @@
             Origen: {{$myRide->origin}}
             Destino: {{$myRide->destination}}
             
+            
+            @if ($myRide->paid == 'FALSE')
+
+
             <a class="listitem text-white" href=" {{route('user.payRide', Auth::User()->id)}} "> 
               <h2>Pagar</h2>
             </a>
+
+
+            @endif
             
             <br><br>
           </td>
