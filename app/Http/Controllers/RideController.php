@@ -334,15 +334,19 @@ class RideController extends Controller
 
         // Has an 'departHour' parameter been provided?
         if ($request->has('departHour')) {
-            $rides->whereHas('rsvp.departHour', $request->input('departHour'));
+            $rides->where('departHour', $request->input('departHour'));
         }
       
-        if ($request->has('kind')) {
-            $rides->whereHas('rides', function ($query) use ($request) {
-            $query->where('kind', $request->kind);
-            })->get();
-        }
+       # if ($request->has('kind')) {
+           # $rides->whereHas('rides', function ($query) use ($request) {
+          #      $query->where('kind', $request->input('kind'))->get();
+         #   });
+        #}
         $rides = $rides->get();
+        if ($rides->count() < 1){
+            $rides = 'No hay resultados.';
+            return view('ride.searchResult')->with('rides', $rides);
+        }
         return view('ride.searchResult')->with('rides', $rides);
     }
 
