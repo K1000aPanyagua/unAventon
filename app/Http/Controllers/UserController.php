@@ -365,13 +365,21 @@ class UserController extends Controller{
     }
 
     public function pay(Request $request, $ride_id){
+        $ride=Ride::find($ride_id);
         $num=rand(5, 20);
         if (($num % 2) == 0){
-            $ride=Ride::find($ride_id);
-            $ride->paid=TRUE;
-            $ride->save();
+            if ($ride->user_id == Auth::user()->id){
+                $ride->paid = TRUE;
+                $ride->save();
 
-            return redirect()->back()->with('success', 'Pago exitoso!');
+                return redirect()->back()->with('success', 'Pago exitoso!');
+            }else{
+                $passengerRide = PassengerRide::where('ride_id', $ride->id)->where('user_id', Auth::user()->id)
+                $passengerRide->paid = TRUE;
+                $passengerRide->save();
+                return redirect()->back()->with('success', 'Pago exitoso!'); 
+            }
+
         }
         else{
 

@@ -119,6 +119,8 @@ class RideController extends Controller
         //
         $ride->save();
         
+
+        
         $pilot = Auth::user();
         $car = Car::where('id', $ride->car_id)->first();
         $card = Card::where('id', $ride->card_id)->first();
