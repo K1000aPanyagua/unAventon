@@ -393,7 +393,7 @@ class UserController extends Controller{
 
                 return redirect()->back()->with('success', 'Pago exitoso!');
             }else{
-                $passengerRide = PassengerRide::where('ride_id', $ride->id)->where('user_id', Auth::user()->id)
+                $passengerRide = PassengerRide::where('ride_id', $ride->id)->where('user_id', Auth::user()->id);
                 $passengerRide->paid = TRUE;
                 $passengerRide->save();
                 return redirect()->back()->with('success', 'Pago exitoso!'); 

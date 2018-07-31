@@ -33,9 +33,9 @@
           <br> 
           <h5 class="col-sm-6">HORA DE SALIDA:</h5> <p class="col-sm-6">{{ $ride->departHour }}</p>
           <br>
-          <h5 class="col-sm-6">FECHA DE SALIDA:</h5> <p class="col-sm-6">{{ $ride->departDate }}</p>
+          <h5 class="col-sm-6">FECHA DE SALIDA:</h5> <p class="col-sm-6">{{ $ride->departDate->toDateString() }}</p>
           <br> 
-          <h5 class="col-sm-6">FECHA DE LLEGADA:</h5> <p class="col-sm-6">{{ $ride->endDate }}</p>
+          <h5 class="col-sm-6">FECHA/HORA DE LLEGADA:</h5> <p class="col-sm-6">{{ $ride->endDate }}</p>
           <br> 
           <h5 class="col-sm-6">TIPO DE VEHICULO:</h5> <p class="col-sm-6">{{ $car->kind }}</p>
           <br> 
