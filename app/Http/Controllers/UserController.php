@@ -56,6 +56,15 @@ class UserController extends Controller{
         }
     }
 
+    public function getCalifications(){
+        $asPilot = QualificationPilot::where('pilot_id', (Auth::User()->id))->get();
+        $asPassenger = QualificationPassenger::where('passenger_id', (Auth::User()->id))->get();
+         return view('user.califications')->with('asPilot', $asPilot)->with('asPassenger', $asPassenger);
+
+    }
+
+
+
 
     public function editPassword(){
         
