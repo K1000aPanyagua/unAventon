@@ -1,3 +1,4 @@
+
 <h2 class="text-uppercase text-center separator-both-xs col-sm-6">como piloto</h2>
   
   @if ($myRides->count()!= 0)

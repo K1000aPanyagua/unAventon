@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
 use App\Account;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -49,7 +50,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data){
 
-        
+
         return Validator::make($data, [
             'name' => 'required|string',
             'lastname' => 'required|string',
@@ -89,6 +90,19 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
+
+        $fecha = Carbon::parse($request->birthdate);
+        $mfecha = $fecha->month;
+        $dfecha = $fecha->day;
+        $afecha = $fecha->year;
+
+        $age = Carbon::createFromDate($afecha,$mfecha,$dfecha)->age;
+    
+
+        if($age < 18){
+            return redirect()->back()->with('error', 'Lo sentimos... debes tener mas de 18 años para registrarte');
+        }
+
         $this->guard()->login($this->create($request->all()));
         
         return redirect('/')->with('success', 'Usuario creado!');
