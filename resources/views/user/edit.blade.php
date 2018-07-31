@@ -73,7 +73,8 @@
                         </div>
 
                         <label class="col-md-4 col-form-label text-md-right">Fecha de nacimiento*</label>
-                        <input value="{{ $user->birthdate }}" type="date" name="birthdate" min="1950-01-01" max="2018-01-01" required="required">
+                        <input value="{{ $user->birthdate }}" type="date" name="birthdate" min="1950-01-01" max="2018-01-01" required="required" oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                    oninput="setCustomValidity('')>
 
                         <br><br>
                         <div class="form-group row mb-0">

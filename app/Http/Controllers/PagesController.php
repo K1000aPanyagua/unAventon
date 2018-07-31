@@ -14,7 +14,7 @@ use App\User;
 class PagesController extends Controller {
 
 	public function getIndex(){
-		$rides = DB::table('rides')->paginate(15);
+		$rides = DB::table('rides')->where('done', FALSE)->paginate(15);
 		return view('home')->with('rides', $rides);
 		
 	}

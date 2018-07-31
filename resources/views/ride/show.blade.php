@@ -50,7 +50,7 @@
           @if (Auth::check())
             <ul style="list-style: none">
             <!-- SI EL USUARIO ES DUEÑO DEL VIAJE -->
-            @if ($ride->user_id == Auth::user()->id)
+            @if ($ride->user_id == Auth::user()->id and $ride->done == FALSE)
               <li><a href="{{route('page.showPassengers', ['idRide' => $ride->id])}}"> Pasajeros aceptados </a></li>
               <li class="separator" ><a  href="{{ route('ride.edit', $ride->id) }}">Editar</a></li>
 
@@ -72,7 +72,7 @@
             <!-- MUESTRO LAS SOLICITUDES PENDIENTES -->
               @if ($solicitudes == 'No hay postulaciones')
                 {{$solicitudes}}
-              @else
+              @elseif ($ride->done == FALSE)
                 <h6 class="separator-l">Solicitudes pendientes: </h6> 
                 <!-- MUESTRA LOS PENDIENTES Y ACEPTADOS DEBERIA MOSTRAR SOLO PENDIENTES -->
                 @foreach($postulant as $postu)
@@ -99,7 +99,7 @@
               @endif
 
             <!-- SI EL USUARIO NO ES DUEÑO Y SE HA POSTULADO PREVIAMENTE -->
-            @elseif (isset($passengerRide))
+            @elseif (isset($passengerRide) and $ride->done == FALSE)
 
               <!-- SI AUN NO HA SIDO RECHAZADO/ACEPTADO-->
               @if ($passengerRide->state == 'pendiente')
@@ -141,7 +141,7 @@
 
               @endif
 
-            @else
+            @elseif ($ride->done == FALSE)
              <li> <form  action="{{route('user.postulate', ['id' => $ride->id])}}">
                 <button class="btn btn-primary" type="submit">Postularme</button>
                 {{method_field('GET')}}
@@ -149,7 +149,10 @@
 
             </ul>      
             @endif
-          @endif  
+          @endif
+          @if ($ride->done == TRUE)  
+            <h2>Viaje finalizado.</h2>
+          @endif
         </div>
       </div>
 
@@ -180,7 +183,7 @@
                 </button>
               </div>
               <div id="{{$comment->id}}" class="text-left collapse">
-                @if ($ride->user_id == Auth::user()->id)
+                @if ($ride->user_id == Auth::user()->id and $ride->done == FALSE)
                   <div class="col-xs-10">
                     @if ($comment->answer == null)
                       <form method="POST" action="{{route('comment.answer')}}">
@@ -210,7 +213,7 @@
       @endforeach
     @endif  
 
-    @if (Auth::check() and $ride->user_id != Auth::user()->id)
+    @if (Auth::check() and $ride->user_id != Auth::user()->id and $ride-done == FALSE)
       <!-- TEXTBOX PARA COMENTAR -->  
       <div class="col-sm-12 separator text-center" >       
         <form method="POST" id="formComment" action="{{route('comment.store')}}">
