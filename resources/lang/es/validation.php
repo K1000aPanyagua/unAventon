@@ -176,5 +176,7 @@ return [
         'message' => 'mensaje',
         'numCard' => 'Número de tarjeta',
         'expiration' => 'Fecha de vencimiento',
+        'departDate' => 'Fecha de salida',
+        'departHour' => 'Hora de salida',
     ],
 ];

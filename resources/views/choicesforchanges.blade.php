@@ -25,7 +25,7 @@ Mi perfil</h1>
                   else
                     return false;
                 }
-              </script>
+              </script> @include('flash_message')
             </form>
 
     </div>

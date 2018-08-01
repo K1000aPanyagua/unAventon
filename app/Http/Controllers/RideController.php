@@ -81,24 +81,27 @@ class RideController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     protected function validator(array $data){
 
-        $today=Carbon::now();
+        $today=Carbon::now()->toDateString();
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
             'duration' => 'required',
-            'amount' => 'required|decimal',
+            'amount' => 'required|numeric',
             'remarks' => 'string',
             'departHour' => 'required',
-            'departDate' => 'required|after:'.$today,
+            'departDate' => 'required|after_or_equal:'.$today,
         ]);
     }
 
     public function store(Request $request){
-        //$this->validator($request->all())->validate();
+        
+        $this->validator($request->all())->validate();
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //CALCULO endDate DEL NUEVO VIAJE
+        $now = Carbon::now();
         $duration = Carbon::parse($request->duration);
         $departHour = Carbon::parse($request->departHour);
         $aux = Carbon::parse($request->departDate);
@@ -112,6 +115,10 @@ class RideController extends Controller
         $departDate = $aux;
         $departDate->addMinutes($departHour->minute);
         $departDate->addHours($departHour->hour);
+        //
+        if ($departDate->lt($now)) {
+            return redirect()->back()->withInput()->with('error', 'La fecha y hora de salida debe ser posterior a la fecha y hora actual');
+        }
         //
         $ok1 = TRUE;
         $ok2 = TRUE;

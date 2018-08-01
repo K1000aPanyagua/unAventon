@@ -18,7 +18,7 @@
                 {{method_field('DELETE')}}
                 {{ csrf_field() }}
                 <input type="submit" class="btn btn-primary sangria" value="Desactivar mi cuenta"/>
-                <script>
+                <script>  
                   function ConfirmDelete(){
                     var x = confirm("¿Está seguro que quiere desactivar la cuenta?");
                     if (x)
@@ -26,7 +26,7 @@
                     else
                       return false;
                   }
-                </script>
+                </script> @include('flash_message')
               </form>
 
       </div >

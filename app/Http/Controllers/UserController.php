@@ -152,8 +152,24 @@ class UserController extends Controller{
         if ($id != Auth::user()->id) {
             return view('/');
         }
+        
+        $rides = Ride::where('done', FALSE)->where('user_id', $id)->get();
+        $ridesPassenger = PassengerRide::where('user_id', $id)->where('paid', '!=', TRUE)->get();
+        //adeuda como piloto?
+        if ($rides->count() > 0) {
+           return redirect()->back()->with('error', 'Usted tiene viajes en curso o adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
+        }
+        //adeuda como pasajero?
+        if ($ridesPassenger->count() > 0) {
+            return redirect()->back()->with('error', 'Usted tiene viajes en curso o adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
+        }
+        $qualifications1 = QualificationPilot::where('passenger_id', $id)->where('done', FALSE)->get();
+        $qualifications2 = QualificationPassenger::where('pilot_id', $id)->where('done', FALSE)->get();
+        if ($qualifications1->count() > 0 || $qualifications2->count() > 0){
+           return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
+        }
         User::destroy($id);
-        return redirect('/')->with('success', 'Usuario eliminado');
+        return redirect('/')->with('success', 'Cuenta desactivada!');
     }
 
     public function updatePassword(Request $request){
