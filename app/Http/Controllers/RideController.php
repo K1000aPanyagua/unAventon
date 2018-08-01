@@ -83,6 +83,8 @@ class RideController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected function validator(array $data){
+
+        $today=Carbon::now();
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
@@ -95,6 +97,10 @@ class RideController extends Controller
     }
 
     public function store(Request $request){
+
+    
+
+
         $ride = new Ride;
         $ride->user_id =        Auth::User()->id;
         $ride->origin =         $request->origin;
@@ -207,7 +213,7 @@ class RideController extends Controller
     public function update(Request $request, $id)
     {
         //SI SE LLEGA ACÁ ES POR QUE NO HAY COPILOTOS ASOCIADOS
-        //$this->validator($request->all())->validate();
+        //$this->Validator($request->all())->validate();
 
         $ride = Ride::find($id);
 
