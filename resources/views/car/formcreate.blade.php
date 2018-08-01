@@ -1,4 +1,5 @@
 <header class="masthead bg-primary text-white text-center row">
+  @if(Auth::check())
   <div class="container text-center">
     <div class="row">
       <div class="col-lg-8 mx-auto">
@@ -98,4 +99,17 @@
       </div>
     </div>
   </div>
-</header>
+  </header>
+  @else
+  <div class="col-12">
+    <a href="/login"> 
+      <h4 class="text-white text-uppercase mb-0" style="text-decoration: underline;"> 
+        Iniciar sesion 
+      </h4>
+    </a>
+  </div>
+  </header>
+  <div class="row">
+    @include('fill')
+  </div>
+  @endif

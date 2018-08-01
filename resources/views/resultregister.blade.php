@@ -88,18 +88,5 @@
         <strong>{{ $errors->first('password') }}</strong>
     </span>
 @endif
-
-
-             
-         
-
-
-
->>>>>>> cc18c37abbc7378a6ed6142f48ef393fd0739ccf
-@endif
-
-
-          </body>
-          </html>
-
-
+</body>
+</html>

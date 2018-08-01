@@ -12,16 +12,16 @@
 
       	<div class="row color-aventon-bk">
       		<div class="col-4 search-form-item">
-      			<h5>Destino: </h5> <input class="form-control" type="text" name="destino" value="" size="50" />
+      			<h5>Destino: </h5> <input class="form-control" type="text" name="destination" value="" size="50" />
       		</div>
       		<div class="col-4 search-form-item">
-      			<h5>Origen: </h5><input class="form-control" type="text" name="origen" value="" size="50" />
+      			<h5>Origen: </h5><input class="form-control" type="text" name="origin" value="" size="50" />
       		</div>
       		<div class="col-4 search-form-item">
-      			<h5>Fecha salida: </h5><input class="form-control" type="date" name="fecha salida" min="1950-01-01" max="2020-01-01">
+      			<h5>Fecha salida: </h5><input class="form-control" type="date" name="departDate" min="1950-01-01" max="2020-01-01">
       	    </div>
       	    <div class="col-4 search-form-item">
-      			<h5>Fecha llegada: </h5><input class="form-control" type="date" name="fecha llegada" min="1950-01-01" max="2020-01-01">
+      			<h5>Fecha llegada: </h5><input class="form-control" type="date" name="endDate" min="1950-01-01" max="2020-01-01">
       	    </div>
       	    <div class="col-4 search-form-item">
       			<h5>Tipo de vehiculo: </h5>
@@ -33,7 +33,10 @@
               </select>
       	    </div>
             <div class="col-4 search-form-item">
-            <h5>Asientos disponibles: </h5><input class="form-control" type="number" name="asientos">
+            <h5>Asientos disponibles: </h5><input class="form-control" type="number" name="numSeats">
+            </div>
+            <div class="col-4 search-form-item">
+            <h5>Monto: </h5><input class="form-control" type="number" step="0.1" name="amount" min="1950-01-01" max="2020-01-01">
             </div>
       	 </div>
 
