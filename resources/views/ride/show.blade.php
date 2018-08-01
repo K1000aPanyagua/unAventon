@@ -50,8 +50,13 @@
           @if (Auth::check())
             <ul style="list-style: none">
             <!-- SI EL USUARIO ES DUEÑO DEL VIAJE -->
-            @if ($ride->user_id == Auth::user()->id and $ride->done == FALSE)
-              <li><a href="{{route('page.showPassengers', ['idRide' => $ride->id])}}"> Pasajeros aceptados </a></li>
+            @if ($ride->user_id == Auth::user()->id )
+             @if($ride->paid == FALSE)
+               <a href=""></a>
+             @endif
+             
+              <li><a class=" text-white" style="text-decoration: underline;" href="{{route('page.showPassengers', ['idRide' => $ride->id])}}"> <h5 class="text-uppercase separator-l">Pasajeros aceptados </h5></a></li>
+              @if ($ride->done == FALSE)
               <li class="separator" ><a  href="{{ route('ride.edit', $ride->id) }}">Editar</a></li>
 
               <li class="separator"><form action="{{route('ride.destroy', ['id' => $ride->id])}}" method="POST" onsubmit="return ConfirmDelete()">
@@ -97,6 +102,8 @@
                   </div>
                 @endforeach
               @endif
+              @endif
+
 
             <!-- SI EL USUARIO NO ES DUEÑO Y SE HA POSTULADO PREVIAMENTE -->
             @elseif (isset($passengerRide) and $ride->done == FALSE)
@@ -151,7 +158,7 @@
             @endif
           @endif
           @if ($ride->done == TRUE)  
-            <h2>Viaje finalizado.</h2>
+            <h2 class="text-uppercase separator-l col-sm-12">Viaje finalizado</h2>
           @endif
         </div>
       </div>

@@ -44,10 +44,13 @@ class UserController extends Controller{
      */
 
     public function show($id){
-        $ridesP = Ride::where('user_id', $id)->paginate(15);
-        $ridesC = PassengerRide::where('user_id', $id)->paginate(15);
+        $ridesP = Ride::where('user_id', $id)->get();
+        $rides = PassengerRide::where('user_id', $id)->get(); /*DE ACA SE SACA EL RIDE ID DE TODOS LOS VIAJES DE LOS QUE SE ES PASAJERO*/
+        $ridesC= collect([]);
         $user = User::find($id);
-  
+        foreach ($rides as $ride) {
+            $ridesC->push(Ride::find($ride->ride_id));
+        }
         if ($id != Auth::user()->id) {
             return view('user.showOtherUser', compact('user'))->with('myRides', $ridesP)->with('rides', $ridesC);
         }
@@ -108,8 +111,14 @@ class UserController extends Controller{
 
 
     public function update(Request $request, $id){
-        $ridesP = Ride::where('user_id', $id)->paginate(15);
-        $ridesC = PassengerRide::where('user_id', $id)->paginate(15);
+                $ridesP = Ride::where('user_id', $id)->get();
+        $rides = PassengerRide::where('user_id', $id)->get(); /*DE ACA SE SACA EL RIDE ID DE TODOS LOS VIAJES DE LOS QUE SE ES PASAJERO*/
+        $ridesC= collect([]);
+        $user = User::find($id);
+        foreach ($rides as $ride) {
+            $ridesC->push(Ride::find($ride->ride_id));
+        }
+
 
         if ($id != Auth::user()->id) {
             return view('/');
@@ -189,6 +198,20 @@ class UserController extends Controller{
             return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
 
+<<<<<<< HEAD
+        //VALIDACIONES
+        $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
+        if ($auxRide->count() > 0){
+            foreach ($auxRide as $currentRide) {
+                //valido que el usuario no sea pasajero de un viaje con misma fecha
+                $now = Carbon::now();
+                if ($currentRide->endDate){
+                    /////////////////////DASDASDSNJSDANDANDSNA
+                }
+                //valido que no adeude pagos
+                if ($currentRide->paid == FALSE) {
+                    return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
+=======
         //VALIDO QUE EL USUARIO NO POSEA ALGÚN VIAJE COMO PILOTO O COPILOTO QUE SE //SUPERPONGA CON EL QUE SE QUIERE POSTULAR 
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //
@@ -201,6 +224,7 @@ class UserController extends Controller{
                     $ok1 = TRUE;
                 }else{
                     $ok1 = FALSE;
+>>>>>>> 20522d07c0e266fc5e730d6f6413d2593fcb9257
                 }
             }elseif ($postedRide->endDate->lt($ride->departDate)) {
                 $ok1 = TRUE;
@@ -238,11 +262,11 @@ class UserController extends Controller{
         $ridesPassenger = PassengerRide::where('user_id', Auth::user()->id)->where('paid', FALSE)->get();
         //adeuda como piloto?
         if ($auxRide->count() > 0) {
-           return redirect()->back()->with('error', 'Ustéd adeuda pagos');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
+           return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
         }
         //adeuda como pasajero?
         if ($ridesPassenger->count() > 0) {
-            return redirect()->back()->with('error', 'Ustéd adeuda pagos');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
+            return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
         }
         //valido que no adeude calificaciones
         $qualificationsAsPassenger = QualificationPassenger::where('pilot_id', Auth::user()->id)->where('done', FALSE)->get();
@@ -399,6 +423,7 @@ class UserController extends Controller{
     }
 
     public function qualificatePassenger(Request $request, $ride_id, $passenger_id){
+        dd($request);
         $qualification = QualificationPassenger::where('ride_id', $ride_id)->where('passenger_id', $passenger_id)->first();
         $qualification->value = $request->value;
         $qualification->pilot_id = Auth::user()->id;
@@ -459,7 +484,7 @@ class UserController extends Controller{
 
                 return redirect()->route('user.show', [Auth::user()->id])->with('success', 'Pago exitoso!');
             }else{
-                $passengerRide = PassengerRide::where('ride_id', $ride->id)->where('user_id', Auth::user()->id);
+                $passengerRide = PassengerRide::where('ride_id', $ride->id)->where('user_id', Auth::user()->id)->first();
                 $passengerRide->paid = TRUE;
                 $passengerRide->save();
                 return redirect()->back()->with('success', 'Pago exitoso!'); 

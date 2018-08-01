@@ -1,6 +1,6 @@
 <div class="copyright py-4 text-center text-white row">
-  <div class="container">
-    <small>Copyleft &copy; Un Aventón 2018</small>
+  <div class="container" style="margin-top: auto">
+    <p>Copyleft &copy; Un Aventón 2018</p>
   </div>
 </div>
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->

@@ -46,7 +46,7 @@ Mis vehículos:</h1>
       <h1 class="text-uppercase  separator-m col-sm-12"> <i class="fa fa-angle-double-down" aria-hidden="true"></i>
 
 Mis Tarjetas:</h1>  
-        <a class="text-white "  href="{{ action('CarController@create') }}"> 
+        <a class="text-white "  href="{{ action('CardController@create') }}"> 
           <p class="sangria"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Cargar nueva tarjeta</p>
         </a>
         <a class=" text-white "  href="{{ action('CarController@index')}}"> 

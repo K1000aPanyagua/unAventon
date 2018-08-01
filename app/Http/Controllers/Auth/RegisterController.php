@@ -105,7 +105,7 @@ class RegisterController extends Controller
 
         $this->guard()->login($this->create($request->all()));
         
-        return redirect('/')->with('success', 'Usuario creado!');
+        return redirect('/');
     }
 
     public function getRegister(){

@@ -30,6 +30,11 @@ Route::get('/postulate/{ride}', 'UserController@postulate')
 		->name('user.postulate');
 Route::get('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePassenger')
 		->name('user.deletePassenger');
+
+
+Route::get('qualificatePassenger/{ride}/{idPassenger}', 'UserController@qualificatePassenger')
+    ->name('user.qualificatePassenger');
+		
 Route::resource('user', 'UserController');
 
 Route::get('/califications', 'UserController@getCalifications');
