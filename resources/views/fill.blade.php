@@ -1,6 +1,3 @@
-<section class="background-w-imageaventon text-white mb-0 row" style="background-image: url('{{ asset('assets/autos.jpg') }}')" id="#ahorra">
-  <div class="container">
-    
-    <div>
-  </div>
-</section>
+<div class="background-w-imageaventon text-white mb-0 col-12" style="background-image: url('{{ asset('assets/autos.jpg') }}'); height: 20em;" id="#ahorra">
+  
+</div>
