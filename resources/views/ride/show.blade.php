@@ -213,7 +213,7 @@
       @endforeach
     @endif  
 
-    @if (Auth::check() and $ride->user_id != Auth::user()->id and $ride-done == FALSE)
+    @if (Auth::check() and $ride->user_id != Auth::user()->id and $ride->done == FALSE)
       <!-- TEXTBOX PARA COMENTAR -->  
       <div class="col-sm-12 separator text-center" >       
         <form method="POST" id="formComment" action="{{route('comment.store')}}">
