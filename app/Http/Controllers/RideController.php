@@ -270,9 +270,21 @@ class RideController extends Controller
         $ride->card_id =        $request->card;
         $ride->car_id =        $request->car;
         
+        //CALCULO endDate 
+        $duration = Carbon::parse($request->duration);
+        $departHour = Carbon::parse($request->departHour);
+        $aux = Carbon::parse($request->departDate);
+        $endDate = $aux;
+        $endDate->addMinutes($duration->minute);
+        $endDate->addHours($duration->hour);
+        $endDate->addMinutes($departHour->minute);
+        $endDate->addHours($departHour->hour);
+        $ride->endDate = $endDate;
+        //
+
         $ride->save();
         
-    
+        //
         $car = Car::where('id', $ride->car_id)->first();
         $card = Card::where('id', $ride->card_id)->first();
         $pilot = User::find($ride->user_id)->first();

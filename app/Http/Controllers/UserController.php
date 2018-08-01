@@ -223,7 +223,7 @@ class UserController extends Controller{
                     }else{
                         $ok2 = FALSE;
                     }
-                }elseif ($currRide->endDate->lt($ide->departDate)) {
+                }elseif ($currRide->endDate->lt($ride->departDate)) {
                     $ok2 = TRUE;
                 }else{
                     $ok2 = FALSE;
@@ -296,6 +296,39 @@ class UserController extends Controller{
     }
 
     public function acceptSolicitude($idRide, $idPostulant){
+        $ride = Ride::where('id', $idRide)->first();
+        //
+        $ok = TRUE;
+        //NO ES POSIBLE QUE EL POSTULANTE POSEA VIAJES COMO PILOTO QUE SE SUPERPONGAN
+        //YA QUE UN USUARIO NO PUEDE POSTULARSE A UN VIAJE QUE SE SUPERPONE
+        
+        //VERIFICO SI EL POSTULANTE HA SIDO ACEPTADO EN OTRO VIAJE QUE SE SUPERPONE
+        $passRides = PassengerRide::where('user_id', $idPostulant)->where('state', 'aceptado')->where('paid', NULL)->get();
+        $rideAsPass = collect([]);
+        if ($passRides->count() > 0){
+            foreach ($passRides as $i) {
+                $rideAsPass->push(Ride::find($i->ride_id)); 
+            }
+            foreach ($rideAsPass as $currRide) {
+                if ($ride->departDate->lt($currRide->departDate)) {
+                    if ($ride->endDate->lt($currRide->departDate)) {
+                        $ok = TRUE;
+                    }else{
+                        $ok = FALSE;
+                    }
+                }elseif ($currRide->endDate->lt($ride->departDate)) {
+                    $ok = TRUE;
+                }else{
+                    $ok = FALSE;
+                }
+            }
+        }
+        if ($ok == FALSE) {
+            $erase = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPostulant)->first();
+            $erase->delete();
+            return redirect()->back()->with('error', 'Esta solicitud ya no es válida');
+        }
+        //
         $aux = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPostulant)->first();
         $aux->state = 'aceptado';
         $aux->save();
