@@ -12,4 +12,4 @@
 @include('copyrigtharrow')
 @include('javascript')
 </body>
-</html>
+</html> 

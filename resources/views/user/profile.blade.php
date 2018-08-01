@@ -33,7 +33,7 @@
       <div class="col-sm-12 col-md-4">
         <h1 class="text-uppercase text-center separator-m"> mis cali- ficaciones</h1> 
         <div class="col-12 text-center"> 
-          <a href="/califications">
+          <a class="text-white" href="/califications">
             <h1>
               @if ($user->reputation == 0)
                 <i class="fa fa-star-o" aria-hidden="true"></i>
@@ -42,8 +42,9 @@
               @else
                 <i class="fa fa-star" aria-hidden="true"></i>
               @endif
-              {{$user->reputation}} 
+              {{$user->reputation}}
             </h1>
+            <p>Ver más</p>
           </a>
         </div>
       </div>
