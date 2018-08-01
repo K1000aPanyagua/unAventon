@@ -23,12 +23,18 @@
             <p  class="col-sm-12 text-right">Mas informacion sobre este viaje...</p>
           </div>
           <br><br>
-          <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', Auth::User()->id)}} "> 
+          @if ($myRide->paid == FALSE )
+          <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', $myRide->id)}} "> 
             <h2>Pagar</h2>
           </a>
-          <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', Auth::User()->id)}} "> 
-            <h2>Calificar</h2>
+          @else
+          <a  class="sangria text-uppercase text-center text-white" ><p>sarasa</p>></a>
+          @endif
+          @if($myRide->done == TRUE)
+          <a  class="sangria text-uppercase text-center" style="color: #f17376;" href="{{route('page.showPassengers', ['idRide' => $myRide->id])}}"> 
+            <h2>Calificar <br> copilotos</h2>
           </a>
+          @endif
           <br><br>
         </td>
       </div>
@@ -68,12 +74,18 @@
               <p  class="col-sm-12 text-right">Mas informacion sobre este viaje...</p>
             </div>
             <br><br>
-            <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', Auth::User()->id)}} "> 
+            @if ($ride->paid == FALSE )
+            <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', $ride->id)}} "> 
               <h2>Pagar</h2>
             </a>
-            <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', Auth::User()->id)}} "> 
-              <h2>Calificar</h2>
+             @else
+             <a  class="sangria text-uppercase text-center text-white" ><p>sarasa</p>></a>
+            @endif
+            @if($ride->done == TRUE)
+            <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.showPassengers', $ride->id)}}"> 
+              <h2>Calificar piloto</h2>
             </a>
+            @endif
             <br><br>
           </td>
         </div>

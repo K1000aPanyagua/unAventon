@@ -101,7 +101,7 @@
   </div>
   </header>
   @else
-  <div class="col-12">
+    <div class="col-12">
     <a href="/login"> 
       <h4 class="text-white text-uppercase mb-0" style="text-decoration: underline;"> 
         Iniciar sesion 
@@ -111,5 +111,9 @@
   </header>
   <div class="row">
     @include('fill')
-  </div>
+  </div>    
   @endif
+
+
+
+  

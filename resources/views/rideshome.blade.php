@@ -10,13 +10,13 @@
           <div class="container-ride row separator-both-s">
             <td>
               <div class="col-md-4 col-sm-12 row">
-                <h5 class="col-sm-6">Origen: </h5> <p class="col-sm-6 text-left">{{$ride->origin}}</p> 
+                <h5 class="col-sm-6">Origen: </h5> <p class="col-sm-6 text-left"> {{$ride->origin}} </p> 
               </div>
               <div class="col-md-4 col-sm-12 row">
                 <h5  class="col-sm-6">Destino:</h5> <p class="col-sm-6 text-left">{{$ride->destination}}</p>
               </div>
               <div class="col-md-4 col-sm-12 row">
-                <h5  class="col-sm-8">Fecha y hora de salida:</h5> <p class="col-sm-4 text-left">{{$ride->departDate}}  {{$ride->departHour}}</p>
+                <h5  class="col-sm-8">Fecha y hora de salida:</h5> <p class="col-sm-4 text-left"> {{$ride->departDate}} {{$ride->departHour}} </p>
               </div>
               <div class="col-md-4 col-sm-12 row">
                 <h5 class="col-sm-6">Precio:</h5> <p class="col-sm-6 text-left">{{$ride->amount}}</p>

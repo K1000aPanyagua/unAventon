@@ -62,11 +62,11 @@ class RideController extends Controller
         $ridesPassenger = PassengerRide::where('user_id', $id)->where('paid', FALSE)->get();
         //adeuda como piloto?
         if ($rides->count() > 0) {
-           return redirect()->back()->with('error', 'Ustéd adeuda pagos');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
+           return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
         }
         //adeuda como pasajero?
         if ($ridesPassenger->count() > 0) {
-            return redirect()->back()->with('error', 'Ustéd adeuda pagos');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
+            return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');//!!!!!!!!!!!!!!!!!!!!!!!!!arrglar redirect
         }
         $qualifications1 = QualificationPilot::where('passenger_id', $id)->where('done', FALSE)->get();
         $qualifications2 = QualificationPassenger::where('pilot_id', $id)->where('done', FALSE)->get();

@@ -61,7 +61,7 @@ class LoginController extends Controller
             }
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('/')->with('success', 'Bienvenido');
+            return redirect()->intended('/');
         }else{
             return redirect()->back()->with('error', 'Lo sentimos.. el E-mail o la contraseña no son correctos.');
         }
@@ -94,7 +94,7 @@ class LoginController extends Controller
         $credentials = $this->validator($request->all())->validate();
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('/')->with('success', 'Bienvenido');
+            return redirect()->intended('/');
         }else{
             return redirect()->back()->with('error', 'Lo sentimos.. el E-mail o la contraseña no son correctos.');
         }
