@@ -32,6 +32,8 @@ Route::get('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePasseng
 		->name('user.deletePassenger');
 Route::resource('user', 'UserController');
 
+Route::get('/califications', 'UserController@getCalifications');
+
 Route::get('/editPass', 'UserController@editPassword');
 Route::post('/newPass', 'UserController@updatePassword');
 

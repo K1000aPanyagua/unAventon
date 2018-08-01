@@ -30,7 +30,23 @@
               </form>
 
       </div >
-      <div class="col-sm-12 col-md-4"> <h1 class="text-uppercase text-center "> mis cali- ficaciones</h1> </div>
+      <div class="col-sm-12 col-md-4">
+        <h1 class="text-uppercase text-center separator-m"> mis cali- ficaciones</h1> 
+        <div class="col-12 text-center"> 
+          <a href="/califications">
+            <h1>
+              @if ($user->reputation == 0)
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              @elseif ($user->reputation< 50)
+                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+              @else
+                <i class="fa fa-star" aria-hidden="true"></i>
+              @endif
+              {{$user->reputation}} 
+            </h1>
+          </a>
+        </div>
+      </div>
 
     </div>
     

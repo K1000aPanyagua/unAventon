@@ -56,6 +56,15 @@ class UserController extends Controller{
         }
     }
 
+    public function getCalifications(){
+        $asPilot = QualificationPilot::where('pilot_id', (Auth::User()->id))->get();
+        $asPassenger = QualificationPassenger::where('passenger_id', (Auth::User()->id))->get();
+         return view('user.califications')->with('asPilot', $asPilot)->with('asPassenger', $asPassenger);
+
+    }
+
+
+
 
     public function editPassword(){
         
@@ -384,7 +393,7 @@ class UserController extends Controller{
 
                 return redirect()->back()->with('success', 'Pago exitoso!');
             }else{
-                $passengerRide = PassengerRide::where('ride_id', $ride->id)->where('user_id', Auth::user()->id)
+                $passengerRide = PassengerRide::where('ride_id', $ride->id)->where('user_id', Auth::user()->id);
                 $passengerRide->paid = TRUE;
                 $passengerRide->save();
                 return redirect()->back()->with('success', 'Pago exitoso!'); 

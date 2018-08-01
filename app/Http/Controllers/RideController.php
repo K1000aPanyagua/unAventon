@@ -379,7 +379,7 @@ class RideController extends Controller
                     $qualificationPassenger->pilot_id = $ride->user_id;
                     $qualificationPassenger->passenger_id = $passenger->id;
                     $qualificationPassenger->review = null;
-                    $qualificationPassenger->ride_id = $idRide;
+                    $qualificationPassenger->ride_id = $id;
                     $qualificationPassenger->done = FALSE;
 
                     $qualificationPassenger->save();           

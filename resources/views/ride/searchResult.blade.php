@@ -13,16 +13,40 @@
   <div class="container">
     @include('flash_message')
     <h1 class="text-uppercase separator-l col-sm-12">Resultados de la busqueda:</h1>  
+    
+    @if ($rides instanceof Illuminate\Support\Collection)
+      <div class="col-sm-12">
+  
+    @foreach ($rides as $ride)
+      <tr>
 
-    @if ($rides instanceof Collection)
-      @foreach($rides as $ride)
-        <div class="row" >
-            Origen: {{ $ride->origin }} Destino: {{ $ride->destination}} 
-            Fecha de salida: {{$ride->departDate}} Hora de salida: {{$ride->departHour}}
-            Monto: {{$ride->amount}}
+        <a href="{{route('ride.show', $ride->id)}}">
+          <div class="container-ride row separator-both-s">
+            <td>
+              <div class="col-md-4 col-sm-12 row">
+                <h5 class="col-sm-6">Origen: </h5> <p class="col-sm-6 text-left">{{$ride->origin}}</p> 
+              </div>
+              <div class="col-md-4 col-sm-12 row">
+                <h5  class="col-sm-6">Destino:</h5> <p class="col-sm-6 text-left">{{$ride->destination}}</p>
+              </div>
+              <div class="col-md-4 col-sm-12 row">
+                <h5  class="col-sm-8">Fecha y hora de salida:</h5> <p class="col-sm-4 text-left">{{$ride->departDate}}  {{$ride->departHour}}</p>
+              </div>
+              <div class="col-md-4 col-sm-12 row">
+                <h5 class="col-sm-6">Precio:</h5> <p class="col-sm-6 text-left">{{$ride->amount}}</p>
+              </div>
+              <div class="offset-md-3 col-md-5 col-sm-12 row">
+                <p  class="col-sm-12 text-right">Mas informacion sobre este viaje...</p>
+              </div>
+              <br><br>
+            </td>
+          </div>
+        </a>
 
-       </div>
-      @endforeach
+      </tr>
+    @endforeach
+
+  </div>
     @else
       {{$rides}}
     @endif

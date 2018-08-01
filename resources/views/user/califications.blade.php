@@ -1,4 +1,13 @@
+<!DOCTYPE html>
+<html lang="es">
 
+@include('head')
+@include('flash_message')
+<body id="page-top" class="container-fluid">
+<!--Body -->
+@include('menu')
+
+<header class="masthead bg-primary text-white text-left row">
 <h2 class="text-uppercase text-center separator-both-xs col-sm-6">como piloto</h2>
   
   @if ($myRides->count()!= 0)
@@ -14,7 +23,7 @@
             <h5  class="col-sm-6">Destino:</h5> <p class="col-sm-6 text-left">{{$myRide->destination}}</p>
           </div>
           <div class="col-md-4 col-sm-12 row">
-            <h5  class="col-sm-8">Fecha y hora de salida:</h5> <p class="col-sm-4 text-left">{{$myRide->departDate->toDateString()}}  {{$myRide->departHour}}</p>
+            <h5  class="col-sm-8">Fecha y hora de salida:</h5> <p class="col-sm-4 text-left">{{$myRide->departDate}}  {{$myRide->departHour}}</p>
           </div>
           <div class="col-md-4 col-sm-12 row">
             <h5 class="col-sm-6">Precio:</h5> <p class="col-sm-6 text-left">{{$myRide->amount}}</p>
@@ -87,3 +96,10 @@
       </div>
     </div>
   @endif
+</header>
+
+<!--fin header-->
+@include('footer')
+@include('javascript')
+</body>
+</html>
