@@ -23,10 +23,10 @@
             <p  class="col-sm-12 text-right">Mas informacion sobre este viaje...</p>
           </div>
           <br><br>
-          <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', Auth::User()->id)}} "> 
+          <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', $myRide->id)}} "> 
             <h2>Pagar</h2>
           </a>
-          <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', Auth::User()->id)}} "> 
+          <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{ route('user.payRide', Auth::user()->id) }} "> 
             <h2>Calificar</h2>
           </a>
           <br><br>
@@ -68,7 +68,7 @@
               <p  class="col-sm-12 text-right">Mas informacion sobre este viaje...</p>
             </div>
             <br><br>
-            <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', Auth::User()->id)}} "> 
+            <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', $ride->id)}} "> 
               <h2>Pagar</h2>
             </a>
             <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', Auth::User()->id)}} "> 

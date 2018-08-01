@@ -96,12 +96,7 @@ class RideController extends Controller
     }
 
     public function store(Request $request){
-<<<<<<< HEAD
-
-    
-
-
-=======
+        //$this->validator($request->all())->validate();
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //CALCULO endDate DEL NUEVO VIAJE
         $duration = Carbon::parse($request->duration);
@@ -160,7 +155,7 @@ class RideController extends Controller
             return redirect()->back()->with('error', 'Ustéd poseé uno o más viajes que se superponen con el que desea publicar en este momento');
         }
         //
->>>>>>> 20522d07c0e266fc5e730d6f6413d2593fcb9257
+
         $ride = new Ride;
         $ride->user_id =        Auth::User()->id;
         $ride->origin =         $request->origin;

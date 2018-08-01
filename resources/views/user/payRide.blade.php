@@ -8,7 +8,7 @@
 <header class="masthead bg-primary text-white text-left row">
   <div class="col-sm-12 text-center">
   	@include('flash_message')
-	<form method="POST" action="{{ route('user.pay', $ride) }}">
+	<form method="POST" action="{{ route('user.pay', $ride->id) }}">
 	  {{ csrf_field() }} {{ method_field('POST') }}
       <label class="col-form-label text-md-right">Seleccionar tarjeta:</label>
       <select name="card" id="card" required="required" class="form-control{{ $errors->has('card') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
