@@ -14,7 +14,7 @@
             <h5  class="col-sm-6">Destino:</h5> <p class="col-sm-6 text-left">{{$myRide->destination}}</p>
           </div>
           <div class="col-md-4 col-sm-12 row">
-            <h5  class="col-sm-8">Fecha y hora de salida:</h5> <p class="col-sm-4 text-left">{{$myRide->departDate}}  {{$myRide->departHour}}</p>
+            <h5  class="col-sm-8">Fecha y hora de salida:</h5> <p class="col-sm-4 text-left">{{$myRide->departDate->toDateString()}}  {{$myRide->departHour}}</p>
           </div>
           <div class="col-md-4 col-sm-12 row">
             <h5 class="col-sm-6">Precio:</h5> <p class="col-sm-6 text-left">{{$myRide->amount}}</p>
