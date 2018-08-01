@@ -198,6 +198,7 @@ class UserController extends Controller{
             return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
 
+<<<<<<< HEAD
         //VALIDACIONES
         $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
         if ($auxRide->count() > 0){
@@ -210,11 +211,54 @@ class UserController extends Controller{
                 //valido que no adeude pagos
                 if ($currentRide->paid == FALSE) {
                     return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
+=======
+        //VALIDO QUE EL USUARIO NO POSEA ALGÚN VIAJE COMO PILOTO O COPILOTO QUE SE //SUPERPONGA CON EL QUE SE QUIERE POSTULAR 
+        $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
+        //
+        $ok1 = TRUE;
+        $ok2 = TRUE;
+        //VERIFICO SI EL VIAJE AL QUE SE QUIERE POSTULAR NO SE SUPERPONE CON OTRO YA //PUBLICADO
+        foreach ($rides as $postedRide) {
+            if ($ride->departDate->lt($postedRide->departDate)) {
+                if ($ride->endDate->lt($postedRide->departDate)) {
+                    $ok1 = TRUE;
+                }else{
+                    $ok1 = FALSE;
+>>>>>>> 20522d07c0e266fc5e730d6f6413d2593fcb9257
                 }
-
+            }elseif ($postedRide->endDate->lt($ride->departDate)) {
+                $ok1 = TRUE;
+            }else{
+                $ok1 = FALSE;
             }
         }
-        $auxRide = Ride::where('paid', FALSE)->where('user_id', Auth::user()->id)->get();
+
+        //VERIFICO SI EL VIAJE AL QUE SE QUIERE POSTULAR NO SE SUPERPONE CON UN VIAJE EL CUAL EL USUARIO ES COPILOTO
+        $passRides = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->where('paid', NULL)->get();
+        $rideAsPass = collect([]);
+        if ($passRides->count() > 0){
+            foreach ($passRides as $i) {
+                $rideAsPass->push(Ride::find($i->ride_id)); 
+            }
+            foreach ($rideAsPass as $currRide) {
+                if ($ride->departDate->lt($currRide->departDate)) {
+                    if ($ride->endDate->lt($currRide->departDate)) {
+                        $ok2 = TRUE;
+                    }else{
+                        $ok2 = FALSE;
+                    }
+                }elseif ($currRide->endDate->lt($ride->departDate)) {
+                    $ok2 = TRUE;
+                }else{
+                    $ok2 = FALSE;
+                }
+            }
+        }
+        if ($ok1 == FALSE or $ok2 == FALSE) {
+            return redirect()->back()->with('error', 'Ustéd poseé uno o más viajes que se superponen con el que desea postularse en este momento');
+        }
+        //VALIDO QUE NO SE ADEUDE PAGOS COMO PILOTO O COPILOTO
+        $auxRide = Ride::where('user_id', Auth::user()->id)->where('paid', FALSE)->where('done', TRUE)->get();
         $ridesPassenger = PassengerRide::where('user_id', Auth::user()->id)->where('paid', FALSE)->get();
         //adeuda como piloto?
         if ($auxRide->count() > 0) {
@@ -255,6 +299,7 @@ class UserController extends Controller{
             //SI FUÉ ACEPTADO PENALIZO 
             $user = User::find(Auth::user()->id);
             $user->reputation = $user->reputation - 1;
+            $user->save();
             
             PassengerRide::destroy($solicitude->id);
 
@@ -275,6 +320,39 @@ class UserController extends Controller{
     }
 
     public function acceptSolicitude($idRide, $idPostulant){
+        $ride = Ride::where('id', $idRide)->first();
+        //
+        $ok = TRUE;
+        //NO ES POSIBLE QUE EL POSTULANTE POSEA VIAJES COMO PILOTO QUE SE SUPERPONGAN
+        //YA QUE UN USUARIO NO PUEDE POSTULARSE A UN VIAJE QUE SE SUPERPONE
+        
+        //VERIFICO SI EL POSTULANTE HA SIDO ACEPTADO EN OTRO VIAJE QUE SE SUPERPONE
+        $passRides = PassengerRide::where('user_id', $idPostulant)->where('state', 'aceptado')->where('paid', NULL)->get();
+        $rideAsPass = collect([]);
+        if ($passRides->count() > 0){
+            foreach ($passRides as $i) {
+                $rideAsPass->push(Ride::find($i->ride_id)); 
+            }
+            foreach ($rideAsPass as $currRide) {
+                if ($ride->departDate->lt($currRide->departDate)) {
+                    if ($ride->endDate->lt($currRide->departDate)) {
+                        $ok = TRUE;
+                    }else{
+                        $ok = FALSE;
+                    }
+                }elseif ($currRide->endDate->lt($ride->departDate)) {
+                    $ok = TRUE;
+                }else{
+                    $ok = FALSE;
+                }
+            }
+        }
+        if ($ok == FALSE) {
+            $erase = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPostulant)->first();
+            $erase->delete();
+            return redirect()->back()->with('error', 'Esta solicitud ya no es válida');
+        }
+        //
         $aux = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPostulant)->first();
         $aux->state = 'aceptado';
         $aux->save();
@@ -334,6 +412,7 @@ class UserController extends Controller{
         //PENALIZO AL USUARIO
         $user = User::find(Auth::user()->id);
         $user->reputation = $user->reputation - 1;
+        $user->save();
         //
         $passenger = PassengerRide::where('ride_id', $idRide)->where('user_id', $idPassenger)->first();
         $passenger->state = 'eliminado';

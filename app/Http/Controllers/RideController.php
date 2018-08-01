@@ -43,8 +43,7 @@ class RideController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         //VERIFICAR QUE USUARIO TENGA TARJETA, VEHICULO NO ADEUDE PAGOS NI CALIFICACIONES
         if (!Auth::check()) {
             return redirect('/register')->with('error','Registrate para publicar tu viaje!');
@@ -58,7 +57,7 @@ class RideController extends Controller
         if ( count($cars) == 0) {
             return redirect('car/create')->with('error', 'Usted no posee un vehiculo asignado.');
         }
-        $rides = Ride::where('paid', FALSE)->where('user_id', $id)->get();
+        $rides = Ride::where('paid', FALSE)->where('done', TRUE)->where('user_id', $id)->get();
         $ridesPassenger = PassengerRide::where('user_id', $id)->where('paid', FALSE)->get();
         //adeuda como piloto?
         if ($rides->count() > 0) {
@@ -74,7 +73,7 @@ class RideController extends Controller
            return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!arreglar redirect
         }
         return view('ride.create')->with('cards', $cards)->with('cars', $cars);
-    }
+    }   
 
     /**
      * Store a newly created resource in storage.
@@ -95,6 +94,64 @@ class RideController extends Controller
     }
 
     public function store(Request $request){
+        $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
+        //CALCULO endDate DEL NUEVO VIAJE
+        $duration = Carbon::parse($request->duration);
+        $departHour = Carbon::parse($request->departHour);
+        $aux = Carbon::parse($request->departDate);
+        $endDate = $aux;
+        $endDate->addMinutes($duration->minute);
+        $endDate->addHours($duration->hour);
+        $endDate->addMinutes($departHour->minute);
+        $endDate->addHours($departHour->hour);
+        //
+        $aux = Carbon::parse($request->departDate);
+        $departDate = $aux;
+        $departDate->addMinutes($departHour->minute);
+        $departDate->addHours($departHour->hour);
+        //
+        $ok1 = TRUE;
+        $ok2 = TRUE;
+        //VERIFICO SI EL VIAJE QUE SE QUIERE PUBLICAR NO SE SUPERPONE CON OTRO YA PUBLICADO
+        foreach ($rides as $postedRide) {
+            if ($departDate->lt($postedRide->departDate)) {
+                if ($endDate->lt($postedRide->departDate)) {
+                    $ok1 = TRUE;
+                }else{
+                    $ok1 = FALSE;
+                }
+            }elseif ($postedRide->endDate->lt($departDate)) {
+                $ok1 = TRUE;
+            }else{
+                $ok1 = FALSE;
+            }
+        }
+
+        //VERIFICO SI EL VIAJE QUE SE QUIERE PUBLICAR NO SE SUPERPONE CON UN VIAJE EL CUAL EL PILOTO ES COPILOTO
+        $passRides = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->where('paid', NULL)->get();
+        $rideAsPass = collect([]);
+        if ($passRides->count() > 0){
+            foreach ($passRides as $i) {
+                $rideAsPass->push(Ride::find($i->ride_id)); 
+            }
+            foreach ($rideAsPass as $currRide) {
+                if ($departDate->lt($currRide->departDate)) {
+                    if ($endDate->lt($currRide->departDate)) {
+                        $ok2 = TRUE;
+                    }else{
+                        $ok2 = FALSE;
+                    }
+                }elseif ($currRide->endDate->lt($departDate)) {
+                    $ok2 = TRUE;
+                }else{
+                    $ok2 = FALSE;
+                }
+            }
+        }
+        if ($ok1 == FALSE or $ok2 == FALSE) {
+            return redirect()->back()->with('error', 'Ustéd poseé uno o más viajes que se superponen con el que desea publicar en este momento');
+        }
+        //
         $ride = new Ride;
         $ride->user_id =        Auth::User()->id;
         $ride->origin =         $request->origin;
@@ -106,21 +163,13 @@ class RideController extends Controller
         $ride->departHour =     $request->departHour;
         $ride->car_id =         $request->car_id;
         $ride->card_id =        $request->card;
-        $ride->done =           FALSE; 
-        //CALCULO LA FECHA DE LLEGADA OH YES BABEEEEEEEEEEEEEEE
-        $duration = Carbon::parse($ride->duration);
-        $departHour = Carbon::parse($ride->departHour);
-        $endDate = $ride->departDate;
-        $endDate->addMinutes($duration->minute);
-        $endDate->addHours($duration->hour);
-        $endDate->addMinutes($departHour->minute);
-        $endDate->addHours($departHour->hour);
-        $ride->endDate = $endDate;
-        //
+        $ride->done =           FALSE;
+        $ride->paid =           FALSE; 
+        $ride->endDate =        $endDate;
+        
         $ride->save();
         
-
-        
+        //
         $pilot = Auth::user();
         $car = Car::where('id', $ride->car_id)->first();
         $card = Card::where('id', $ride->card_id)->first();
@@ -221,9 +270,21 @@ class RideController extends Controller
         $ride->card_id =        $request->card;
         $ride->car_id =        $request->car;
         
+        //CALCULO endDate 
+        $duration = Carbon::parse($request->duration);
+        $departHour = Carbon::parse($request->departHour);
+        $aux = Carbon::parse($request->departDate);
+        $endDate = $aux;
+        $endDate->addMinutes($duration->minute);
+        $endDate->addHours($duration->hour);
+        $endDate->addMinutes($departHour->minute);
+        $endDate->addHours($departHour->hour);
+        $ride->endDate = $endDate;
+        //
+
         $ride->save();
         
-    
+        //
         $car = Car::where('id', $ride->car_id)->first();
         $card = Card::where('id', $ride->card_id)->first();
         $pilot = User::find($ride->user_id)->first();
@@ -298,6 +359,7 @@ class RideController extends Controller
         $user = User::find(Auth::user()->id);
         foreach ($passengers as $passenger) {
             $user->reputation = $user->reputation - 1;
+            $user->save();
             $passenger->delete();
         }
         $comments = Comment::where('ride_id', $id)->get();
@@ -338,12 +400,24 @@ class RideController extends Controller
         if ($request->has('departHour')) {
             $rides->where('departHour', $request->input('departHour'));
         }
+
+        if ($request->has('endDate')) {
+           $rides->where('endDate', $request->input('endDate'));
+        }
+            //NO SE COMO TRAERME LA CANTIDAD DE ASIENTOS O EL TIPO DE AUTO
+            //ESTAS QUIERYS INVOLUCRAN ACCEDER A LA TABLA DEL CAMPO FORÁNEO
+            //DE CARS
+        
+        if ($request->has('amount')) {
+           $rides->where('amount', $request->input('amount'));
+        }
       
-       # if ($request->has('kind')) {
+        #if ($request->has('kind')) {
            # $rides->whereHas('rides', function ($query) use ($request) {
           #      $query->where('kind', $request->input('kind'))->get();
          #   });
         #}
+        
         $rides = $rides->get();
         if ($rides->count() < 1){
             $rides = 'No hay resultados.';
@@ -357,7 +431,6 @@ class RideController extends Controller
         $now = Carbon::now();
         if ($now->gt($ride->endDate)) {
             $ride->done = TRUE;
-            $ride->paid = FALSE;
             $ride->save();
 
             $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->get();
@@ -382,7 +455,10 @@ class RideController extends Controller
                     $qualificationPassenger->ride_id = $id;
                     $qualificationPassenger->done = FALSE;
 
-                    $qualificationPassenger->save();           
+                    $qualificationPassenger->save();      
+                    //SETEO EN FALSE EL PAID PARA EL PASSENGER
+                    $passenger->paid = FALSE;
+                    $passenger->save();     
                 }
             }
         }
