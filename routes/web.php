@@ -27,7 +27,7 @@ Route::get('/accept/{idRidede}/{idPostulant}', 'UserController@acceptSolicitude'
 		->name('user.acceptSolicitude');
 Route::delete('/cancel/{ride}', 'UserController@cancelSolicitude')
 		->name('user.cancelSolicitude');
-Route::post('/postulate/{ride}', 'UserController@postulate')
+Route::get('/postulate/{ride}', 'UserController@postulate')
 		->name('user.postulate');
 Route::get('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePassenger')
 		->name('user.deletePassenger');

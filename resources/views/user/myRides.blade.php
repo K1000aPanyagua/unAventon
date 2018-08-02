@@ -31,7 +31,7 @@
           @else
           <a  class="sangria text-uppercase text-center text-white" ><p>sarasa</p>></a>
           @endif
-          @if($myRide->done == TRUE)
+          @if($myRide->done == TRUE) and ()
           <a  class="sangria text-uppercase text-center" style="color: #f17376;" href="{{route('page.showPassengers', ['idRide' => $myRide->id])}}"> 
             <h2>Calificar <br> copilotos</h2>
 

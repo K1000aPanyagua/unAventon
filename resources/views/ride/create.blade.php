@@ -49,10 +49,7 @@
 
 	<br>
 	<label for="duration">Duración:</label>
-<<<<<<< HEAD
-=======
 
->>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
     <div class="col-12" style="display: flex; padding: 0;">
     <div class="col-6">
         Horas
@@ -64,11 +61,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
-
-=======
-	
->>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
 	@if ($errors->has('durationHour'))
     	<span class="invalid-feedback">
     		<strong>{{ $errors->first('durationHour') }}</strong>

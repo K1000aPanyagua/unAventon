@@ -85,16 +85,10 @@ class RideController extends Controller
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
-<<<<<<< HEAD
-            'duration-hour' => 'required',
-            'duration-minute' => 'required',
-            'amount' => 'required|decimal',
-=======
             'durationHour' => 'required',
             'durationMinute' => 'required',
             'amount' => 'required|decimal',
             'amount' => 'required|numeric',
->>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
             'remarks' => 'string',
             'departHour' => 'required',
             'departDate' => 'required|after:'.$today,
@@ -104,13 +98,6 @@ class RideController extends Controller
     public function store(Request $request){
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //CALCULO endDate DEL NUEVO VIAJE
-<<<<<<< HEAD
-        $duration = Carbon::parse($request->departDate);
-        $duration->addMinutes($request->durationMinute);
-        $duration->addHour($request->durationHour);
-        $departHour = Carbon::parse($request->departHour);
-        
-=======
         $now = Carbon::now();
         $duration = Carbon::parse($request->departDate);
         $duration->addMinutes($request->durationMinute);
@@ -119,10 +106,7 @@ class RideController extends Controller
 
         $departHour = Carbon::parse($request->departHour);
         $endDate =  Carbon::parse($request->departDate);
->>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
 
-        $aux = Carbon::parse($request->departDate);
-        $endDate = $aux;
         $endDate->addMinutes($request->durationMinute);
         $endDate->addHours($request->durationHour);
         $endDate->addMinutes($departHour->minute);
@@ -132,12 +116,11 @@ class RideController extends Controller
         $departDate = $aux;
         $departDate->addMinutes($departHour->minute);
         $departDate->addHours($departHour->hour);
-<<<<<<< HEAD
-        $duration = $duration->toTimeString();
-        
-=======
->>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
-  
+
+  //
+        /*if ($departDate->lt($now)){
+            return redirect()->back()->withInput()->with('error', 'La fecha y hora de salida de ser posterior a la fecha y hora actual');
+        }*/
         //
         $ok1 = TRUE;
         $ok2 = TRUE;
