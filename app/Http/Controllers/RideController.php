@@ -88,14 +88,10 @@ class RideController extends Controller
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
-<<<<<<< HEAD
-            'duration-hour' => 'required',
-            'duration-minute' => 'required',
+            'durationHour' => 'required',
+            'durationMinute' => 'required',
             'amount' => 'required|decimal',
-=======
-            'duration' => 'required',
             'amount' => 'required|numeric',
->>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
             'remarks' => 'string',
             'departHour' => 'required',
             'departDate' => 'required|after_or_equal:'.$today,
@@ -107,17 +103,13 @@ class RideController extends Controller
         $this->validator($request->all())->validate();
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //CALCULO endDate DEL NUEVO VIAJE
-<<<<<<< HEAD
+        $now = Carbon::now();
         $duration = Carbon::parse($request->departDate);
         $duration->addMinutes($request->durationMinute);
         $duration->addHour($request->durationHour);
-
-=======
-        $now = Carbon::now();
         $duration = Carbon::parse($request->duration);
->>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
+
         $departHour = Carbon::parse($request->departHour);
-        
         $endDate =  Carbon::parse($request->departDate);
 
         $endDate->addMinutes($request->durationMinute);
@@ -185,7 +177,6 @@ class RideController extends Controller
         $ride->user_id =        Auth::User()->id;
         $ride->origin =         $request->origin;
         $ride->destination =    $request->destination;
-        $ride->duration =       $duration;
         $ride->amount =         $request->amount;
         $ride->remarks =        $request->remarks;
         $ride->departDate =     $request->departDate;
@@ -195,6 +186,8 @@ class RideController extends Controller
         $ride->done =           FALSE;
         $ride->paid =           FALSE; 
         $ride->endDate =        $endDate;
+        $ride->durationHour =   $request->durationHour;
+        $ride->durationMinute = $request->durationMinute;
         
         $ride->save();
         

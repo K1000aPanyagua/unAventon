@@ -27,7 +27,7 @@
           <br>
           <h5 class="col-sm-6">DESTINO:</h5> <p class="col-sm-6">{{ $ride->destination }}</p>
           <br> 
-          <h5 class="col-sm-6">DURACION:</h5> <p class="col-sm-6">{{ $ride->duration}}</p>
+          <h5 class="col-sm-6">DURACION:</h5> <p class="col-sm-6">{{$ride->durationHour}}:{{ $ride->durationMinute}}</p>
           <br> 
           <h5 class="col-sm-6">MONTO:</h5> <p class="col-sm-6">{{ $ride->amount }}</p>
           <br> 

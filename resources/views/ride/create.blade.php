@@ -14,8 +14,8 @@
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-md-8">
-          @include('flash_message')
-
+          
+@include('flash_message')
 <form method="POST" action="{{ route('ride.store') }}">
 	{{ csrf_field() }}
 	<label for="origin">Origen:</label>
@@ -49,7 +49,7 @@
 
 	<br>
 	<label for="duration">Duración:</label>
-<<<<<<< HEAD
+
     <div class="col-12" style="display: flex; padding: 0;">
     <div class="col-6">
         Horas
@@ -61,9 +61,6 @@
     </div>
 </div>
 
-=======
-	<input value="{{ old('duration') }}" type="time" name="duration" id="duration" class="form-control{{ $errors->has('duration') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
->>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
 	
 	@if ($errors->has('durationHour'))
     	<span class="invalid-feedback">
