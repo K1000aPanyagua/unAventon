@@ -24,13 +24,22 @@
             </form>
         @else      
           
-          <div class="col-12">
+          
            <form method="POST" action="{{ route('user.qualificatePassenger', ['ride' =>   $ride->id, 'passenger' => $passenger->id]) }}">
             {{ csrf_field() }}
-            <h6>Calificar copiloto</h6>
-            <button class="btn btn-primary" type="submit" value="bueno">Bueno</button>
+            <div class="form-group separator-s" >
+            <label for="model"><h5 class="text-uppercase text-center separator-m col-form-label">Calificar copiloto</h5></label>
+              <select name="value" class=" separator-l" required="required">
+                <option value="">Seleccionar</option>
+                <option value="positivo" @if (old('value')== "bueno") {{ 'selected' }} @endif>Bueno</option>
+                <option value="regular" @if (old('value')== "regular") {{ 'selected' }} @endif>Neutra</option>
+                <option value="negativo" @if (old('value')== "malo") {{ 'selected' }} @endif>Malo</option>
+              </select>
+            </div>
+            <button class="btn btn-primary col-12" type="submit"> Calificar</button>
             </form>
-          </div>
+
+
           @endif
 
         @endforeach

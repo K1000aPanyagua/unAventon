@@ -210,6 +210,23 @@ class UserController extends Controller{
         if ($passengers->count() == $car->numSeats) {
             return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
+<<<<<<< HEAD
+
+        //VALIDACIONES
+        $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
+        if ($auxRide->count() > 0){
+            foreach ($auxRide as $currentRide) {
+                //valido que el usuario no sea pasajero de un viaje con misma fecha
+                $now = Carbon::now();
+                if ($currentRide->endDate){
+                    /////////////////////DASDASDSNJSDANDANDSNA
+                }
+                //valido que no adeude pagos
+                if ($currentRide->paid == FALSE) {
+                    return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
+
+=======
+>>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
         //VALIDO QUE EL USUARIO NO POSEA ALGÚN VIAJE COMO PILOTO O COPILOTO QUE SE //SUPERPONGA CON EL QUE SE QUIERE POSTULAR 
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //
@@ -288,6 +305,8 @@ class UserController extends Controller{
         }
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
     }   
+}}
+}
 
     public function cancelSolicitude($idRide){
         $solicitude = PassengerRide::where('user_id', Auth::user()->id)->where('ride_id', $idRide)->first();
@@ -419,6 +438,10 @@ class UserController extends Controller{
     }
 
     public function qualificatePassenger(Request $request, $ride_id, $passenger_id){
+<<<<<<< HEAD
+      
+=======
+>>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
         $qualification = QualificationPassenger::where('ride_id', $ride_id)->where('passenger_id', $passenger_id)->first();
         $qualification->value = $request->value;
         $qualification->pilot_id = Auth::user()->id;

@@ -15,6 +15,7 @@ Route::get('/','PagesController@getIndex');
 Route::get('/search','PagesController@getSearch');
 Route::get('/configurationAccount','PagesController@getAccount');
 Route::get('/resultregister','PagesController@getResultRegister');
+
 Route::get('/showPassengers/{idRide}', 'PagesController@showPassengers')
 		->name('page.showPassengers');
 
@@ -32,7 +33,7 @@ Route::get('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePasseng
 		->name('user.deletePassenger');
 
 
-Route::get('qualificatePassenger/{ride}/{idPassenger}', 'UserController@qualificatePassenger')
+Route::post('qualificatePassenger/{ride}/{idPassenger}', 'UserController@qualificatePassenger')
     ->name('user.qualificatePassenger');
 		
 Route::resource('user', 'UserController');

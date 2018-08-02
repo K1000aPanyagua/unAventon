@@ -17,7 +17,6 @@
       <td>
         <div class="col-md-4 col-sm-12 row">
           <h5 class="col-sm-6">Calificacion: </h5> <p class="col-sm-6 text-left">{{$pilot->value}}</p> 
-          @dd($asPilot);
         </div>
       </td>
     </div>

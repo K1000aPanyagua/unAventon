@@ -120,7 +120,7 @@ class CardController extends Controller
         $today=Carbon::today();
         $today=$today->toDateString();
         return Validator::make($data, [
-            'numCard' => 'required|digits:16',
+            'numCard' => 'required|digits:16|unique:cards',
             'expiration' => 'required|after:'.$today,
         ]);
     }
