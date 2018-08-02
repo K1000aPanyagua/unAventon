@@ -23,6 +23,7 @@
             <p  class="col-sm-12 text-right">Mas informacion sobre este viaje...</p>
           </div>
           <br><br>
+
           @if ($myRide->paid == FALSE )
           <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', $myRide->id)}} "> 
             <h2>Pagar</h2>
@@ -33,6 +34,7 @@
           @if($myRide->done == TRUE)
           <a  class="sangria text-uppercase text-center" style="color: #f17376;" href="{{route('page.showPassengers', ['idRide' => $myRide->id])}}"> 
             <h2>Calificar <br> copilotos</h2>
+
           </a>
           @endif
           <br><br>
@@ -74,7 +76,9 @@
               <p  class="col-sm-12 text-right">Mas informacion sobre este viaje...</p>
             </div>
             <br><br>
+
             @if ($ride->paid == FALSE )
+
             <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.payRide', $ride->id)}} "> 
               <h2>Pagar</h2>
             </a>

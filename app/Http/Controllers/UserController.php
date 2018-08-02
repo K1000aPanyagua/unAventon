@@ -67,9 +67,6 @@ class UserController extends Controller{
 
     }
 
-
-
-
     public function editPassword(){
         
         return view('user.passForm');
@@ -152,8 +149,24 @@ class UserController extends Controller{
         if ($id != Auth::user()->id) {
             return view('/');
         }
+        
+        $rides = Ride::where('done', FALSE)->where('user_id', $id)->get();
+        $ridesPassenger = PassengerRide::where('user_id', $id)->where('paid', '!=', TRUE)->get();
+        //adeuda como piloto?
+        if ($rides->count() > 0) {
+           return redirect()->back()->with('error', 'Usted tiene viajes en curso o adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
+        }
+        //adeuda como pasajero?
+        if ($ridesPassenger->count() > 0) {
+            return redirect()->back()->with('error', 'Usted tiene viajes en curso o adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
+        }
+        $qualifications1 = QualificationPilot::where('passenger_id', $id)->where('done', FALSE)->get();
+        $qualifications2 = QualificationPassenger::where('pilot_id', $id)->where('done', FALSE)->get();
+        if ($qualifications1->count() > 0 || $qualifications2->count() > 0){
+           return redirect()->back()->with('error', 'Ustéd adeuda calificaciones');
+        }
         User::destroy($id);
-        return redirect('/')->with('success', 'Usuario eliminado');
+        return redirect('/')->with('success', 'Cuenta desactivada!');
     }
 
     public function updatePassword(Request $request){
@@ -197,6 +210,7 @@ class UserController extends Controller{
         if ($passengers->count() == $car->numSeats) {
             return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
+<<<<<<< HEAD
 
         //VALIDACIONES
         $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
@@ -211,6 +225,8 @@ class UserController extends Controller{
                 if ($currentRide->paid == FALSE) {
                     return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
 
+=======
+>>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
         //VALIDO QUE EL USUARIO NO POSEA ALGÚN VIAJE COMO PILOTO O COPILOTO QUE SE //SUPERPONGA CON EL QUE SE QUIERE POSTULAR 
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //
@@ -230,7 +246,6 @@ class UserController extends Controller{
                 $ok1 = FALSE;
             }
         }
-
         //VERIFICO SI EL VIAJE AL QUE SE QUIERE POSTULAR NO SE SUPERPONE CON UN VIAJE EL CUAL EL USUARIO ES COPILOTO
         $passRides = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->where('paid', NULL)->get();
         $rideAsPass = collect([]);
@@ -423,7 +438,10 @@ class UserController extends Controller{
     }
 
     public function qualificatePassenger(Request $request, $ride_id, $passenger_id){
+<<<<<<< HEAD
       
+=======
+>>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
         $qualification = QualificationPassenger::where('ride_id', $ride_id)->where('passenger_id', $passenger_id)->first();
         $qualification->value = $request->value;
         $qualification->pilot_id = Auth::user()->id;
@@ -446,6 +464,10 @@ class UserController extends Controller{
     }
 
     public function qualificatePilot(Request $request, $ride_id, $pilot_id){
+        if (!$request->has('review')) {
+            return redirect()->back()->withInput()->with('error', 'Usted debe proveer un reseña de la calificación');
+        }
+
         $qualification = QualificationPilot::where('ride_id', $ride_id)->where('pilot_id', $pilot_id)->where('passenger_id', Auth::user()->id)->first();
         $qualification->value = $request->value;
         $qualification->pilot_id = $pilot_id;
@@ -473,15 +495,22 @@ class UserController extends Controller{
         return view('user.payRide')->with('ride', $ride)->with('cards', $cards);
     }
 
-    public function pay(Request $request, $ride_id){
+    public function pay(Request $request, $ride_id, $expiration){
         $ride=Ride::find($ride_id);
+        $now = Carbon::now();
+        $expirationDate = Carbon::parse($expiration);
+        
+        if ($expirationDate->gt($now)){
+            return redirect()->back()->withInput()->with('error', 'Su tarjeta ha expirado.');
+        }
+
         $num=rand(5, 20);
         if (($num % 2) == 0){
             if ($ride->user_id == Auth::user()->id){
                 $ride->paid = TRUE;
                 $ride->save();
 
-                return redirect()->back()->with('success', 'Pago exitoso!');
+                return redirect()->route('user.show', [Auth::user()->id])->with('success', 'Pago exitoso!');
             }else{
                 $passengerRide = PassengerRide::where('ride_id', $ride->id)->where('user_id', Auth::user()->id)->first();
                 $passengerRide->paid = TRUE;

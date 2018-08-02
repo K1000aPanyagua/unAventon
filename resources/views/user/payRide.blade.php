@@ -8,7 +8,7 @@
 <header class="masthead bg-primary text-white text-left row">
   <div class="col-sm-12 text-center">
   	@include('flash_message')
-	<form method="POST" action="{{ route('user.pay', $ride) }}">
+	<form method="POST" action="{{ route('user.pay', $ride->id, $card->expiration) }}">
 	  {{ csrf_field() }} {{ method_field('POST') }}
       
       <div class="form-group separator-s" >

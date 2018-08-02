@@ -65,6 +65,14 @@ class CarController extends Controller
 
         $car = Car::find($id);
 
+        //SI EL AUTO ESTÁ ASOCIADO A UN VIAJE NO PUEDE SER EDITADO
+        $count = Ride::where('car_id', $id)->where('done', FALSE)->count();
+        if($count != 0){
+            $cars = Car::where('user_id', Auth::user()->id)->get();
+            //redirecciona a cualquier lugar
+            return redirect()->back()->with('cars', $cars)->with('error', 'Usted posee aún un viaje no finalizado asociado a este vehículo.');
+        }
+
         $car->license = $request->license;
         $car->brand = $request->brand;
         $car->model = $request->model;
@@ -82,14 +90,14 @@ class CarController extends Controller
         //Se elimina el auto con id $id
         //Hay que verificar que no haya viajes pendientes
         
-        $count = Ride::where('car_id', $id)->count();
+        $count = Ride::where('car_id', $id)->where('done', FALSE)->count();
         if($count != 0){
             $cars = Car::where('user_id', Auth::user()->id)->get();
             //redirecciona a cualquier lugar
-            return redirect()->back()->with('cars', $cars)->with('error', 'Usted posee aún un viaje asociado a este vehículo.');
+            return redirect()->back()->with('cars', $cars)->with('error', 'Usted posee aún un viaje no finalizado asociado a este vehículo.');
         }
         else{
-            $car = Car::find($id)->first();
+            $car = Car::find($id);
             $car->delete();
             $cars = Car::where('user_id', Auth::user()->id)->get();
             //redirecciona a cualquier lugar
