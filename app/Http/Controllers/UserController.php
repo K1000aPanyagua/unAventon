@@ -210,6 +210,7 @@ class UserController extends Controller{
         if ($passengers->count() == $car->numSeats) {
             return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
+<<<<<<< HEAD
 
 
         //VALIDACIONES
@@ -224,6 +225,8 @@ class UserController extends Controller{
                 //valido que no adeude pagos
                 if ($currentRide->paid == FALSE) {
                     return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
+=======
+>>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
 
         //VALIDO QUE EL USUARIO NO POSEA ALGÚN VIAJE COMO PILOTO O COPILOTO QUE SE //SUPERPONGA CON EL QUE SE QUIERE POSTULAR 
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
@@ -303,8 +306,8 @@ class UserController extends Controller{
         }
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
     }   
-}}
-}
+
+
 
     public function cancelSolicitude($idRide){
         $solicitude = PassengerRide::where('user_id', Auth::user()->id)->where('ride_id', $idRide)->first();

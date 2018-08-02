@@ -14,8 +14,8 @@
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-md-8">
-          @include('flash_message')
-
+          
+@include('flash_message')
 <form method="POST" action="{{ route('ride.store') }}">
 	{{ csrf_field() }}
 	<label for="origin">Origen:</label>
@@ -49,6 +49,10 @@
 
 	<br>
 	<label for="duration">Duración:</label>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
     <div class="col-12" style="display: flex; padding: 0;">
     <div class="col-6">
         Horas
@@ -60,7 +64,11 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
 	@if ($errors->has('durationHour'))
     	<span class="invalid-feedback">
     		<strong>{{ $errors->first('durationHour') }}</strong>

@@ -85,9 +85,16 @@ class RideController extends Controller
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
+<<<<<<< HEAD
             'duration-hour' => 'required',
             'duration-minute' => 'required',
             'amount' => 'required|decimal',
+=======
+            'durationHour' => 'required',
+            'durationMinute' => 'required',
+            'amount' => 'required|decimal',
+            'amount' => 'required|numeric',
+>>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
             'remarks' => 'string',
             'departHour' => 'required',
             'departDate' => 'required|after:'.$today,
@@ -97,11 +104,22 @@ class RideController extends Controller
     public function store(Request $request){
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //CALCULO endDate DEL NUEVO VIAJE
+<<<<<<< HEAD
         $duration = Carbon::parse($request->departDate);
         $duration->addMinutes($request->durationMinute);
         $duration->addHour($request->durationHour);
         $departHour = Carbon::parse($request->departHour);
         
+=======
+        $now = Carbon::now();
+        $duration = Carbon::parse($request->departDate);
+        $duration->addMinutes($request->durationMinute);
+        $duration->addHour($request->durationHour);
+        $duration = Carbon::parse($request->duration);
+
+        $departHour = Carbon::parse($request->departHour);
+        $endDate =  Carbon::parse($request->departDate);
+>>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
 
         $aux = Carbon::parse($request->departDate);
         $endDate = $aux;
@@ -114,8 +132,11 @@ class RideController extends Controller
         $departDate = $aux;
         $departDate->addMinutes($departHour->minute);
         $departDate->addHours($departHour->hour);
+<<<<<<< HEAD
         $duration = $duration->toTimeString();
         
+=======
+>>>>>>> 51299bf295754b0357824b8b3734c675e94fa026
   
         //
         $ok1 = TRUE;
@@ -164,7 +185,6 @@ class RideController extends Controller
         $ride->user_id =        Auth::User()->id;
         $ride->origin =         $request->origin;
         $ride->destination =    $request->destination;
-        $ride->duration =       $duration;
         $ride->amount =         $request->amount;
         $ride->remarks =        $request->remarks;
         $ride->departDate =     $request->departDate;
@@ -174,6 +194,8 @@ class RideController extends Controller
         $ride->done =           FALSE;
         $ride->paid =           FALSE; 
         $ride->endDate =        $endDate;
+        $ride->durationHour =   $request->durationHour;
+        $ride->durationMinute = $request->durationMinute;
         
         $ride->save();
         
@@ -389,7 +411,7 @@ class RideController extends Controller
         if ($request->has('destination')) {
             $rides->where('destination', $request->input('destination'));
         }
-
+        $rides->get();
         // Search for a ride based on their origin.
         if ($request->has('origin')) {
             $rides->where('origin', $request->input('origin'));
@@ -419,14 +441,9 @@ class RideController extends Controller
         if ($request->has('amount')) {
            $rides->where('amount', $request->input('amount'));
         }
-      
-        #if ($request->has('kind')) {
-           # $rides->whereHas('rides', function ($query) use ($request) {
-          #      $query->where('kind', $request->input('kind'))->get();
-         #   });
-        #}
         
-        $rides = $rides->get();
+        $rides->get();
+        dd($rides->get());
         if ($rides->count() < 1){
             $rides = 'No hay resultados.';
             return view('ride.searchResult')->with('rides', $rides);
