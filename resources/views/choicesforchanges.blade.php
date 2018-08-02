@@ -49,7 +49,7 @@ Mis Tarjetas:</h1>
         <a class="text-white "  href="{{ action('CardController@create') }}"> 
           <p class="sangria"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Cargar nueva tarjeta</p>
         </a>
-        <a class=" text-white "  href="{{ action('CarController@index')}}"> 
+        <a class=" text-white "  href="{{ action('CardController@index')}}"> 
           <p class="sangria"><i class="fa fa-window-close-o" aria-hidden="true"></i>Eliminar tarjeta</p>
         </a>
     </div>

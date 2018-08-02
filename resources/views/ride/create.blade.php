@@ -49,13 +49,29 @@
 
 	<br>
 	<label for="duration">Duración:</label>
-	<input type="time" name="duration" id="duration" class="form-control{{ $errors->has('duration') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+    <div class="col-12" style="display: flex; padding: 0;">
+    <div class="col-6">
+        Horas
+	<input style="margin-right: 10px;" type="number" name="durationHour" id="duration" class="form-control{{ $errors->has('durationHour') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+    </div>
+    <div class="col-6">
+        minutos
+    <input type="number" name="durationMinute" id="duration" class="form-control{{ $errors->has('durationMinute') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">
+    </div>
+</div>
+
 	
-	@if ($errors->has('duration'))
+	@if ($errors->has('durationHour'))
     	<span class="invalid-feedback">
-    		<strong>{{ $errors->first('duration') }}</strong>
+    		<strong>{{ $errors->first('durationHour') }}</strong>
     	</span>
     @endif
+    @if ($errors->has('durationMinute'))
+        <span class="invalid-feedback">
+            <strong>{{ $errors->first('durationMinute') }}</strong>
+        </span>
+    @endif
+
 
 	<br>
 	<label for="departDate">Fecha de Salida:</label>

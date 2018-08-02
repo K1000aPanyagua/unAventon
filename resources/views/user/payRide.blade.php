@@ -10,13 +10,31 @@
   	@include('flash_message')
 	<form method="POST" action="{{ route('user.pay', $ride) }}">
 	  {{ csrf_field() }} {{ method_field('POST') }}
-      <label class="col-form-label text-md-right">Seleccionar tarjeta:</label>
-      <select name="card" id="card" required="required" class="form-control{{ $errors->has('card') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
-    	<option value="">Seleccionar</option>
-    	@foreach ($cards as $card)
-        <option  value="{{$card->id}}"> Tarjeta {{ $card->numCard }}</option>
+      
+      <div class="form-group separator-s" >
+        <label class="col-form-label text-md-right">Seleccionar tarjeta:</label>
+        <select name="card" id="card" required="required" class="form-control{{ $errors->has('card') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
+    	  <option value="">Seleccionar</option>
+    	  @foreach ($cards as $card)
+          <option  value="{{$card->id}}"> Tarjeta {{ $card->numCard }}</option>
         @endforeach
-      </select>
+        </select>
+      </div>
+      <div class="form-group separator-s" >
+        <label class="col-form-label text-md-right">Fecha de vencimiento:</label>   
+        <input type="date" name="fecha-vencimiento"><br>
+      </div>
+      <div class="form-group separator-s" >
+        <label class="col-form-label text-md-right">Nombre:</label>   
+        <p>(Tal como aparece en la tarjeta)</p>
+        <input type="text" name="name"><br>
+      </div><div class="form-group separator-s" >
+        <label class="col-form-label text-md-right">Codigo de seguridad:</label>   
+        <input type="number" name="securitycode"><br>
+      </div>
+
+
+
       <br>
 	  <button type="submit" class="btn btn-primary">Pagar</button>
 	</form>

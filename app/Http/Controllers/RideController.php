@@ -85,7 +85,8 @@ class RideController extends Controller
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
-            'duration' => 'required',
+            'duration-hour' => 'required',
+            'duration-minute' => 'required',
             'amount' => 'required|decimal',
             'remarks' => 'string',
             'departHour' => 'required',
@@ -96,19 +97,27 @@ class RideController extends Controller
     public function store(Request $request){
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //CALCULO endDate DEL NUEVO VIAJE
-        $duration = Carbon::parse($request->duration);
+        $duration = Carbon::parse($request->departDate);
+        $duration->addMinutes($request->durationMinute);
+        $duration->addHour($request->durationHour);
+
         $departHour = Carbon::parse($request->departHour);
-        $aux = Carbon::parse($request->departDate);
-        $endDate = $aux;
-        $endDate->addMinutes($duration->minute);
-        $endDate->addHours($duration->hour);
+        
+        $endDate =  Carbon::parse($request->departDate);
+
+        $endDate->addMinutes($request->durationMinute);
+        $endDate->addHours($request->durationHour);
         $endDate->addMinutes($departHour->minute);
         $endDate->addHours($departHour->hour);
+
         //
         $aux = Carbon::parse($request->departDate);
         $departDate = $aux;
         $departDate->addMinutes($departHour->minute);
         $departDate->addHours($departHour->hour);
+
+        
+  
         //
         $ok1 = TRUE;
         $ok2 = TRUE;
@@ -156,7 +165,7 @@ class RideController extends Controller
         $ride->user_id =        Auth::User()->id;
         $ride->origin =         $request->origin;
         $ride->destination =    $request->destination;
-        $ride->duration =       $request->duration;
+        $ride->duration =       $duration;
         $ride->amount =         $request->amount;
         $ride->remarks =        $request->remarks;
         $ride->departDate =     $request->departDate;
@@ -450,7 +459,7 @@ class RideController extends Controller
                     $qualificationPassenger = new QualificationPassenger;
                     $qualificationPassenger->value = null;
                     $qualificationPassenger->pilot_id = $ride->user_id;
-                    $qualificationPassenger->passenger_id = $passenger->id;
+                    $qualificationPassenger->passenger_id = $passenger->user_id;
                     $qualificationPassenger->review = null;
                     $qualificationPassenger->ride_id = $id;
                     $qualificationPassenger->done = FALSE;

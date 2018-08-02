@@ -29,7 +29,8 @@ class CreateRidesTable extends Migration
             $table->boolean('paid')->nullable()->default(NULL);
             $table->date('departDate');
             $table->time('departHour');
-            $table->time('duration');
+            $table->integer('durationHour');
+            $table->integer('durationMinute');
             $table->datetime('endDate');
             $table->timestamps();
         });

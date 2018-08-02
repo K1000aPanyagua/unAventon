@@ -15,39 +15,46 @@
     <h1 class="text-uppercase separator-l col-sm-12">Seleccionar tarjeta:</h1>  
 
     @foreach($cards as $card)
-      <div class="row" >
+      <div class="row separator-l" style="display: flex; border-bottom: 1px lightgrey solid" >
 
-      
+          <div class="col-7 separator-s">
+            <div class="col-12">
+             <h6> Fecha de vencimiento: </h6> {{ $card->expiration }} 
+            </div>
+            <div class="col-12">
+              <h6> Número: </h6> {{ $card->numCard }} 
+            </div>
+          </div>
 
-           Fecha de vencimiento: {{ $card->expiration }}, Número: {{ $card->numCard }} 
-
-
-           <form action="{{ route('card.destroy', $card->id) }}" method="POST" onsubmit="return ConfirmDelete()">
-                {{method_field('DELETE')}}
-                {{ csrf_field() }}
-                 <input type="submit" class="btn btn-outline-light text-center color-aventon" value="Eliminar"/>
-                <script>
-                  function ConfirmDelete(){
-                    var x = confirm("¿Está seguro que quiere eliminar la tarjeta?");
-                    if (x)
-                      return true;
-                    else
-                      return false;
-                  }
-                </script>
-              </form>
-
+        <div class="col-5">
+          <form action="{{ route('card.destroy', $card->id) }}" method="POST" onsubmit="return ConfirmDelete()">
+            {{method_field('DELETE')}} {{ csrf_field() }}
+            <input type="submit" class="btn btn-outline-light text-center color-aventon" value="Eliminar"/>
+            <script>
+              function ConfirmDelete(){
+              var x = confirm("¿Está seguro que quiere eliminar la tarjeta?");
+              if (x)
+                return true;
+              else
+                return false;
+              }
+            </script>
+          </form>
+        </div>
               
       
       </div>
     @endforeach
-    <div class="col-lg-4 offset-4">
+    <div class="col-12">
         <a class="btn btn-xl btn-outline-light text-center color-aventon" href="/configurationAccount">
           Volver
         </a>
     </div>
   </div>
 </header>
+<div class="row">
+  @include('fill')
+</div>
 
 
 

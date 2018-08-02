@@ -11,7 +11,7 @@
 
 
 <header class="masthead bg-primary text-white text-center row">
-  <div class="container">
+  <div class="container separator-l">
     <h1 class="text-uppercase separator-l col-sm-12">datos del vehiculo</h1>  
     @include('flash_message')
       <div class="col-sm-12" >
@@ -29,6 +29,7 @@
         </a>
       </div>
   </div>
+  @include('fill')
 </header>
 
 
