@@ -404,15 +404,17 @@ class RideController extends Controller
         return view('home')->with('rides', $rides)->with('success', 'viaje eliminado');
     }
 
-    public function getBy(Request $request){
-        $rides = DB::table('rides');
+    public function getBy(Request $request, Ride $rides){
+        $rides = $rides->newQuery();
 
         // Search for a ride based on their destination.
         if ($request->has('destination')) {
             $rides->where('destination', $request->input('destination'));
         }
-        $rides->get();
+
         // Search for a ride based on their origin.
+        $rides = Ride::where('origin', $request->origin)->get();
+        dd($rides);
         if ($request->has('origin')) {
             $rides->where('origin', $request->input('origin'));
         }
@@ -443,7 +445,6 @@ class RideController extends Controller
         }
         
         $rides->get();
-        dd($rides->get());
         if ($rides->count() < 1){
             $rides = 'No hay resultados.';
             return view('ride.searchResult')->with('rides', $rides);
