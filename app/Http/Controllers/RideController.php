@@ -122,8 +122,6 @@ class RideController extends Controller
         $departDate = $aux;
         $departDate->addMinutes($departHour->minute);
         $departDate->addHours($departHour->hour);
-
-        
   
         //
         if ($departDate->lt($now)) {
@@ -413,7 +411,7 @@ class RideController extends Controller
         if ($request->has('destination')) {
             $rides->where('destination', $request->input('destination'));
         }
-
+        $rides->get();
         // Search for a ride based on their origin.
         if ($request->has('origin')) {
             $rides->where('origin', $request->input('origin'));
@@ -443,10 +441,9 @@ class RideController extends Controller
         if ($request->has('amount')) {
            $rides->where('amount', $request->input('amount'));
         }
-      
-       
         
-        $rides = $rides->get();
+        $rides->get();
+        dd($rides->get());
         if ($rides->count() < 1){
             $rides = 'No hay resultados.';
             return view('ride.searchResult')->with('rides', $rides);
