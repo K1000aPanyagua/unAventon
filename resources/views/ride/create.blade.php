@@ -61,7 +61,6 @@
     </div>
 </div>
 
-	
 	@if ($errors->has('durationHour'))
     	<span class="invalid-feedback">
     		<strong>{{ $errors->first('durationHour') }}</strong>
@@ -107,7 +106,7 @@
     </select>
     <br>
 
-	<!--<label class="col-md-4 col-form-label text-md-right">Tarjeta*</label>
+	<label class="col-md-4 col-form-label text-md-right">Tarjeta*</label>
     <select name="card" id="card" required="required" class="form-control{{ $errors->has('card') ? ' is-invalid' : '' }}"  required="required" autofocus oninvalid="this.setCustomValidity('Campo obligatorio')" oninput="setCustomValidity('')">	
     	<option value="">Seleccionar</option>
     	@foreach ($cards as $card)
@@ -115,7 +114,7 @@
         @endforeach
         
     </select>
-    <br>-->
+    <br>
 	<textarea required="required" name="remarks" id="remarks" placeholder="Observaciones..."></textarea>
 	
 	@if ($errors->has('remarks'))

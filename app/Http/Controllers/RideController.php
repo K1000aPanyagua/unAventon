@@ -81,10 +81,7 @@ class RideController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     protected function validator(array $data){
-
-        $today=Carbon::now()->toDateString();
         return Validator::make($data, [
             'origin' => 'required|string',
             'destination' => 'required|string',
@@ -94,13 +91,11 @@ class RideController extends Controller
             'amount' => 'required|numeric',
             'remarks' => 'string',
             'departHour' => 'required',
-            'departDate' => 'required|after_or_equal:'.$today,
+            'departDate' => 'required|after:'.$today,
         ]);
     }
 
     public function store(Request $request){
-        
-        $this->validator($request->all())->validate();
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //CALCULO endDate DEL NUEVO VIAJE
         $now = Carbon::now();
@@ -116,17 +111,16 @@ class RideController extends Controller
         $endDate->addHours($request->durationHour);
         $endDate->addMinutes($departHour->minute);
         $endDate->addHours($departHour->hour);
-
         //
         $aux = Carbon::parse($request->departDate);
         $departDate = $aux;
         $departDate->addMinutes($departHour->minute);
         $departDate->addHours($departHour->hour);
-  
-        //
-        if ($departDate->lt($now)) {
-            return redirect()->back()->withInput()->with('error', 'La fecha y hora de salida debe ser posterior a la fecha y hora actual');
-        }
+
+  //
+        /*if ($departDate->lt($now)){
+            return redirect()->back()->withInput()->with('error', 'La fecha y hora de salida de ser posterior a la fecha y hora actual');
+        }*/
         //
         $ok1 = TRUE;
         $ok2 = TRUE;
@@ -170,7 +164,6 @@ class RideController extends Controller
             return redirect()->back()->with('error', 'Ustéd poseé uno o más viajes que se superponen con el que desea publicar en este momento');
         }
         //
-
         $ride = new Ride;
         $ride->user_id =        Auth::User()->id;
         $ride->origin =         $request->origin;
@@ -276,7 +269,7 @@ class RideController extends Controller
     public function update(Request $request, $id)
     {
         //SI SE LLEGA ACÁ ES POR QUE NO HAY COPILOTOS ASOCIADOS
-        //$this->Validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
 
         $ride = Ride::find($id);
 
@@ -338,10 +331,6 @@ class RideController extends Controller
         //SI HAY, SE LE PREGUNTA SI REALMENTE QUIERE ELIMINAR 
         //ADVIRTIENDO DE LA PENALIZACION
         //SI NO HAY SE LLAMA A DESTROY
-        $ride = Ride::find($id);
-        if ($ride->paid == FALSE) {
-            return redirect()->back()->with('rideConfirmationDelete', 'Ustéd no ha realizado el pago de este viaje, haga click aquí para confirmar la eliminación, ustéd será penalizado)');
-        }
         $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->get();
         if ($passengers->count() > 0 ){
             return redirect()->back()->with('rideConfirmationDelete', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado por cada pasajero aceptado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
@@ -378,19 +367,13 @@ class RideController extends Controller
     }
     
     public function delete($id){
-        //SI LLEGO ACA ES  POR QUE HAY COPILOTOS ACEPTADOS 0 QUIERE ELIMINAR SIN HABER //PAGADO
-        $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->get();
+        //SI LLEGO ACA ES  POR QUE HAY COPILOTOS ACEPTADOS
+        $passengers = PassengerRide::where('ride_id', $id)->get();
         $user = User::find(Auth::user()->id);
-        if ($passengers->count() > 0){
-            foreach ($passengers as $passenger) {
-                $user->reputation = $user->reputation - 1;
-                $user->save();
-                $passenger->delete();
-            }
-        }else{
+        foreach ($passengers as $passenger) {
             $user->reputation = $user->reputation - 1;
-                $user->save();
-
+            $user->save();
+            $passenger->delete();
         }
         $comments = Comment::where('ride_id', $id)->get();
         if ($comments != null) {
