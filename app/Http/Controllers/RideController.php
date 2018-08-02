@@ -433,11 +433,7 @@ class RideController extends Controller
            $rides->where('amount', $request->input('amount'));
         }
       
-        #if ($request->has('kind')) {
-           # $rides->whereHas('rides', function ($query) use ($request) {
-          #      $query->where('kind', $request->input('kind'))->get();
-         #   });
-        #}
+       
         
         $rides = $rides->get();
         if ($rides->count() < 1){
