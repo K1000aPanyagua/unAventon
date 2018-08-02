@@ -67,9 +67,6 @@ class UserController extends Controller{
 
     }
 
-
-
-
     public function editPassword(){
         
         return view('user.passForm');
@@ -422,7 +419,6 @@ class UserController extends Controller{
     }
 
     public function qualificatePassenger(Request $request, $ride_id, $passenger_id){
-        dd($request);
         $qualification = QualificationPassenger::where('ride_id', $ride_id)->where('passenger_id', $passenger_id)->first();
         $qualification->value = $request->value;
         $qualification->pilot_id = Auth::user()->id;
@@ -445,6 +441,10 @@ class UserController extends Controller{
     }
 
     public function qualificatePilot(Request $request, $ride_id, $pilot_id){
+        if (!$request->has('review')) {
+            return redirect()->back()->withInput()->with('error', 'Usted debe proveer un reseña de la calificación');
+        }
+
         $qualification = QualificationPilot::where('ride_id', $ride_id)->where('pilot_id', $pilot_id)->where('passenger_id', Auth::user()->id)->first();
         $qualification->value = $request->value;
         $qualification->pilot_id = $pilot_id;
@@ -472,9 +472,15 @@ class UserController extends Controller{
         return view('user.payRide')->with('ride', $ride)->with('cards', $cards);
     }
 
-    public function pay(Request $request, $ride_id){
-        
+    public function pay(Request $request, $ride_id, $expiration){
         $ride=Ride::find($ride_id);
+        $now = Carbon::now();
+        $expirationDate = Carbon::parse($expiration);
+        
+        if ($expirationDate->gt($now)){
+            return redirect()->back()->withInput()->with('error', 'Su tarjeta ha expirado.');
+        }
+
         $num=rand(5, 20);
         if (($num % 2) == 0){
             if ($ride->user_id == Auth::user()->id){

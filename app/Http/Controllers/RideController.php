@@ -329,6 +329,10 @@ class RideController extends Controller
         //SI HAY, SE LE PREGUNTA SI REALMENTE QUIERE ELIMINAR 
         //ADVIRTIENDO DE LA PENALIZACION
         //SI NO HAY SE LLAMA A DESTROY
+        $ride = Ride::find($id);
+        if ($ride->paid == FALSE) {
+            return redirect()->back()->with('rideConfirmationDelete', 'Ustéd no ha realizado el pago de este viaje, haga click aquí para confirmar la eliminación, ustéd será penalizado)');
+        }
         $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->get();
         if ($passengers->count() > 0 ){
             return redirect()->back()->with('rideConfirmationDelete', 'Usted poseé usuarios aceptados o pendientes para este viaje. ¿Desea eliminar el viaje de todos modos? (Ustéd será penalizado por cada pasajero aceptado)');//mandarle un anchor a la pregunta que llame a destroy (en la vista claro)
@@ -365,13 +369,19 @@ class RideController extends Controller
     }
     
     public function delete($id){
-        //SI LLEGO ACA ES  POR QUE HAY COPILOTOS ACEPTADOS
-        $passengers = PassengerRide::where('ride_id', $id)->get();
+        //SI LLEGO ACA ES  POR QUE HAY COPILOTOS ACEPTADOS 0 QUIERE ELIMINAR SIN HABER //PAGADO
+        $passengers = PassengerRide::where('ride_id', $id)->where('state', 'aceptado')->get();
         $user = User::find(Auth::user()->id);
-        foreach ($passengers as $passenger) {
+        if ($passengers->count() > 0){
+            foreach ($passengers as $passenger) {
+                $user->reputation = $user->reputation - 1;
+                $user->save();
+                $passenger->delete();
+            }
+        }else{
             $user->reputation = $user->reputation - 1;
-            $user->save();
-            $passenger->delete();
+                $user->save();
+
         }
         $comments = Comment::where('ride_id', $id)->get();
         if ($comments != null) {
