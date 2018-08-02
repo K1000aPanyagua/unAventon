@@ -149,9 +149,10 @@
               @endif
 
             @elseif ($ride->done == FALSE)
-             <li> <form  action="{{route('user.postulate', ['id' => $ride->id])}}">
+
+             <li> <form method="POST" action="{{route('user.postulate', ['id' => $ride->id])}}">
                 <button class="btn btn-primary" type="submit">Postularme</button>
-                {{method_field('GET')}}
+                {{method_field('POST')}}
               </form> </li>
 
             </ul>      

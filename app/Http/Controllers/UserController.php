@@ -210,7 +210,7 @@ class UserController extends Controller{
         if ($passengers->count() == $car->numSeats) {
             return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
-<<<<<<< HEAD
+
 
         //VALIDACIONES
         $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
@@ -225,8 +225,6 @@ class UserController extends Controller{
                 if ($currentRide->paid == FALSE) {
                     return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
 
-=======
->>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
         //VALIDO QUE EL USUARIO NO POSEA ALGÚN VIAJE COMO PILOTO O COPILOTO QUE SE //SUPERPONGA CON EL QUE SE QUIERE POSTULAR 
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //
@@ -438,10 +436,7 @@ class UserController extends Controller{
     }
 
     public function qualificatePassenger(Request $request, $ride_id, $passenger_id){
-<<<<<<< HEAD
-      
-=======
->>>>>>> 06a35704cb20d58ad4e1b8b8b31ccec8bf6f966a
+
         $qualification = QualificationPassenger::where('ride_id', $ride_id)->where('passenger_id', $passenger_id)->first();
         $qualification->value = $request->value;
         $qualification->pilot_id = Auth::user()->id;
@@ -495,17 +490,22 @@ class UserController extends Controller{
         return view('user.payRide')->with('ride', $ride)->with('cards', $cards);
     }
 
-    public function pay(Request $request, $ride_id, $expiration){
+    public function pay(Request $request, $ride_id){
         $ride=Ride::find($ride_id);
-        $now = Carbon::now();
-        $expirationDate = Carbon::parse($expiration);
         
-        if ($expirationDate->gt($now)){
+        $id = $request->card;
+        $card=Card::find($id);
+
+
+        $now = Carbon::now();
+        $expirationDate = Carbon::parse($card->expiration);
+        
+        if ($expirationDate->lt($now)){
             return redirect()->back()->withInput()->with('error', 'Su tarjeta ha expirado.');
         }
 
         $num=rand(5, 20);
-        if (($num % 2) == 0){
+        if (($num % 3) == 0){
             if ($ride->user_id == Auth::user()->id){
                 $ride->paid = TRUE;
                 $ride->save();
