@@ -84,4 +84,5 @@ Route::resource('comment', 'CommentController');
 Route::get('myRides/{user}', 'RideController@myRides')->name('ride.myRides');
 Route::get('payRide/{ride}', 'UserController@payRide')->name('user.payRide');
 Route::post('pay/{ride}', 'UserController@pay')->name('user.pay');
-
+Route::get('frequentQuestions', 'PagesController@getFrequentQuestions');
+Route::get('termsAndConditions', 'PagesController@getTermsAndConditions');

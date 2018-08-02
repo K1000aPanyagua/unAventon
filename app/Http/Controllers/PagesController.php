@@ -52,4 +52,12 @@ class PagesController extends Controller {
  		}
  		return view('ride.showPassengers')->with('passengers', $passengers)->with('ride', $ride);
  	}
+
+ 	public function getFrequentQuestions(){
+ 		return view('frequentQuestions');
+ 	}
+
+ 	public function getTermsAndConditions(){
+ 		return view('termsAndConditions');
+ 	} 
 }

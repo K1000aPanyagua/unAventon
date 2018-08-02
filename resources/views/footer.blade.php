@@ -30,7 +30,7 @@
           </div>
           <div class="col-md-4 mb-5 mb-lg-0">
             <h4 class="text-uppercase mb-4">¿Necesitás ayuda?</h4>
-            <p class="lead mb-0">Ingresá a nuestra sección de <a href="">preguntas frecuentes</a> para más información. También podés consultar nuestros <a href="">términos y condiciones</a>.</p>
+            <p class="lead mb-0">Ingresá a nuestra sección de <a href="/frequentQuestions">preguntas frecuentes</a> para más información. También podés consultar nuestros <a href="/termsAndConditions">términos y condiciones</a>.</p>
           </div>
           
         </div>
