@@ -179,6 +179,7 @@ class RideController extends Controller
         $ride->endDate =        $endDate;
         $ride->durationHour =   $request->durationHour;
         $ride->durationMinute = $request->durationMinute;
+        $ride->duration =       $duration;
         
         $ride->save();
         

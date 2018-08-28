@@ -9,7 +9,7 @@ class CreateRidesTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return void 
      */
     public function up()
     {
@@ -31,6 +31,8 @@ class CreateRidesTable extends Migration
             $table->time('departHour');
             $table->time('duration');
             $table->datetime('endDate');
+            $table->integer('durationHour');
+            $table->integer('durationMinute');
             $table->timestamps();
         });
     }   

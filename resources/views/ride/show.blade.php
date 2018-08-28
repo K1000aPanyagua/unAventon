@@ -12,7 +12,7 @@
 
 
 
-
+ 
   <div class="container">
     @include('flash_message') 
     
@@ -149,12 +149,11 @@
               @endif
 
             @elseif ($ride->done == FALSE)
-
-             <li> <form action="{{route('user.postulate', $ride->id)}}">
-
-                <button class="btn btn-primary" type="submit">Postularme</button>
-                {{method_field('GET')}}
-              </form> </li>
+            
+              {{!!Form::open(['route' => ['user.postulate']])!!}}
+                {!! Form::submit('Postularme', ['class' => 'btn btn-info']) !!}}
+                {!! Form::hidden('idRide', $ride->id) !!}
+              {{!!Form::close()!!}}
 
             </ul>      
             @endif

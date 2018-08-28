@@ -183,7 +183,7 @@ class UserController extends Controller{
         }
     }
 
-    public function postulate(Request $request, $idRide){
+    public function postulate(Request $request){
         //UN USUARIO QUE NO POSEA TARJETA NO PODRÁ POSTULARSE
         //TAMPOCO PODRÁ POSTULARSE SI HA SIDO ACEPTADO EN UN VIAJE
         //QUE SE SUPERPONGA 
@@ -192,8 +192,9 @@ class UserController extends Controller{
         if (!Auth::check()) {
             return redirect('/register')->with('error','Registrate para postularte a un viaje!');
         }
-
+        
         //cargo datos del viaje
+        $idRide = $request->idRide; 
         $ride = Ride::where('id', $idRide)->first();
         $comments = Comment::where('ride_id', $idRide)->get();
         $car = Car::where('id', $ride->car_id)->first();
@@ -211,20 +212,20 @@ class UserController extends Controller{
             return redirect()->back()->with('error', 'No hay lugares deisponibles para este viaje');
         }
 
-
         //VALIDACIONES
         $auxRide = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->get();
+        
         if ($auxRide->count() > 0){
             foreach ($auxRide as $currentRide) {
                 //valido que el usuario no sea pasajero de un viaje con misma fecha
                 $now = Carbon::now();
-                if ($currentRide->endDate){
-                    /////////////////////DASDASDSNJSDANDANDSNA
-                }
+                
                 //valido que no adeude pagos
                 if ($currentRide->paid == FALSE) {
-                    return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"');
-
+                    return redirect()->back()->with('error', 'Ustéd adeuda pagos, para abonarlos dirijase a "Mi perfil" y seleccione, en viaje que desea abonar, la opcion: "PAGAR"'); 
+                }
+            }
+        }
         //VALIDO QUE EL USUARIO NO POSEA ALGÚN VIAJE COMO PILOTO O COPILOTO QUE SE //SUPERPONGA CON EL QUE SE QUIERE POSTULAR 
         $rides = Ride::where('user_id', Auth::user()->id)->where('done', FALSE)->get();
         //
@@ -244,6 +245,7 @@ class UserController extends Controller{
                 $ok1 = FALSE;
             }
         }
+        
         //VERIFICO SI EL VIAJE AL QUE SE QUIERE POSTULAR NO SE SUPERPONE CON UN VIAJE EL CUAL EL USUARIO ES COPILOTO
         $passRides = PassengerRide::where('user_id', Auth::user()->id)->where('state', 'aceptado')->where('paid', NULL)->get();
         $rideAsPass = collect([]);
@@ -268,6 +270,7 @@ class UserController extends Controller{
         if ($ok1 == FALSE or $ok2 == FALSE) {
             return redirect()->back()->with('error', 'Ustéd poseé uno o más viajes que se superponen con el que desea postularse en este momento');
         }
+        
         //VALIDO QUE NO SE ADEUDE PAGOS COMO PILOTO O COPILOTO
         $auxRide = Ride::where('user_id', Auth::user()->id)->where('paid', FALSE)->where('done', TRUE)->get();
         $ridesPassenger = PassengerRide::where('user_id', Auth::user()->id)->where('paid', FALSE)->get();
@@ -301,9 +304,10 @@ class UserController extends Controller{
                 $postulant->push(User::find($solicitude->user_id));
             }
         }
+
         return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
     }   
-}}}
+
 
 
     public function cancelSolicitude($idRide){
