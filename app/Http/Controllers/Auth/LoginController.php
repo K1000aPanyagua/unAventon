@@ -45,7 +45,7 @@ class LoginController extends Controller
     protected function validator(array $data){
         
         return Validator::make($data, [
-            'pass' => 'required|string',
+            'password' => 'required|string',
             'email' => 'required|email', 
         ]);
     }
@@ -54,11 +54,12 @@ class LoginController extends Controller
     public function postLogin(Request $request){   
         $credentials = $this->validator($request->all())->validate();
         $email = $request->input('email');
-        $pass = $request->input('pass');
+        $pass = $request->input('password');
         $user = User::onlyTrashed()->where('email', $email)->first();
         if ( $user != null ){
                 return redirect()->back()->with('deleted', 'Su cuenta ha sido desactivada, ¿Desea recuperarla?');
             }
+        
         if (Auth::attempt($credentials)) {
             // Authentication passed...
             return redirect()->intended('/');

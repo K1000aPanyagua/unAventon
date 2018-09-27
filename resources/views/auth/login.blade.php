@@ -5,7 +5,7 @@
 
 <body id="page-top" class="container-fluid">
 <!--Body -->
-
+ 
 
 @include('menuiniciar')
 
@@ -35,15 +35,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="pass" class="col-md-4 col-form-label text-md-left">{{ __('Contraseña:') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-left">{{ __('Contraseña:') }}</label>
 
                             <div class="col-md-6">
-                                <input class="form-control{{ $errors->has('pass') ? ' is-invalid' : '' }} form-control-lg" type="password" placeholder="contraseña" name="pass" required oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} form-control-lg" type="password" placeholder="contraseña" name="password" required oninvalid="this.setCustomValidity('Campo obligatorio')"
                                     oninput="setCustomValidity('')">
                              
-                                @if ($errors->has('pass'))
+                                @if ($errors->has('password'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('pass') }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                                  
