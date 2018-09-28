@@ -1,9 +1,10 @@
-<?php
+    <?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Answer;
+use App\Ride;
 
 class AnswerController extends Controller
 {
@@ -45,7 +46,7 @@ class AnswerController extends Controller
         $ride = Ride::find($ride_id);
         
         //Redireccion
-        return view('ride.show')->with('ride', $ride);
+        return redirect()->route('ride.show', [$ride->id]);
     }
 
     /**
@@ -99,9 +100,13 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id_answer){
-        Answer::destroy($id_answer);
-        return view('ride.show');
+    public function destroy($answerId){
+        $answer = Answer::find($answerId);
+        $ride = Ride::find($answer->ride_id);
+        
+        Answer::destroy($answerId);
+        
+        return redirect()->route('ride.show', $ride->id);
     }
 
     protected function validator(array $data){

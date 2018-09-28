@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
-
+use App\Ride;
 
 class CardController extends Controller
 {
@@ -54,7 +54,7 @@ class CardController extends Controller
         $card->save();
 
         //Redireccion
-        return view('card.show')->with('card', $card);
+        return redirect()->route('card.show', [$card->id])->with('card', $card);
     }
 
     /**
@@ -97,7 +97,7 @@ class CardController extends Controller
         $card->save();
 
         //Redireccion
-        return view('card.show')->with('success', 'Cambios guardados');
+        return redirect()->route('card.show', [$card->id])->with('success', 'Cambios guardados');
     }
 
     /**
@@ -108,11 +108,17 @@ class CardController extends Controller
      */
     public function destroy($id)
     {
+        //no se puede eliminar una tarjeta relacionada a un viaje
+        $rides = Ride::where('card_id', $id)->get();
+        if ($rides->count() > 0) {
+            return redirect()->back()->with('error', 'Esta tarjeta pertenece a un viaje');
+        }
+
         //Se elimina la tarjeta con id $id
         Card::destroy($id);
         
         //Se redirecciona a la vista de tarjetas
-        return $this->index();
+        return redirect()->route('card.index');
     }
 
     protected function validator(array $data){

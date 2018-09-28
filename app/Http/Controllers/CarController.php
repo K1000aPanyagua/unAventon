@@ -25,28 +25,27 @@ class CarController extends Controller
     }
 
     public function store(Request $request){
-
         $userCars= Car::Where('user_id', Auth::user()->id)->Where('license', $request->license)->first();
 
         if ($userCars == null) {
 
-          $this->validator($request->all())->validate();
+            $this->validator($request->all())->validate();
 
-        $car = new Car;
-        $car->license = $request->license;
-        $car->brand = $request->brand;
-        $car->model = $request->model;
-        $car->color = $request->color;
-        $car->numSeats = $request->numSeats;
-        $car->kind = $request->kind;
+            $car = new Car;
+            $car->license = $request->license;
+            $car->brand = $request->brand;
+            $car->model = $request->model;
+            $car->color = $request->color;
+            $car->numSeats = $request->numSeats;
+            $car->kind = $request->kind;
 
-        $car->user_id = Auth::user()->id;
-        $car->save();
-        return view('car.show')->with('car', $car)->with('success', 'Vehiculo agregado');
+            $car->user_id = Auth::user()->id;
+            $car->save();
+            return redirect()->route('car.show', [$car->id])->with('success', 'Vehiculo agregado');
         }
-      else {
-        return redirect()->back()->with('error', 'Usted ya posee un vehículo con esta patente');
-      }
+        else {
+            return redirect()->back()->with('error', 'Usted ya posee un vehículo con esta patente');
+        }
     }
 
     public function show($id){
@@ -70,7 +69,7 @@ class CarController extends Controller
         if($count != 0){
             $cars = Car::where('user_id', Auth::user()->id)->get();
             //redirecciona a cualquier lugar
-            return redirect()->back()->with('cars', $cars)->with('error', 'Usted posee aún un viaje no finalizado asociado a este vehículo.');
+            return redirect()->back()->with('cars', $cars)->with(   'error', 'Usted posee aún un viaje no finalizado asociado a este vehículo.');
         }
 
         $car->license = $request->license;
@@ -83,7 +82,7 @@ class CarController extends Controller
         $car->save();
         $car = Car::find($id);
         \Session::flash('success', 'Veiculo modificado' );
-        return view('car.show')->with('car', $car);
+        return redirect()->route('car.show', [$car->id])->with('car', $car);
     }
 
     public function destroy($id){
@@ -101,17 +100,11 @@ class CarController extends Controller
             $car->delete();
             $cars = Car::where('user_id', Auth::user()->id)->get();
             //redirecciona a cualquier lugar
-            return view('car.allCars')->with('cars', $cars)->with('success', 'Vehiculo eliminado');    
+            return redirect()->route('car.index')->with('cars', $cars)->with('success', 'Vehiculo eliminado');    
         }
-        
     }
 
-
     protected function validator(array $data){
-       
-            
-
-
         return Validator::make($data, [
             'license' => 'required|string',
             'brand' => 'required|string',

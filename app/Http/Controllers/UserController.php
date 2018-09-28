@@ -118,7 +118,7 @@ class UserController extends Controller{
 
 
         if ($id != Auth::user()->id) {
-            return view('/');
+            return redirect()->intended('/');
         }
 
         $this->updateValidator($request->all())->validate();
@@ -142,7 +142,7 @@ class UserController extends Controller{
         $user->save();
 
         //Redireccion
-        return view('user.show')->with('user', $user)->with('success', 'Cambios guardados')->with('myRides', $ridesP)->with('rides', $ridesC);
+        return redirect()->route('user.show', [$user->id])->with('success', 'Cambios guardados');
     }
 
     public function destroy($id){   
@@ -305,7 +305,7 @@ class UserController extends Controller{
             }
         }
 
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('passengerRide', $passengerRide)->with('ride', $ride)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
+        return redirect()->route('ride.show', [$ride->id]);
     }   
 
 
@@ -324,16 +324,9 @@ class UserController extends Controller{
             PassengerRide::destroy($solicitude->id);
         }
         
-        $solicitudes = null;
         $ride = Ride::where('id', $idRide)->first();
-        $comments = Comment::where('ride_id', $idRide)->get();
-        $car = Car::where('id', $ride->car_id)->first();
-        $pilot = User::find($ride->user_id)->first();
-        $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
-        $postulant = null;
-        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
-        
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('pilot', $pilot)->with('postulant', $postulant)->with('disponible', $disponible);
+    
+        return redirect()->route('ride.show', [$ride->id]);
     }
 
     public function acceptSolicitude($idRide, $idPostulant){
@@ -374,31 +367,9 @@ class UserController extends Controller{
         $aux->state = 'aceptado';
         $aux->save();
 
-        //CARGO LAS SOLICITUDES Y TODOS LOS DATOS NECESARIOS PARA LA VISTA DEL VIAJE
-        $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
-        $postulant = collect([]);
-        //CARGO LOS POSTULANTES PARA MOSTRARLOS EN LA VISTA
-        foreach ($solicitudes as $i) {    
-            $postulant->push(User::find($i->user_id)->first());
-        }
-        if ($solicitudes->count() == 0) {
-            $solicitudes = 'No hay postulaciones';
-        }
         $ride = Ride::where('id', $idRide)->first();
-        $comments = Comment::where('ride_id', $idRide)->get();
-        $car = Car::where('id', $ride->car_id)->first();
-        $pilot = User::find($ride->user_id)->first();
-        $passengers = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado')->get();
-        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
-        if ($aux->count() == $car->numSeats) {
-            return redirect()->back()->with('error', 'No hay lugares disponibles para este viaje');
-        }
-        if ($solicitudes != 'No hay postulaciones'){
-            foreach ($solicitudes as $solicitude) {
-                $postulant->push(User::find($solicitude->user_id));
-            }
-        }
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant)->with('disponible', $disponible);
+
+        return redirect()->route('ride.show', [$ride->id]);
     }
 
     public function declineSolicitude(Request $request, $idRide, $idPostulant){
@@ -406,23 +377,9 @@ class UserController extends Controller{
         $aux->state = 'rechazado';
         $aux->save();
 
-        $passengers = null;
-        $solicitudes = PassengerRide::where('ride_id', $idRide)->where('state', 'pendiente')->get();
-        if ($solicitudes->count() == 0) {
-            $solicitudes = 'No hay postulaciones';
-        }
         $ride = Ride::where('id', $idRide)->first();
-        $comments = Comment::where('ride_id', $idRide)->get();
-        $car = Car::where('id', $ride->car_id)->first();
-        $pilot = User::find($ride->user_id)->first();
-        $postulant = collect([]);
-        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
-        if ($solicitudes != 'No hay postulaciones'){
-            foreach ($solicitudes as $solicitude) {
-                $postulant->push(User::find($solicitude->user_id));
-            }
-        }
-        return view('ride.show')->with('comments', $comments)->with('car', $car)->with('solicitudes', $solicitudes)->with('ride', $ride)->with('passengers', $passengers)->with('pilot', $pilot)->with('postulant', $postulant)->with('disponible', $disponible);
+        
+        return redirect()->route('ride.show', [$ride->id]);
     }
 
     public function deletePassenger(Request $Request, $idRide, $idPassenger){
@@ -435,8 +392,7 @@ class UserController extends Controller{
         $passenger->state = 'eliminado';
         $passenger->save();
         
-        $passengers = PassengerRide::where('ride_id', $idRide)->where('state', 'aceptado');
-        return view('ride.showPassengers')->with('passengers', $passengers);
+        return redirect()->route('page.showPassengers', $idRide);
     }
 
     public function qualificatePassenger(Request $request, $ride_id, $passenger_id){
@@ -521,10 +477,8 @@ class UserController extends Controller{
                 $passengerRide->save();
                 return redirect()->back()->with('success', 'Pago exitoso!'); 
             }
-
         }
         else{
-
             return redirect()->back()->with('error', 'Ha ocurrido un problema, el pago ha fallado...');
         }
     }

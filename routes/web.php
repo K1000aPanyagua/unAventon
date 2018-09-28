@@ -44,8 +44,6 @@ Route::get('/editPass', 'UserController@editPassword');
 Route::post('/newPass', 'UserController@updatePassword');
 
 
-
-
 Route::resource('card', 'CardController');
 Route::get('/list', 'CarController@list');
 Route::resource('car', 'CarController');

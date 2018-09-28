@@ -115,12 +115,7 @@ class RideController extends Controller
         $aux = Carbon::parse($request->departDate);
         $departDate = $aux;
         $departDate->addMinutes($departHour->minute);
-        $departDate->addHours($departHour->hour);
-
-  //
-        /*if ($departDate->lt($now)){
-            return redirect()->back()->withInput()->with('error', 'La fecha y hora de salida de ser posterior a la fecha y hora actual');
-        }*/
+        $departDate->addHours($departHour->hour);    
         //
         $ok1 = TRUE;
         $ok2 = TRUE;
@@ -182,27 +177,8 @@ class RideController extends Controller
         $ride->duration =       $duration;
         
         $ride->save();
-        
-        //
-        $pilot = Auth::user();
-        $car = Car::where('id', $ride->car_id)->first();
-        $card = Card::where('id', $ride->card_id)->first();
-        $comments = Comment::where('ride_id', $ride->id)->get();
-        $solicitudes = PassengerRide::where('ride_id', $ride->id)->where('state', 'pendiente')->where('state', 'aceptado')->get();
-        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
-        if ($solicitudes->count() == 0) {
-            $solicitudes = 'No hay postulaciones';
-        }
-        if ($comments->count() == 0) {
-            $comments = 'Aún no hay comentarios';
-        }
-        $postulant = collect([]);
-        if ($solicitudes != 'No hay postulaciones'){
-            foreach ($solicitudes as $solicitude) {
-                $postulant->push(User::find($solicitude->user_id));
-            }
-        }
-        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje publicado!')->with('comments', $comments)->with('postulant', $postulant)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('disponible', $disponible);
+    
+        return redirect()->route('ride.show', [$ride->id])->with('success', 'Viaje publicado!');
     }
 
 
@@ -260,7 +236,7 @@ class RideController extends Controller
         return view('ride.edit')->with('cars', $cars)->with('cards', $cards)->with('ride', $ride);
     }
 
-    /**
+    /** 
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -297,27 +273,8 @@ class RideController extends Controller
         //
 
         $ride->save();
-        
         //
-        $car = Car::where('id', $ride->car_id)->first();
-        $card = Card::where('id', $ride->card_id)->first();
-        $pilot = User::find($ride->user_id)->first();
-        $solicitudes = PassengerRide::where('ride_id', $id)->where('state', 'pendiente')->get();
-        $disponible= ($car->numSeats) - (PassengerRide::where('ride_id', $ride->id)->where('state', 'aceptado')->get()->count());
-        if ($solicitudes->count() == 0) {
-            $solicitudes = 'No hay postulaciones';
-        }
-        $comments = Comment::where('ride_id', $ride->id)->get();
-        if ($comments->count() == 0) {
-            $comments = 'Aún no hay comentarios';
-        }
-        $postulant = collect([]);
-        if ($solicitudes != 'No hay postulaciones'){
-            foreach ($solicitudes as $solicitude) {
-                $postulant->push(User::find($solicitude->user_id));
-            }
-        }
-        return view('ride.show')->with('car', $car)->with('card', $card)->with('ride', $ride)->with('success', 'Viaje editado!')->with('comments', $comments)->with('pilot', $pilot)->with('solicitudes', $solicitudes)->with('postulant', $postulant)->with('disponible', $disponible);
+        return redirect()->route('ride.show', [$ride->id])->with('success', 'Viaje editado!');
         
     }
 
