@@ -66,35 +66,35 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="pass" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}*</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}*</label>
 
                             <div class="col-md-6">
-                                <input id="pass" type="password" class="form-control{{ $errors->has('pass') ? ' is-invalid' : '' }}" name="pass" required oninvalid="this.setCustomValidity('Campo obligatorio')"
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required oninvalid="this.setCustomValidity('Campo obligatorio')"
                                     oninput="setCustomValidity('')">
 
-                                @if ($errors->has('pass'))
+                                @if ($errors->has('password'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('pass') }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                         </div>
                         </div>
 
                             <div class="form-group row">
-                            <label for="pass_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña') }}*</label>
+                            <label for="password_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña') }}*</label>
 
                             <div class="col-md-6">
-                                <input id="pass_confirmation" type="password" class="form-control" name="pass_confirmation" required oninput="check2(this)">
+                                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required oninput="check2(this)">
                             </div>
-                            @if ($errors->has('pass_confirmation'))
+                            @if ($errors->has('password_confirmation'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('pass_confirmation') }}</strong>
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
                                     </span>
                                 @endif
 
                                  <script language='javascript' type='text/javascript'>
                                     function check2() {
-                                        if (input.value != document.getElementById('pass').value) {
+                                        if (input.value != document.getElementById('password').value) {
                                             input.setCustomValidity('Las contraseñas deben coincidir.');
                                         } else {
                                             // input is valid -- reset the error message

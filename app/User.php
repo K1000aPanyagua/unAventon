@@ -14,17 +14,17 @@ class User extends Authenticatable
     use SoftDeletes;
     
     protected $fillable = [
-        'name', 'email', 'pass', 'lastname', 'birthdate', 'gender', 'photo', 'telephone'];
+        'name', 'email', 'password', 'lastname', 'birthdate', 'gender', 'photo', 'telephone'];
     
     protected $hidden = [
-        'pass', 'remember_token',];
+        'password', 'remember_token',];
 
     protected $dates = ['deleted_at'];
     
     protected $table = 'users';
 
     public function getAuthPassword() {
-        return $this->pass;
+        return $this->password;
     }
 
     public function cars(){

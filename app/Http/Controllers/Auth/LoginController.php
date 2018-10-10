@@ -9,6 +9,7 @@ use Auth;
 use Session;
 use App\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -52,6 +53,7 @@ class LoginController extends Controller
 
 
     public function postLogin(Request $request){   
+        
         $credentials = $this->validator($request->all())->validate();
         $email = $request->input('email');
         $pass = $request->input('password');
@@ -59,7 +61,7 @@ class LoginController extends Controller
         if ( $user != null ){
                 return redirect()->back()->with('deleted', 'Su cuenta ha sido desactivada, ¿Desea recuperarla?');
             }
-        
+
         if (Auth::attempt($credentials)) {
             // Authentication passed...
             return redirect()->intended('/');
@@ -102,3 +104,5 @@ class LoginController extends Controller
     }
 
 }
+
+
