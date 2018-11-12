@@ -24,8 +24,8 @@
             </form>
         @else      
           
-          
-           <form method="POST" action="{{ route('user.qualificatePassenger', ['ride' =>   $ride->id, 'passenger' => $passenger->id]) }}">
+           
+           <form method="POST" action="{{ route('passenger.qualificatePassenger', ['ride_id' => $ride->id, 'passenger_id' => $passenger->id])}}">
             {{ csrf_field() }}
             <div class="form-group separator-s" >
             <label for="model"><h5 class="text-uppercase text-center separator-m col-form-label">Calificar copiloto</h5></label>
@@ -35,6 +35,7 @@
                 <option value="regular" @if (old('value')== "regular") {{ 'selected' }} @endif>Neutra</option>
                 <option value="negativo" @if (old('value')== "malo") {{ 'selected' }} @endif>Malo</option>
               </select>
+              <textarea placeholder="Reseña" name="review" required="required"></textarea>
             </div>
             <button class="btn btn-primary col-12" type="submit"> Calificar</button>
             </form>

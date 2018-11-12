@@ -38,9 +38,17 @@ Route::post('qualificatePassenger/{ride}/{idPassenger}', 'UserController@qualifi
 		
 Route::resource('user', 'UserController');
 
+//CALIFICACIONES
 Route::get('/califications', 'UserController@getCalifications');
 
+Route::post('/calificatePassenger/{ride_id}/passenger/{passenger_id}', 'UserController@qualificatePassenger')
+		->name('passenger.qualificatePassenger');
+
+Route::post('/calificatePilot/{ride_id}/pilot/{pilot_id}', 'UserController@qualificatePilot')
+		->name('pilot.qualificatePilot');
+
 Route::get('/editPass', 'UserController@editPassword');
+
 Route::post('/newPass', 'UserController@updatePassword');
 
 

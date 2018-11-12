@@ -2,7 +2,7 @@
 <div class="row color-aventon-bk rides-home">
    
   <div class="col-sm-12">
-  
+    <h2 class="text-center text-uppercase text-white">Últimos viajes publicados </h2>
     @foreach ($rides as $ride)
       <tr>
 

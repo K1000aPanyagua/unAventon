@@ -17,7 +17,7 @@ use Carbon\Carbon;
 use App\QualificationPilot;
 use App\QualificationPassenger;
 
-
+ 
 class RideController extends Controller
 {
     /**
@@ -404,10 +404,11 @@ class RideController extends Controller
             //CREO LAS TABLAS DE CALIFICACION PENDIENTE
             if ($passengers->count() > 0 ){
                 foreach ($passengers as $passenger) {
+
                     $qualificationPilot = new QualificationPilot;
                     $qualificationPilot->value = null;
                     $qualificationPilot->pilot_id = $ride->user_id;
-                    $qualificationPilot->passenger_id = $passenger->id;
+                    $qualificationPilot->passenger_id = $passenger->user_id;
                     $qualificationPilot->review = null;
                     $qualificationPilot->ride_id = $id;
                     $qualificationPilot->done = FALSE;

@@ -150,10 +150,10 @@
 
             @elseif ($ride->done == FALSE)
             
-              {{!!Form::open(['route' => ['user.postulate']])!!}}
-                {!! Form::submit('Postularme', ['class' => 'btn btn-info']) !!}}
+              {!!Form::open(['route' => ['user.postulate']])!!}
+                {!! Form::submit('Postularme', ['class' => 'btn btn-info']) !!}
                 {!! Form::hidden('idRide', $ride->id) !!}
-              {{!!Form::close()!!}}
+              {!!Form::close()!!}
 
             </ul>      
             @endif

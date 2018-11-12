@@ -396,44 +396,41 @@ class UserController extends Controller{
     }
 
     public function qualificatePassenger(Request $request, $ride_id, $passenger_id){
+        if (!$request->has('review')) {
+            return redirect()->back()->withInput()->with('error', 'Usted debe proveer un reseña de la calificación');
+        }
 
         $qualification = QualificationPassenger::where('ride_id', $ride_id)->where('passenger_id', $passenger_id)->first();
+        
         $qualification->value = $request->value;
-        $qualification->pilot_id = Auth::user()->id;
-        $qualification->passenger_id = $passenger_id;
         $qualification->review = $request->review;
-        $qualification->ride_id = $ride_id;
         $qualification->done = TRUE;
 
         $qualification->save();
 
-        $passenger = User::find($passenger_id);
+        $passenger = User::find($qualification->passenger_id);
 
         if ($qualification->value = 'positivo') {
             $passenger->reputation = $passenger->reputation + 1;
         }elseif ($qualification->value = 'negativo') {
             $passenger->reputation = $passenger->reputation - 1;
         }
-            return redirect()->back();
-        
+            return redirect()->back();   
     }
 
-    public function qualificatePilot(Request $request, $ride_id, $pilot_id){
+    public function qualificatePilot(Request $request, $ride_id){
         if (!$request->has('review')) {
             return redirect()->back()->withInput()->with('error', 'Usted debe proveer un reseña de la calificación');
         }
-
+ 
         $qualification = QualificationPilot::where('ride_id', $ride_id)->where('pilot_id', $pilot_id)->where('passenger_id', Auth::user()->id)->first();
         $qualification->value = $request->value;
-        $qualification->pilot_id = $pilot_id;
-        $qualification->passenger_id = Auth::user()->id;
         $qualification->review = $request->review;
-        $qualification->ride_id = $ride_id;
         $qualification->done = TRUE;
 
         $qualification->save();
 
-        $pilot = User::find($pilot_id);
+        $pilot = User::find($qualification->pilot_id);
 
         if ($qualification->value = 'positivo') {
             $pilot->reputation = $pilot->reputation + 1;
