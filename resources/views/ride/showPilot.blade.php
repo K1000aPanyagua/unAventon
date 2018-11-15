@@ -8,27 +8,17 @@
 <header class="masthead background-w-imagebgprimary text-white row" style="background-image: url('{{ asset('assets/autos.jpg') }}')">
   
   <div class="container">
-    <div class="col-12" style="display: flex;">
-      @if ($passengers->count() == 0)
-        No hay pasajeros aceptados
-      @else  
-        @foreach ($passengers as $passenger)
-        
-          <a class="col-7 text-white"  href="{{route('user.show', ['id' => $passenger->id])}}">
-            <h2 class="text-uppercase" style="text-decoration: underline;"> {{$passenger->name}} {{$passenger->lastname}}</h2>
+    <div class="col-12">
+      <a class="col-7 text-white"  href="{{route('user.show', ['id' => $pilot->id])}}">
+            <h2 class="text-uppercase" style="text-decoration: underline;"> {{$pilot->name}} {{$pilot->lastname}}</h2>
           </a>
-          @if($ride->done == FALSE)
-          <form method="POST" action="{{ route('user.deletePassenger', ['ride' =>   $ride->id, 'passenger' => $passenger->id]) }}">
-              {{method_field('GET')}} {{ csrf_field() }}
-              <button class="btn btn-primary" type="submit">Eliminar copiloto</button>
-            </form>
-        @else      
-          
+    </div>
+    <div class="col-12" style="display: flex;">
            
-           <form method="POST" action="{{ route('user.qualificatePassenger', ['ride_id' => $ride->id, 'passenger_id' => $passenger->id])}}">
+          <form method="POST" action="{{ route('user.qualificatePilot', ['ride_id' => $ride->id, 'pilot_id' => $pilot->id])}}">
             {{ csrf_field() }}
             <div class="form-group separator-s" >
-            <label for="model"><h5 class="text-uppercase text-center separator-m col-form-label">Calificar copiloto</h5></label>
+            <label for="model"><h5 class="text-uppercase text-center separator-m col-form-label">Calificar piloto</h5></label>
               <select name="value" class=" separator-l" required="required">
                 <option value="">Seleccionar</option>
                 <option value="positivo" @if (old('value')== "bueno") {{ 'selected' }} @endif>Bueno</option>
@@ -39,12 +29,6 @@
             </div>
             <button class="btn btn-primary col-12" type="submit"> Calificar</button>
             </form>
-
-
-          @endif
-
-        @endforeach
-      @endif
     </div>
   </div>
 

@@ -173,8 +173,8 @@ class UserController extends Controller{
         $this->passValidator($request->all())->validate();
         $passw = $request->input('pass');
         
-        if (\Hash::check($passw, Auth::user()->pass)){
-            Auth::user()->pass = bcrypt($request->input('nuevaContraseña'));
+        if (\Hash::check($passw, Auth::user()->password)){
+            Auth::user()->password = bcrypt($request->input('nuevaContraseña'));
             Auth::user()->save();
         return redirect('/editPass')->with('user', Auth::user()->email)->with('success', 'Cambios guardados');
         }
@@ -418,12 +418,16 @@ class UserController extends Controller{
             return redirect()->back();   
     }
 
-    public function qualificatePilot(Request $request, $ride_id){
+    public function qualificatePilot(Request $request, $ride_id, $pilot_id){
+        //VALIDO SI HAY RESEÑA
         if (!$request->has('review')) {
             return redirect()->back()->withInput()->with('error', 'Usted debe proveer un reseña de la calificación');
         }
- 
+        
+        //ME TRAIGO LAS CALIFICACIONES PENDIENTES DE LOS PASAJEROS ACEPTADOS
         $qualification = QualificationPilot::where('ride_id', $ride_id)->where('pilot_id', $pilot_id)->where('passenger_id', Auth::user()->id)->first();
+
+        //GUARDO LOS CAMBIOS QUE VIENEN EN LA REQUEST
         $qualification->value = $request->value;
         $qualification->review = $request->review;
         $qualification->done = TRUE;

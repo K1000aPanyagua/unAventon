@@ -60,4 +60,10 @@ class PagesController extends Controller {
  	public function getTermsAndConditions(){
  		return view('termsAndConditions');
  	} 
+
+ 	public function showPilot($idRide){
+ 		$ride = Ride::where('id', $idRide)->first();
+ 		$pilot = User::find($ride->user_id);
+ 		return view('ride.showPilot')->with('pilot', $pilot)->with('ride', $ride);
+ 	}
 }

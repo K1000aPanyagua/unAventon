@@ -18,7 +18,8 @@ Route::get('/resultregister','PagesController@getResultRegister');
 
 Route::get('/showPassengers/{idRide}', 'PagesController@showPassengers')
 		->name('page.showPassengers');
-
+Route::get('/showPilot/{idRide}', 'PagesController@showPilot')
+		->name('page.showPilot');
 
 Route::pattern('users', '[0-9]+');
 Route::get('/decline/{idRide}/{idPostulant}', 'UserController@declineSolicitude')
@@ -29,12 +30,13 @@ Route::delete('/cancel/{ride}', 'UserController@cancelSolicitude')
 		->name('user.cancelSolicitude');
 Route::post('/postulate', 'UserController@postulate')
 		->name('user.postulate');
-Route::get('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePassenger')
+Route::post('deletePassenger/{ride}/{idPassenger}', 'UserController@deletePassenger')
 		->name('user.deletePassenger');
 
-
-Route::post('qualificatePassenger/{ride}/{idPassenger}', 'UserController@qualificatePassenger')
+Route::post('/qualificatePassenger/{ride}/passenger/{idPassenger}', 'UserController@qualificatePassenger')
     ->name('user.qualificatePassenger');
+Route::post('/qualificatePilot/{ride}/passenger/{idPassenger}', 'UserController@qualificatePilot')
+    ->name('user.qualificatePilot');
 		
 Route::resource('user', 'UserController');
 

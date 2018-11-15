@@ -86,10 +86,10 @@
              <a  class="sangria text-uppercase text-center text-white" ><p>sarasa</p>></a>
             @endif
             @if($ride->done == TRUE)
-            <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('user.showPassengers', $ride->id)}}"> 
+            <a  class="sangria text-uppercase text-center" style="color: #f17376;" href=" {{route('page.showPilot', $ride->id)}}">  
               <h2>Calificar piloto</h2>
-            </a>
-            @endif
+            </a> 
+            @endif 
             <br><br>
           </td>
         </div>
